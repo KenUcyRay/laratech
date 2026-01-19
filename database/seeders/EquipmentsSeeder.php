@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Equipment;
 use App\Models\EquipmentType;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class EquipmentsSeeder extends Seeder
 {
@@ -17,22 +16,20 @@ class EquipmentsSeeder extends Seeder
             return;
         }
 
-        foreach ($types as $type) {
-            Equipment::create([
-                'code' => strtoupper(Str::slug($type->name)) . '-' . rand(100, 999),
-                'name' => $type->name . ' ' . rand(1, 10),
-                'equipment_type_id' => $type->id,
-                'status' => 'idle',
-                'hour_meter' => rand(100, 5000),
-            ]);
+        $statuses = ['idle', 'operasi', 'servis', 'rusak'];
+        $counter = 1;
 
-            Equipment::create([
-                'code' => strtoupper(Str::slug($type->name)) . '-' . rand(100, 999),
-                'name' => $type->name . ' ' . rand(11, 20),
-                'equipment_type_id' => $type->id,
-                'status' => 'operasi',
-                'hour_meter' => rand(100, 5000),
-            ]);
+        foreach ($types as $type) {
+            for ($i = 1; $i <= 4; $i++) {
+                Equipment::create([
+                    'code' => strtoupper(substr($type->name, 0, 3)) . '-' . str_pad($counter, 3, '0', STR_PAD_LEFT),
+                    'name' => $type->name . ' Unit ' . $i,
+                    'equipment_type_id' => $type->id,
+                    'status' => $statuses[($i - 1) % 4],
+                    'hour_meter' => rand(500, 10000),
+                ]);
+                $counter++;
+            }
         }
     }
 }
