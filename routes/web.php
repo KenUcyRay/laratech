@@ -52,7 +52,11 @@ Route::prefix('mekanik')->name('mekanik.')->middleware(['auth', 'mekanik'])->gro
     Route::get('/reports', function() { return view('mekanik.reports.index'); })->name('reports.index');
 });
 
-// Common routes
-Route::get('/profile', function() { return view('profile.edit'); })->name('profile');
+// Common routes (authenticated users)
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
+    Route::put('/profile/password', [App\Http\Controllers\ProfileController::class, 'updatePassword'])->name('profile.password.update');
+});
+
 Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 Route::get('/password/request', function() { return view('auth.forgot-password'); })->name('password.request');
