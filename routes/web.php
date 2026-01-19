@@ -20,10 +20,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
             'activeOperators' => 8,
             'activeMekaniks' => 5,
             'pendingTasks' => 12
-        ]); 
+        ]);
     })->name('dashboard');
-    
-    Route::get('/users', function() { return view('admin.users.index'); })->name('users.index');
+
+    Route::resource('users', App\Http\Controllers\Admin\UserController::class);
+    Route::post('users/{id}/restore', [App\Http\Controllers\Admin\UserController::class, 'restore'])->name('users.restore');
     Route::get('/operators', function() { return view('admin.operators.index'); })->name('operators.index');
     Route::get('/mekaniks', function() { return view('admin.mekaniks.index'); })->name('mekaniks.index');
     Route::get('/reports', function() { return view('admin.reports.index'); })->name('reports.index');
@@ -38,7 +39,7 @@ Route::prefix('operator')->name('operator.')->middleware(['auth', 'operator'])->
             'completedTasks' => 5,
             'pendingTasks' => 3,
             'workingHours' => '7h 30m'
-        ]); 
+        ]);
     })->name('dashboard');
     
     Route::get('/tasks', function() { return view('operator.tasks.index'); })->name('tasks.index');
@@ -55,7 +56,7 @@ Route::prefix('mekanik')->name('mekanik.')->middleware(['auth', 'mekanik'])->gro
             'completedRepairs' => 12,
             'scheduledMaintenance' => 4,
             'urgentRepairs' => 2
-        ]); 
+        ]);
     })->name('dashboard');
     
     Route::get('/work-orders', function() { return view('mekanik.work-orders.index'); })->name('work-orders.index');
