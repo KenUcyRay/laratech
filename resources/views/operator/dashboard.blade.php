@@ -7,10 +7,26 @@
 @endsection
 
 @section('content')
-<div class="text-center py-5">
-    <div class="alert alert-success">
-        <h2><i class="fas fa-desktop me-2"></i>Dashboard Operator</h2>
-        <p class="mb-0">Placeholder untuk halaman dashboard operator</p>
+<div class="container-fluid mt-4">
+
+ <div class="mb-5">
+    <div class="bg-dark rounded p-4 mb-4 shadow text-center" style="background: linear-gradient(135deg, #22c55e 0%, #10b981 100%);">
+        <div class="d-flex align-items-center justify-content-center">
+            <div class="bg-white bg-opacity-25 rounded-circle p-3 me-3">
+                <i class="fas fa-chart-line fs-4 text-white"></i>
+            </div>
+            <div>
+                <h2 class="text-white fw-bold mb-1">Dashboard Operator</h2>
+                <p class="text-white-50 mb-0">
+                    Pantau dan kelola aktivitas operasional hari ini
+                </p>
+            </div>
+        </div>
     </div>
+</div>
+
+
+    @include('operator.partials.summary-cards')
+
 </div>
 @endsection
