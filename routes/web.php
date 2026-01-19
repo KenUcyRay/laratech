@@ -27,7 +27,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::post('users/{id}/restore', [App\Http\Controllers\Admin\UserController::class, 'restore'])->name('users.restore');
     Route::get('/operators', function() { return view('admin.operators.index'); })->name('operators.index');
     Route::get('/mekaniks', function() { return view('admin.mekaniks.index'); })->name('mekaniks.index');
-    Route::get('/reports', function() { return view('admin.reports.index'); })->name('reports.index');
+    Route::get('/reports', [App\Http\Controllers\Admin\ReportController::class, 'index'])->name('reports.index');
     Route::get('/settings', function() { return view('admin.settings.index'); })->name('settings.index');
 });
 
