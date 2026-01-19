@@ -14,14 +14,7 @@ Route::controller(App\Http\Controllers\AuthController::class)->group(function ()
 
 // Admin Routes
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard', [
-            'totalUsers' => 25,
-            'activeOperators' => 8,
-            'activeMekaniks' => 5,
-            'pendingTasks' => 12
-        ]);
-    })->name('dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('users', App\Http\Controllers\Admin\UserController::class);
     Route::post('users/{id}/restore', [App\Http\Controllers\Admin\UserController::class, 'restore'])->name('users.restore');
@@ -33,14 +26,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
 // Operator Routes
 Route::prefix('operator')->name('operator.')->middleware(['auth', 'operator'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('operator.dashboard', [
-            'todayTasks' => 8,
-            'completedTasks' => 5,
-            'pendingTasks' => 3,
-            'workingHours' => '7h 30m'
-        ]);
-    })->name('dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\Operator\DashboardController::class, 'index'])->name('dashboard');
     
     Route::get('/tasks', function() { return view('operator.tasks.index'); })->name('tasks.index');
     Route::get('/schedules', function() { return view('operator.schedules.index'); })->name('schedules.index');

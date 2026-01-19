@@ -7,14 +7,19 @@ use App\Models\Equipment;
 use App\Models\Task;
 use App\Models\Maintenance;
 use App\Models\Report;
+use App\Models\User;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
     public function index(): View
     {
-        $totalEquipment = Equipment::count();
+        $totalUsers = User::count();
+        $activeOperators = User::where('role', 'operator')->count();
+        $activeMekaniks = User::where('role', 'mekanik')->count();
+        $pendingTasks = Task::whereIn('status', ['todo', 'doing'])->count();
 
+        $totalEquipment = Equipment::count();
         $equipmentStatus = [
             'idle' => Equipment::where('status', 'idle')->count(),
             'operasi' => Equipment::where('status', 'operasi')->count(),
@@ -30,7 +35,7 @@ class DashboardController extends Controller
             'total' => Task::count(),
         ];
 
-        // Maintenance -7 days
+        // Maintenance due within 7 days
         $maintenanceDue = Maintenance::where('next_service', '<=', now()->addDays(7))
             ->with('equipment')
             ->get();
@@ -43,6 +48,10 @@ class DashboardController extends Controller
         ];
 
         return view('admin.dashboard', compact(
+            'totalUsers',
+            'activeOperators',
+            'activeMekaniks',
+            'pendingTasks',
             'totalEquipment',
             'equipmentStatus',
             'taskSummary',
