@@ -7,11 +7,14 @@ Route::get('/', function () {
 });
 
 // Auth Routes
-Route::get('/login', function() { return view('auth.login'); })->name('login');
+Route::controller(App\Http\Controllers\AuthController::class)->group(function () {
+    Route::get('/login', 'create')->name('login');
+    Route::post('/login', 'login');
+});
 
 // Admin Routes
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', function() { 
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
+    Route::get('/dashboard', function () {
         return view('admin.dashboard', [
             'totalUsers' => 25,
             'activeOperators' => 8,
@@ -28,8 +31,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 // Operator Routes
-Route::prefix('operator')->name('operator.')->group(function () {
-    Route::get('/dashboard', function() { 
+Route::prefix('operator')->name('operator.')->middleware(['auth', 'operator'])->group(function () {
+    Route::get('/dashboard', function () {
         return view('operator.dashboard', [
             'todayTasks' => 8,
             'completedTasks' => 5,
@@ -45,8 +48,8 @@ Route::prefix('operator')->name('operator.')->group(function () {
 });
 
 // Mekanik Routes
-Route::prefix('mekanik')->name('mekanik.')->group(function () {
-    Route::get('/dashboard', function() { 
+Route::prefix('mekanik')->name('mekanik.')->middleware(['auth', 'mekanik'])->group(function () {
+    Route::get('/dashboard', function () {
         return view('mekanik.dashboard', [
             'activeWorkOrders' => 6,
             'completedRepairs' => 12,
@@ -64,5 +67,5 @@ Route::prefix('mekanik')->name('mekanik.')->group(function () {
 
 // Common routes
 Route::get('/profile', function() { return view('profile.edit'); })->name('profile');
-Route::post('/logout', function() { return redirect('/'); })->name('logout');
+Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 Route::get('/password/request', function() { return view('auth.forgot-password'); })->name('password.request');

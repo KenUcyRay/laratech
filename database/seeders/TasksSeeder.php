@@ -12,7 +12,7 @@ class TasksSeeder extends Seeder
     public function run(): void
     {
         $equipments = Equipment::all();
-        $mechanics = User::where('role', 'mechanic')->get();
+        $mechanics = User::where('role', 'mekanik')->get();
         $operators = User::where('role', 'operator')->get();
 
         if ($equipments->isEmpty() || ($mechanics->isEmpty() && $operators->isEmpty())) {

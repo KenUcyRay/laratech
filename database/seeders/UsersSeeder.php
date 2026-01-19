@@ -25,10 +25,10 @@ class UsersSeeder extends Seeder
                 'role' => 'operator',
             ],
             [
-                'name' => 'Mechanic User',
-                'username' => 'mechanic',
+                'name' => 'Mekanik User',
+                'username' => 'mekanik',
                 'password' => Hash::make('password'),
-                'role' => 'mechanic',
+                'role' => 'mekanik',
             ],
         ];
 
