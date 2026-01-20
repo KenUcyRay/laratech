@@ -18,10 +18,10 @@
     <div id="app">
         @include('components.navbar')
         
-        <div class="container-fluid">
-            <div class="row">
+        <div class="container-fluid p-0">
+            <div class="row g-0">
                 @hasSection('sidebar')
-                    <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+                    <nav class="col-md-3 col-lg-2 d-md-block p-0 sidebar">
                         @yield('sidebar')
                     </nav>
                     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">

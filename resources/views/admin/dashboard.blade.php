@@ -18,6 +18,19 @@
     position: relative;
     height: 300px;
 }
+/* Menghilangkan indikator mengetik */
+* {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+input, textarea {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
 </style>
 @endpush
 
