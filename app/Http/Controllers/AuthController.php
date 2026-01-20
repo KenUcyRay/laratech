@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+<<<<<<< HEAD
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
+=======
+use Illuminate\Support\Facades\Auth;use Illuminate\Http\RedirectResponse;
+>>>>>>> 9069376e49a87fa6abd63ac2e82cd631973b7b1d
 use Illuminate\View\View;
 
 class AuthController extends Controller
@@ -58,4 +62,8 @@ class AuthController extends Controller
 
         return redirect('/');
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 9069376e49a87fa6abd63ac2e82cd631973b7b1d
