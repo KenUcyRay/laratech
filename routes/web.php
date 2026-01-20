@@ -25,6 +25,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::resource('mekaniks', App\Http\Controllers\Admin\MekanikController::class);
     Route::patch('mekaniks/{id}/restore', [App\Http\Controllers\Admin\MekanikController::class, 'restore'])->name('mekaniks.restore');
     Route::get('/reports', [App\Http\Controllers\Admin\ReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports/{id}', [App\Http\Controllers\Admin\ReportController::class, 'show'])->name('reports.show');
     Route::get('/settings', function() { return view('admin.settings.index'); })->name('settings.index');
 });
 
