@@ -1,34 +1,116 @@
-<div class="position-sticky pt-3">
-    <ul class="nav flex-column">
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('operator.dashboard') ? 'active' : '' }}" 
-               href="{{ route('operator.dashboard') }}">
-                <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+<div class="position-sticky pt-4">
+    <div class="bg-white rounded-4 shadow-sm p-3 mb-4">
+        <div class="text-center mb-4">
+            <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                <i class="fas fa-user-cog fs-3 text-success"></i>
+            </div>
+            <h6 class="fw-bold text-dark mb-1">Operator Panel</h6>
+            <small class="text-muted">Kelola operasional harian</small>
+        </div>
+        
+        <nav class="nav flex-column gap-2">
+            <a class="nav-link d-flex align-items-center p-3 rounded-3 text-decoration-none {{ request()->routeIs('operator.dashboard') ? 'active-modern' : 'nav-modern' }}" 
+               href="{{ route('operator.dashboard') }}" style="transition: all 0.3s ease;">
+                <div class="icon-container me-3">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div>
+                    <div class="fw-semibold">Dashboard</div>
+                    <small class="text-muted">Overview & statistik</small>
+                </div>
             </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('operator.tasks*') ? 'active' : '' }}" 
-               href="{{ route('operator.tasks.index') }}">
-                <i class="fas fa-tasks me-2"></i>Tugas Saya
+            
+            <a class="nav-link d-flex align-items-center p-3 rounded-3 text-decoration-none {{ request()->routeIs('operator.tasks*') ? 'active-modern' : 'nav-modern' }}" 
+               href="{{ route('operator.tasks.index') }}" style="transition: all 0.3s ease;">
+                <div class="icon-container me-3">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <div>
+                    <div class="fw-semibold">Tugas Saya</div>
+                    <small class="text-muted">Kelola tugas harian</small>
+                </div>
             </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('operator.schedules*') ? 'active' : '' }}" 
-               href="{{ route('operator.schedules.index') }}">
-                <i class="fas fa-calendar me-2"></i>Jadwal Kerja
+            
+            <a class="nav-link d-flex align-items-center p-3 rounded-3 text-decoration-none {{ request()->routeIs('operator.schedules*') ? 'active-modern' : 'nav-modern' }}" 
+               href="{{ route('operator.schedules.index') }}" style="transition: all 0.3s ease;">
+                <div class="icon-container me-3">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div>
+                    <div class="fw-semibold">Jadwal Kerja</div>
+                    <small class="text-muted">Atur waktu kerja</small>
+                </div>
             </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('operator.reports*') ? 'active' : '' }}" 
-               href="{{ route('operator.reports.index') }}">
-                <i class="fas fa-file-alt me-2"></i>Laporan Harian
+            
+            <a class="nav-link d-flex align-items-center p-3 rounded-3 text-decoration-none {{ request()->routeIs('operator.reports*') ? 'active-modern' : 'nav-modern' }}" 
+               href="{{ route('operator.reports.index') }}" style="transition: all 0.3s ease;">
+                <div class="icon-container me-3">
+                    <i class="fas fa-file-chart-line"></i>
+                </div>
+                <div>
+                    <div class="fw-semibold">Laporan Harian</div>
+                    <small class="text-muted">Buat & lihat laporan</small>
+                </div>
             </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('operator.maintenance*') ? 'active' : '' }}" 
-               href="{{ route('operator.maintenance.index') }}">
-                <i class="fas fa-tools me-2"></i>Maintenance
+            
+            <a class="nav-link d-flex align-items-center p-3 rounded-3 text-decoration-none {{ request()->routeIs('operator.maintenance*') ? 'active-modern' : 'nav-modern' }}" 
+               href="{{ route('operator.maintenance.index') }}" style="transition: all 0.3s ease;">
+                <div class="icon-container me-3">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <div>
+                    <div class="fw-semibold">Maintenance</div>
+                    <small class="text-muted">Perawatan sistem</small>
+                </div>
             </a>
-        </li>
-    </ul>
+        </nav>
+    </div>
 </div>
+
+<style>
+.nav-modern {
+    color: #6c757d !important;
+    background: transparent;
+    border: 1px solid transparent;
+}
+
+.nav-modern:hover {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%) !important;
+    color: #495057 !important;
+    transform: translateX(5px);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.active-modern {
+    background: linear-gradient(135deg, #22c55e 0%, #10b981 100%) !important;
+    color: white !important;
+    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+    transform: translateX(5px);
+}
+
+.icon-container {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.active-modern .icon-container {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.nav-modern .icon-container {
+    background: rgba(108, 117, 125, 0.1);
+    color: #6c757d;
+}
+
+.nav-modern:hover .icon-container {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+</style>
