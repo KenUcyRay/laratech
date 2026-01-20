@@ -18,8 +18,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
     Route::resource('users', App\Http\Controllers\Admin\UserController::class);
     Route::patch('users/{id}/restore', [App\Http\Controllers\Admin\UserController::class, 'restore'])->name('users.restore');
-    Route::get('/operators', function() { return view('admin.operators.index'); })->name('operators.index');
-    Route::get('/mekaniks', function() { return view('admin.mekaniks.index'); })->name('mekaniks.index');
+    
+    Route::resource('operators', App\Http\Controllers\Admin\OperatorController::class);
+    Route::patch('operators/{id}/restore', [App\Http\Controllers\Admin\OperatorController::class, 'restore'])->name('operators.restore');
+    
+    Route::resource('mekaniks', App\Http\Controllers\Admin\MekanikController::class);
+    Route::patch('mekaniks/{id}/restore', [App\Http\Controllers\Admin\MekanikController::class, 'restore'])->name('mekaniks.restore');
     Route::get('/reports', [App\Http\Controllers\Admin\ReportController::class, 'index'])->name('reports.index');
     Route::get('/settings', function() { return view('admin.settings.index'); })->name('settings.index');
 });
