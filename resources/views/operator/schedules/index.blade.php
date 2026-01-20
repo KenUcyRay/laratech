@@ -10,7 +10,7 @@
 <div class="container-fluid mt-4">
 
     {{-- Ultra Modern Header --}}
-    <div class="position-relative overflow-hidden rounded-4 shadow-lg mb-4" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);">
+    <div class="position-relative overflow-hidden rounded-4 shadow-lg mb-4" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%);">
         <div class="position-absolute top-0 end-0 opacity-25">
             <i class="fas fa-calendar-alt" style="font-size: 8rem; color: white; transform: rotate(15deg); margin: -2rem;"></i>
         </div>
@@ -18,9 +18,6 @@
             <div class="d-flex justify-content-between align-items-center">
                 <div>
                     <div class="d-flex align-items-center mb-2">
-                        <div class="bg-white bg-opacity-20 rounded-circle p-2 me-3">
-                            <i class="fas fa-clock text-white fs-4"></i>
-                        </div>
                         <h1 class="fw-bold mb-0 text-white">Jadwal Kerja</h1>
                     </div>
                     <p class="text-white-50 mb-0 fs-6">
@@ -28,7 +25,7 @@
                     </p>
                 </div>
                 <button class="btn btn-light rounded-pill px-4 py-3 shadow" data-bs-toggle="modal" data-bs-target="#addScheduleModal" style="backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(255, 255, 255, 0.2);">
-                    <i class="fas fa-plus me-2 text-primary"></i>
+                    <i class="fas fa-plus me-2" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>
                     <span class="fw-semibold text-dark">Tambah Jadwal</span>
                 </button>
             </div>
@@ -104,10 +101,7 @@
         <div class="modal-content border-0 shadow-lg rounded-4">
             <div class="modal-header border-0 pb-0">
                 <div class="text-center w-100">
-                    <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                        <i class="fas fa-calendar-plus fs-3 text-primary"></i>
-                    </div>
-                    <h3 class="fw-bold text-dark mb-2" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">📅 Tambah Jadwal Baru</h3>
+                    <h3 class="fw-bold text-dark mb-2" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"> Tambah Jadwal Baru</h3>
                     <p class="text-muted mb-0 fs-6">Atur jadwal kerja dan shift dengan mudah</p>
                 </div>
                 <button type="button" class="btn-close position-absolute" data-bs-dismiss="modal" style="top: 15px; right: 15px;"></button>
@@ -123,13 +117,13 @@
                                     <option value="maintenance">Maintenance</option>
                                     <option value="training">Training</option>
                                 </select>
-                                <label for="scheduleType" class="text-muted"><i class="fas fa-list me-2 text-primary"></i>Jenis Jadwal</label>
+                                <label for="scheduleType" class="text-muted"><i class="fas fa-list me-2" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>Jenis Jadwal</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input type="date" class="form-control border-0 shadow-sm" id="scheduleDate" style="background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; height: 60px;">
-                                <label for="scheduleDate" class="text-muted"><i class="fas fa-calendar me-2 text-primary"></i>Tanggal</label>
+                                <label for="scheduleDate" class="text-muted"><i class="fas fa-calendar me-2" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>Tanggal</label>
                             </div>
                         </div>
                     </div>
@@ -138,13 +132,13 @@
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input type="time" class="form-control border-0 shadow-sm" id="startTime" style="background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; height: 60px;">
-                                <label for="startTime" class="text-muted"><i class="fas fa-clock me-2 text-primary"></i>Waktu Mulai</label>
+                                <label for="startTime" class="text-muted"><i class="fas fa-clock me-2" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>Waktu Mulai</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input type="time" class="form-control border-0 shadow-sm" id="endTime" style="background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; height: 60px;">
-                                <label for="endTime" class="text-muted"><i class="fas fa-clock me-2 text-primary"></i>Waktu Selesai</label>
+                                <label for="endTime" class="text-muted"><i class="fas fa-clock me-2" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>Waktu Selesai</label>
                             </div>
                         </div>
                     </div>
@@ -152,7 +146,7 @@
                     <div class="mt-4">
                         <div class="form-floating">
                             <textarea class="form-control border-0 shadow-sm" id="scheduleDescription" placeholder="Deskripsi jadwal..." style="background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; height: 120px; resize: none;"></textarea>
-                            <label for="scheduleDescription" class="text-muted"><i class="fas fa-align-left me-2 text-primary"></i>Deskripsi</label>
+                            <label for="scheduleDescription" class="text-muted"><i class="fas fa-align-left me-2" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>Deskripsi</label>
                         </div>
                     </div>
                 </div>
@@ -160,7 +154,7 @@
                     <button type="button" class="btn btn-light rounded-pill px-4 py-2 me-2" data-bs-dismiss="modal" style="background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%); border: none; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
                         <i class="fas fa-times me-2"></i>Batal
                     </button>
-                    <button type="submit" class="btn btn-primary rounded-pill px-4 py-2 shadow" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border: none; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);">
+                    <button type="submit" class="btn btn-primary rounded-pill px-4 py-2 shadow" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); border: none; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);">
                         <i class="fas fa-save me-2"></i>Simpan Jadwal
                     </button>
                 </div>

@@ -10,7 +10,7 @@
 <div class="container-fluid mt-4">
 
     {{-- Ultra Modern Header --}}
-    <div class="position-relative overflow-hidden rounded-4 shadow-lg mb-4" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);">
+    <div class="position-relative overflow-hidden rounded-4 shadow-lg mb-4" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%);">
         <div class="position-absolute top-0 end-0 opacity-25">
             <i class="fas fa-tools" style="font-size: 8rem; color: white; transform: rotate(15deg); margin: -2rem;"></i>
         </div>
@@ -18,9 +18,6 @@
             <div class="d-flex justify-content-between align-items-center">
                 <div>
                     <div class="d-flex align-items-center mb-2">
-                        <div class="bg-white bg-opacity-20 rounded-circle p-2 me-3">
-                            <i class="fas fa-wrench text-white fs-4"></i>
-                        </div>
                         <h1 class="fw-bold mb-0 text-white">Jadwal Maintenance</h1>
                     </div>
                     <p class="text-white-50 mb-0 fs-6">
