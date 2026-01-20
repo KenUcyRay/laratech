@@ -24,10 +24,6 @@
                         📅 Kelola dan pantau jadwal kerja harian Anda
                     </p>
                 </div>
-                <button class="btn btn-light rounded-pill px-4 py-3 shadow" data-bs-toggle="modal" data-bs-target="#addScheduleModal" style="backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(255, 255, 255, 0.2);">
-                    <i class="fas fa-plus me-2" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>
-                    <span class="fw-semibold text-dark">Tambah Jadwal</span>
-                </button>
             </div>
         </div>
     </div>
@@ -147,7 +143,7 @@
                         <div class="form-floating">
                             <textarea class="form-control border-0 shadow-sm" id="scheduleDescription" placeholder="Deskripsi jadwal..." style="background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; height: 120px; resize: none;"></textarea>
                             <label for="scheduleDescription" class="text-muted"><i class="fas fa-align-left me-2" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>Deskripsi</label>
-                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer border-0 pt-2">
@@ -168,34 +164,31 @@
         CONSTANTS
         ========================= */
         const monthNames = [
-            "Januari","Februari","Maret","April","Mei","Juni",
-            "Juli","Agustus","September","Oktober","November","Desember"
+            "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+            "Juli", "Agustus", "September", "Oktober", "November", "Desember"
         ];
 
         const dayNames = [
-            "Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"
+            "Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"
         ];
 
         /* =========================
         STATE
         ========================= */
-        let currentMonth = 0; // Januari
-        let currentYear = 2026;
-        let selectedDate = new Date(currentYear, currentMonth, 20);
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+        let selectedDate = new Date();
 
-        let schedules = [
-            { date: "2026-01-20", title: "Shift Pagi", time: "07:00-15:00", type: "shift", status: "active" },
-            { date: "2026-01-20", title: "Meeting Tim", time: "16:00-17:00", type: "meeting", status: "scheduled" },
-            { date: "2026-01-22", title: "Maintenance", time: "09:00-12:00", type: "maintenance", status: "scheduled" }
-        ];
+        // Injected schedules from Controller
+        let schedules = @json($schedules);
 
         /* =========================
         UTIL
         ========================= */
         function formatDate(date) {
             const y = date.getFullYear();
-            const m = String(date.getMonth()+1).padStart(2,"0");
-            const d = String(date.getDate()).padStart(2,"0");
+            const m = String(date.getMonth() + 1).padStart(2, "0");
+            const d = String(date.getDate()).padStart(2, "0");
             return `${y}-${m}-${d}`;
         }
 
@@ -227,7 +220,7 @@
                 `${monthNames[currentMonth]} ${currentYear}`;
 
             const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-            const daysInMonth = new Date(currentYear, currentMonth+1, 0).getDate();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
             let row = document.createElement("tr");
 
@@ -239,13 +232,14 @@
             for (let day = 1; day <= daysInMonth; day++) {
                 const isActive =
                     day === selectedDate.getDate() &&
-                    currentMonth === selectedDate.getMonth();
-                
+                    currentMonth === selectedDate.getMonth() &&
+                    currentYear === selectedDate.getFullYear();
+
                 const dateStr = formatDate(new Date(currentYear, currentMonth, day));
                 const hasSchedule = schedules.some(s => s.date === dateStr);
 
                 const buttonClass = isActive ? "btn-success text-white" : "btn-light";
-                const underline = hasSchedule ? "border-bottom: 3px solid #3b82f6;" : "";
+                const underline = hasSchedule ? "border-bottom: 3px solid #10B981;" : "";
 
                 row.innerHTML += `
                     <td class="text-center">
@@ -297,16 +291,19 @@
             }
 
             todaySchedules.forEach(item => {
-                const statusColor = item.status === 'active' ? 'success' : 'secondary';
+                let badgeClass = 'primary';
+                if (item.type === 'maintenance') badgeClass = 'danger';
+                if (item.type === 'task') badgeClass = 'info';
+
                 container.innerHTML += `
-                    <div class="mb-3 p-3 rounded-3 bg-light shadow-sm">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
+                    <div class="mb-3 p-3 rounded-3 bg-light shadow-sm border-start border-4 border-${badgeClass}">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
                                 <strong>${item.title}</strong>
-                                <div class="text-muted small">${item.time}</div>
+                                <span class="badge bg-${badgeClass}">${item.type.toUpperCase()}</span>
                             </div>
-                            <span class="badge bg-${statusColor}">${item.status}</span>
-                        </div>
+                        <div class="text-muted small mb-1"><i class="fas fa-clock me-1"></i> ${item.time}</div>
+                        <div class="text-muted small">${item.description}</div>
+                        ${item.status ? `<div class="mt-2 text-end"><span class="badge bg-secondary">${item.status}</span></div>` : ''}
                     </div>
                 `;
             });
@@ -318,8 +315,11 @@
         function generateStats() {
             const today = formatDate(new Date());
             const todaySchedules = schedules.filter(s => s.date === today);
-            const activeSchedules = schedules.filter(s => s.status === 'active');
-            
+
+            // Stats logic can be expanded
+            const maintenanceCount = schedules.filter(s => s.type === 'maintenance').length;
+            const taskCount = schedules.filter(s => s.type === 'task').length;
+
             document.getElementById('stats-container').innerHTML = `
                 <div class="col-md-4">
                     <div class="card border-0 shadow-sm rounded-4 h-100">
@@ -336,10 +336,10 @@
                     <div class="card border-0 shadow-sm rounded-4 h-100">
                         <div class="card-body p-4 text-center">
                             <div class="bg-warning bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                                <i class="fas fa-clock fs-3 text-warning"></i>
+                                <i class="fas fa-tools fs-3 text-warning"></i>
                             </div>
-                            <h3 class="fw-bold text-warning mb-1">${activeSchedules.length}</h3>
-                            <p class="text-muted mb-0">Sedang Aktif</p>
+                            <h3 class="fw-bold text-warning mb-1">${maintenanceCount}</h3>
+                            <p class="text-muted mb-0">Total Maintenance</p>
                         </div>
                     </div>
                 </div>
@@ -347,42 +347,15 @@
                     <div class="card border-0 shadow-sm rounded-4 h-100">
                         <div class="card-body p-4 text-center">
                             <div class="bg-info bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                                <i class="fas fa-list fs-3 text-info"></i>
+                                <i class="fas fa-tasks fs-3 text-info"></i>
                             </div>
-                            <h3 class="fw-bold text-info mb-1">${schedules.length}</h3>
-                            <p class="text-muted mb-0">Total Jadwal</p>
+                            <h3 class="fw-bold text-info mb-1">${taskCount}</h3>
+                            <p class="text-muted mb-0">Total Tasks</p>
                         </div>
                     </div>
                 </div>
             `;
         }
-
-        /* =========================
-        FORM HANDLER
-        ========================= */
-        document.getElementById('scheduleForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const newSchedule = {
-                date: document.getElementById('scheduleDate').value,
-                title: document.getElementById('scheduleType').options[document.getElementById('scheduleType').selectedIndex].text,
-                time: document.getElementById('startTime').value + '-' + document.getElementById('endTime').value,
-                type: document.getElementById('scheduleType').value,
-                status: 'scheduled'
-            };
-            
-            schedules.push(newSchedule);
-            
-            // Reset form
-            this.reset();
-            
-            // Close modal
-            bootstrap.Modal.getInstance(document.getElementById('addScheduleModal')).hide();
-            
-            // Refresh displays
-            generateStats();
-            renderSchedules();
-        });
 
         /* =========================
         INIT

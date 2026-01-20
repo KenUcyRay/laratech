@@ -18,6 +18,12 @@ class UsersSeeder extends Seeder
                 'role' => 'admin',
             ],
             [
+                'name' => 'Manager User',
+                'username' => 'manager',
+                'password' => Hash::make('password'),
+                'role' => 'manager',
+            ],
+            [
                 'name' => 'Budi Santoso',
                 'username' => 'operator1',
                 'password' => Hash::make('password'),

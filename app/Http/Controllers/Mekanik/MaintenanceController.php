@@ -12,7 +12,8 @@ class MaintenanceController extends Controller
     public function index(): View
     {
         // Show upcoming maintenance
-        $maintenances = Maintenance::with(['equipment', 'equipment.type', 'assignee'])
+        $maintenances = Maintenance::with(['equipment', 'assignee'])
+            ->where('user_id', auth()->id())
             ->orderBy('next_service_due', 'asc')
             ->get();
 

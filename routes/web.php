@@ -12,6 +12,15 @@ Route::controller(App\Http\Controllers\AuthController::class)->group(function ()
     Route::post('/login', 'login');
 });
 
+// Manager Routes
+Route::prefix('manager')->name('manager.')->middleware(['auth', 'manager'])->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\Manager\DashboardController::class, 'index'])->name('dashboard');
+    
+    Route::resource('tasks', App\Http\Controllers\Manager\TaskController::class);
+    Route::get('/team', [App\Http\Controllers\Manager\TeamController::class, 'index'])->name('team.index');
+    Route::resource('reports', App\Http\Controllers\Manager\ReportController::class)->only(['index', 'show']);
+});
+
 // Admin Routes
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
@@ -28,7 +37,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     // Master Data & Operations
     Route::resource('equipment-types', App\Http\Controllers\Admin\EquipmentTypeController::class);
     Route::resource('equipment', App\Http\Controllers\Admin\EquipmentController::class);
-    Route::resource('tasks', App\Http\Controllers\Admin\TaskController::class);
     Route::resource('maintenance', App\Http\Controllers\Admin\MaintenanceController::class);
 
     // Reports
@@ -48,8 +56,7 @@ Route::prefix('operator')->name('operator.')->middleware(['auth', 'operator'])->
     Route::get('/tasks', [App\Http\Controllers\Operator\TaskController::class, 'index'])->name('tasks.index');
     Route::put('/tasks/{id}/status', [App\Http\Controllers\Operator\TaskController::class, 'updateStatus'])->name('tasks.updateStatus');
     Route::get('/equipment', [App\Http\Controllers\Operator\EquipmentController::class, 'index'])->name('equipment.index');
-    Route::get('/schedules', function () {
-        return view('operator.schedules.index'); })->name('schedules.index');
+    Route::get('/schedules', [App\Http\Controllers\Operator\ScheduleController::class, 'index'])->name('schedules.index');
     Route::get('/reports', function () {
         return view('operator.reports.index'); })->name('reports.index');
     Route::get('/maintenance', [App\Http\Controllers\Operator\MaintenanceController::class, 'index'])->name('maintenance.index');
@@ -62,6 +69,9 @@ Route::prefix('mekanik')->name('mekanik.')->middleware(['auth', 'mekanik'])->gro
     // Work Orders / Tasks
     Route::get('/work-orders', [App\Http\Controllers\Mekanik\TaskController::class, 'index'])->name('work-orders.index');
     Route::put('/work-orders/{id}', [App\Http\Controllers\Mekanik\TaskController::class, 'update'])->name('work-orders.update');
+
+    // Schedules
+    Route::get('/schedules', [App\Http\Controllers\Mekanik\ScheduleController::class, 'index'])->name('schedules.index');
 
     // Maintenance
     Route::get('/maintenance', [App\Http\Controllers\Mekanik\MaintenanceController::class, 'index'])->name('maintenance.index');
