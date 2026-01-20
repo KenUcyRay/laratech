@@ -48,20 +48,26 @@ Route::prefix('operator')->name('operator.')->middleware(['auth', 'operator'])->
 
 // Mekanik Routes
 Route::prefix('mekanik')->name('mekanik.')->middleware(['auth', 'mekanik'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('mekanik.dashboard', [
-            'activeWorkOrders' => 6,
-            'completedRepairs' => 12,
-            'scheduledMaintenance' => 4,
-            'urgentRepairs' => 2
-        ]);
-    })->name('dashboard');
-    
-    Route::get('/work-orders', function() { return view('mekanik.work-orders.index'); })->name('work-orders.index');
-    Route::get('/maintenance', function() { return view('mekanik.maintenance.index'); })->name('maintenance.index');
-    Route::get('/repairs', function() { return view('mekanik.repairs.index'); })->name('repairs.index');
-    Route::get('/inventory', function() { return view('mekanik.inventory.index'); })->name('inventory.index');
-    Route::get('/reports', function() { return view('mekanik.reports.index'); })->name('reports.index');
+    Route::get('/dashboard', [App\Http\Controllers\Mekanik\DashboardController::class, 'index'])->name('dashboard');
+
+    // Work Orders / Tasks
+    Route::get('/work-orders', [App\Http\Controllers\Mekanik\TaskController::class, 'index'])->name('work-orders.index');
+    Route::put('/work-orders/{id}', [App\Http\Controllers\Mekanik\TaskController::class, 'update'])->name('work-orders.update');
+
+    // Maintenance
+    Route::get('/maintenance', [App\Http\Controllers\Mekanik\MaintenanceController::class, 'index'])->name('maintenance.index');
+    Route::put('/maintenance/{id}', [App\Http\Controllers\Mekanik\MaintenanceController::class, 'update'])->name('maintenance.update');
+
+    // Repairs
+    Route::get('/repairs', [App\Http\Controllers\Mekanik\TaskController::class, 'index'])->name('repairs.index');
+
+    // Inventory / Equipment
+    Route::get('/inventory', [App\Http\Controllers\Mekanik\EquipmentController::class, 'index'])->name('inventory.index');
+    Route::put('/inventory/{id}', [App\Http\Controllers\Mekanik\EquipmentController::class, 'update'])->name('inventory.update');
+
+    // Reports
+    Route::get('/reports', [App\Http\Controllers\Mekanik\ReportController::class, 'index'])->name('reports.index');
+    Route::put('/reports/{id}', [App\Http\Controllers\Mekanik\ReportController::class, 'update'])->name('reports.update');
 });
 
 // Common routes (authenticated users)

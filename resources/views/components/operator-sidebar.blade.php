@@ -1,8 +1,8 @@
 <div class="position-sticky pt-4">
     <div class="bg-white rounded-4 shadow-sm p-3 mb-4">
         <div class="text-center mb-4">
-            <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                <i class="fas fa-user-cog fs-3 text-success"></i>
+            <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                <i class="fas fa-user-cog fs-3 text-primary"></i>
             </div>
             <h6 class="fw-bold text-dark mb-1">Operator Panel</h6>
             <small class="text-muted">Kelola operasional harian</small>
@@ -75,16 +75,16 @@
 }
 
 .nav-modern:hover {
-    background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%) !important;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(29, 78, 216, 0.1) 100%) !important;
     color: #495057 !important;
     transform: translateX(5px);
-    border: 1px solid rgba(34, 197, 94, 0.2);
+    border: 1px solid rgba(59, 130, 246, 0.2);
 }
 
 .active-modern {
-    background: linear-gradient(135deg, #22c55e 0%, #10b981 100%) !important;
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%) !important;
     color: white !important;
-    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
     transform: translateX(5px);
 }
 
@@ -110,7 +110,7 @@
 }
 
 .nav-modern:hover .icon-container {
-    background: rgba(34, 197, 94, 0.2);
-    color: #22c55e;
+    background: rgba(59, 130, 246, 0.2);
+    color: #3b82f6;
 }
 </style>

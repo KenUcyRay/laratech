@@ -10,7 +10,7 @@
 <div class="container-fluid mt-4">
 
     {{-- Ultra Modern Header --}}
-    <div class="position-relative overflow-hidden rounded-4 shadow-lg mb-4" style="background: linear-gradient(135deg, #22c55e 0%, #10b981 100%);">
+    <div class="position-relative overflow-hidden rounded-4 shadow-lg mb-4" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);">
         <div class="position-absolute top-0 end-0 opacity-25">
             <i class="fas fa-tasks" style="font-size: 8rem; color: white; transform: rotate(15deg); margin: -2rem;"></i>
         </div>
@@ -24,13 +24,9 @@
                         <h1 class="fw-bold mb-0 text-white">Tugas Saya</h1>
                     </div>
                     <p class="text-white-50 mb-0 fs-6">
-                        🚀 Kelola dan pantau progress tugas harian Anda dengan mudah
+                        📋 Lihat dan update status tugas yang di-assign kepada Anda
                     </p>
                 </div>
-                <button class="btn btn-light rounded-pill px-4 py-3 shadow" data-bs-toggle="modal" data-bs-target="#addTaskModal" style="backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(255, 255, 255, 0.2);">
-                    <i class="fas fa-plus me-2 text-success"></i>
-                    <span class="fw-semibold text-dark">Buat Tugas</span>
-                </button>
             </div>
         </div>
     </div>
@@ -42,17 +38,17 @@
                 <div class="card border-0 shadow-sm h-100 rounded-4">
                     <div class="card-body p-4">
                         <div class="d-flex justify-content-between align-items-start mb-3">
-                            {{-- Badge Priority --}}
+                            {{-- Badge Status --}}
                             @php
-                                $priorityConfig = [
-                                    'low' => ['color' => 'success', 'emoji' => '🟢', 'bg' => 'rgba(25,135,84,0.1)'],
-                                    'medium' => ['color' => 'warning', 'emoji' => '🟡', 'bg' => 'rgba(255,193,7,0.1)'],
-                                    'high' => ['color' => 'danger', 'emoji' => '🔴', 'bg' => 'rgba(220,53,69,0.1)'],
+                                $statusConfig = [
+                                    'pending' => ['color' => 'warning', 'emoji' => '🕐', 'bg' => 'rgba(255,193,7,0.1)', 'text' => 'Pending'],
+                                    'in_progress' => ['color' => 'info', 'emoji' => '▶️', 'bg' => 'rgba(13,202,240,0.1)', 'text' => 'In Progress'],
+                                    'completed' => ['color' => 'success', 'emoji' => '✅', 'bg' => 'rgba(25,135,84,0.1)', 'text' => 'Completed'],
                                 ];
-                                $config = $priorityConfig[$task->priority] ?? $priorityConfig['low'];
+                                $statusConf = $statusConfig[$task->status] ?? $statusConfig['pending'];
                             @endphp
-                            <div class="rounded-3 p-2" style="background: {{ $config['bg'] }}">
-                                <span class="fs-5">{{ $config['emoji'] }}</span>
+                            <div class="rounded-3 p-2" style="background: {{ $statusConf['bg'] }}">
+                                <span class="fs-5">{{ $statusConf['emoji'] }}</span>
                             </div>
 
                             {{-- Dropdown Update Status --}}
@@ -61,16 +57,35 @@
                                     <i class="fas fa-ellipsis-h"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3">
+                                    <li><h6 class="dropdown-header">Update Status</h6></li>
                                     <li>
-                                        <form action="{{ route('operator.tasks.updateStatus', $task->id) }}" method="POST">
+                                        <form action="{{ route('operator.tasks.updateStatus', $task->id) }}" method="POST" style="display: inline;">
                                             @csrf
                                             @method('PUT')
-                                            <select name="status" onchange="this.form.submit()" class="dropdown-item">
-                                                <option value="todo" {{ $task->status === 'todo' ? 'selected' : '' }}>Todo</option>
-                                                <option value="doing" {{ $task->status === 'doing' ? 'selected' : '' }}>Doing</option>
-                                                <option value="done" {{ $task->status === 'done' ? 'selected' : '' }}>Done</option>
-                                                <option value="cancelled" {{ $task->status === 'cancelled' ? 'selected' : '' }}>Cancelled</option>
-                                            </select>
+                                            <input type="hidden" name="status" value="pending">
+                                            <button type="submit" class="dropdown-item {{ $task->status === 'pending' ? 'active' : '' }}">
+                                                <i class="fas fa-clock me-2 text-warning"></i>Pending
+                                            </button>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <form action="{{ route('operator.tasks.updateStatus', $task->id) }}" method="POST" style="display: inline;">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" name="status" value="in_progress">
+                                            <button type="submit" class="dropdown-item {{ $task->status === 'in_progress' ? 'active' : '' }}">
+                                                <i class="fas fa-play me-2 text-info"></i>In Progress
+                                            </button>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <form action="{{ route('operator.tasks.updateStatus', $task->id) }}" method="POST" style="display: inline;">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" name="status" value="completed">
+                                            <button type="submit" class="dropdown-item {{ $task->status === 'completed' ? 'active' : '' }}">
+                                                <i class="fas fa-check me-2 text-success"></i>Completed
+                                            </button>
                                         </form>
                                     </li>
                                 </ul>
@@ -81,11 +96,30 @@
                         <h5 class="fw-bold text-dark mb-2">{{ $task->title }}</h5>
                         <p class="text-muted mb-3 fs-6">{{ $task->description ?? 'Tidak ada deskripsi tambahan' }}</p>
 
-                        {{-- Priority badge + Deadline --}}
+                        {{-- Status badge + Priority badge + Deadline --}}
                         <div class="d-flex justify-content-between align-items-center">
-                            <span class="badge bg-{{ $config['color'] }} bg-opacity-10 text-{{ $config['color'] }} border border-{{ $config['color'] }} border-opacity-25 rounded-pill px-3 py-2">
-                                {{ ucfirst($task->priority) }}
-                            </span>
+                            <div class="d-flex gap-2">
+                                <span class="badge bg-{{ $statusConf['color'] }} bg-opacity-10 text-{{ $statusConf['color'] }} border border-{{ $statusConf['color'] }} border-opacity-25 rounded-pill px-3 py-2">
+                                    {{ $statusConf['text'] }}
+                                </span>
+                                @php
+                                    $priorityConfig = [
+                                        'low' => ['color' => '', 'text' => 'Low', 'style' => 'background: rgba(108,117,125,0.1); color: #6c757d; border: 1px solid rgba(108,117,125,0.25);'],
+                                        'medium' => ['color' => '', 'text' => 'Medium', 'style' => 'background: rgba(255,69,0,0.15); color: #ff4500; border: 1px solid rgba(255,69,0,0.4);'],
+                                        'high' => ['color' => '', 'text' => 'High', 'style' => 'background: rgba(255,0,0,0.15); color: #dc143c; border: 1px solid rgba(255,0,0,0.4);'],
+                                    ];
+                                    $priorityConf = $priorityConfig[$task->priority] ?? $priorityConfig['low'];
+                                @endphp
+                                @if($priorityConf['style'])
+                                    <span class="badge rounded-pill px-3 py-2" style="{{ $priorityConf['style'] }}">
+                                        {{ $priorityConf['text'] }}
+                                    </span>
+                                @else
+                                    <span class="badge bg-{{ $priorityConf['color'] }} bg-opacity-10 text-{{ $priorityConf['color'] }} border border-{{ $priorityConf['color'] }} border-opacity-25 rounded-pill px-3 py-2">
+                                        {{ $priorityConf['text'] }}
+                                    </span>
+                                @endif
+                            </div>
                             @if($task->due_date)
                                 <small class="text-muted d-flex align-items-center"><i class="fas fa-calendar-alt me-1"></i>{{ $task->due_date->format('d/m/Y H:i') }}</small>
                             @endif
@@ -96,19 +130,13 @@
         @empty
             {{-- Empty State --}}
             <div class="col-12 text-center py-5">
-                <i class="fas fa-clipboard-list fa-3x text-primary mb-3"></i>
+                <i class="fas fa-clipboard-list fa-3x text-muted mb-3"></i>
                 <h4 class="fw-bold text-dark mb-2">Belum ada tugas</h4>
-                <p class="text-muted mb-4 fs-6">Mulai produktivitas Anda dengan membuat tugas pertama</p>
-                <button class="btn btn-outline-primary rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#addTaskModal">
-                    <i class="fas fa-plus me-2"></i>Tambah Tugas Pertama
-                </button>
+                <p class="text-muted mb-0 fs-6">Tidak ada tugas yang di-assign kepada Anda saat ini</p>
             </div>
         @endforelse
     </div>
 
 </div>
-
-{{-- Modal Tambah Tugas (tetap dipisah agar rapi) --}}
-@include('components.add-task-modal')
 
 @endsection
