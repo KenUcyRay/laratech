@@ -41,11 +41,22 @@
                     <small class="text-muted">Atur waktu kerja</small>
                 </div>
             </a>
+
+             <a class="nav-link d-flex align-items-center p-3 rounded-3 text-decoration-none {{ request()->routeIs('operator.equipment*') ? 'active-modern' : 'nav-modern' }}" 
+               href="{{ route('operator.equipment.index') }}" style="transition: all 0.3s ease;">
+                <div class="icon-container me-3">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <div>
+                    <div class="fw-semibold">Equipment</div>
+                    <small class="text-muted">Lihat list & detail equipment</small>
+                </div>
+            </a>
             
             <a class="nav-link d-flex align-items-center p-3 rounded-3 text-decoration-none {{ request()->routeIs('operator.reports*') ? 'active-modern' : 'nav-modern' }}" 
                href="{{ route('operator.reports.index') }}" style="transition: all 0.3s ease;">
                 <div class="icon-container me-3">
-                    <i class="fas fa-file-chart-line"></i>
+                    <i class="fas fa-exclamation-triangle"></i>
                 </div>
                 <div>
                     <div class="fw-semibold">Laporan Harian</div>
