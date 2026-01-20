@@ -26,7 +26,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::patch('mekaniks/{id}/restore', [App\Http\Controllers\Admin\MekanikController::class, 'restore'])->name('mekaniks.restore');
     Route::get('/reports', [App\Http\Controllers\Admin\ReportController::class, 'index'])->name('reports.index');
     Route::get('/reports/{id}', [App\Http\Controllers\Admin\ReportController::class, 'show'])->name('reports.show');
-    Route::get('/settings', function() { return view('admin.settings.index'); })->name('settings.index');
+    Route::get('settings', [App\Http\Controllers\Admin\SettingController::class, 'index'])->name('settings.index');
+    Route::put('settings', [App\Http\Controllers\Admin\SettingController::class, 'update'])->name('settings.update');
+    Route::post('settings/toggle-maintenance', [App\Http\Controllers\Admin\SettingController::class, 'toggleMaintenance'])->name('settings.toggle-maintenance');
+    Route::post('settings/backup', [App\Http\Controllers\Admin\SettingController::class, 'backup'])->name('settings.backup');
+    Route::post('settings/clear-cache', [App\Http\Controllers\Admin\SettingController::class, 'clearCache'])->name('settings.clear-cache');
 });
 
 // Operator Routes
