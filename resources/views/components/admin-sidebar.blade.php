@@ -14,78 +14,130 @@
     <div class="p-3">
         <ul class="nav flex-column gap-2">
             <li class="nav-item">
-                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" 
-                   href="{{ route('admin.dashboard') }}"
-                   style="transition: all 0.3s ease; {{ request()->routeIs('admin.dashboard') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
-                   onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
-                   onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
-                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3" 
-                         style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
+                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
+                    href="{{ route('admin.dashboard') }}"
+                    style="transition: all 0.3s ease; {{ request()->routeIs('admin.dashboard') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
+                    onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
+                    onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
+                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3"
+                        style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
                         <i class="fas fa-tachometer-alt"></i>
                     </div>
                     <span class="fw-medium">Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('admin.users*') ? 'active' : '' }}" 
-                   href="{{ route('admin.users.index') }}"
-                   style="transition: all 0.3s ease; {{ request()->routeIs('admin.users*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
-                   onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
-                   onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
-                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3" 
-                         style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
+                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('admin.users*') ? 'active' : '' }}"
+                    href="{{ route('admin.users.index') }}"
+                    style="transition: all 0.3s ease; {{ request()->routeIs('admin.users*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
+                    onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
+                    onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
+                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3"
+                        style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
                         <i class="fas fa-users"></i>
                     </div>
                     <span class="fw-medium">Manajemen User</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('admin.operators*') ? 'active' : '' }}" 
-                   href="{{ route('admin.operators.index') }}"
-                   style="transition: all 0.3s ease; {{ request()->routeIs('admin.operators*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
-                   onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
-                   onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
-                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3" 
-                         style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
+                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('admin.operators*') ? 'active' : '' }}"
+                    href="{{ route('admin.operators.index') }}"
+                    style="transition: all 0.3s ease; {{ request()->routeIs('admin.operators*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
+                    onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
+                    onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
+                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3"
+                        style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
                         <i class="fas fa-desktop"></i>
                     </div>
                     <span class="fw-medium">Data Operator</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('admin.mekaniks*') ? 'active' : '' }}" 
-                   href="{{ route('admin.mekaniks.index') }}"
-                   style="transition: all 0.3s ease; {{ request()->routeIs('admin.mekaniks*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
-                   onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
-                   onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
-                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3" 
-                         style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
+                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('admin.mekaniks*') ? 'active' : '' }}"
+                    href="{{ route('admin.mekaniks.index') }}"
+                    style="transition: all 0.3s ease; {{ request()->routeIs('admin.mekaniks*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
+                    onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
+                    onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
+                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3"
+                        style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
                         <i class="fas fa-wrench"></i>
                     </div>
                     <span class="fw-medium">Data Mekanik</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('admin.reports*') ? 'active' : '' }}" 
-                   href="{{ route('admin.reports.index') }}"
-                   style="transition: all 0.3s ease; {{ request()->routeIs('admin.reports*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
-                   onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
-                   onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
-                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3" 
-                         style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
+                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('admin.equipment-types*') ? 'active' : '' }}"
+                    href="{{ route('admin.equipment-types.index') }}"
+                    style="transition: all 0.3s ease; {{ request()->routeIs('admin.equipment-types*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
+                    onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
+                    onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
+                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3"
+                        style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <span class="fw-medium">Tipe Equipment</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('admin.equipment.*') ? 'active' : '' }}"
+                    href="{{ route('admin.equipment.index') }}"
+                    style="transition: all 0.3s ease; {{ request()->routeIs('admin.equipment.*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
+                    onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
+                    onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
+                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3"
+                        style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <span class="fw-medium">Equipment</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('admin.tasks*') ? 'active' : '' }}"
+                    href="{{ route('admin.tasks.index') }}"
+                    style="transition: all 0.3s ease; {{ request()->routeIs('admin.tasks*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
+                    onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
+                    onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
+                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3"
+                        style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <span class="fw-medium">Work Orders</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('admin.maintenance*') ? 'active' : '' }}"
+                    href="{{ route('admin.maintenance.index') }}"
+                    style="transition: all 0.3s ease; {{ request()->routeIs('admin.maintenance*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
+                    onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
+                    onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
+                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3"
+                        style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <span class="fw-medium">Jadwal Maintenance</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('admin.reports*') ? 'active' : '' }}"
+                    href="{{ route('admin.reports.index') }}"
+                    style="transition: all 0.3s ease; {{ request()->routeIs('admin.reports*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
+                    onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
+                    onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
+                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3"
+                        style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
                         <i class="fas fa-chart-bar"></i>
                     </div>
                     <span class="fw-medium">Laporan</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('admin.settings*') ? 'active' : '' }}" 
-                   href="{{ route('admin.settings.index') }}"
-                   style="transition: all 0.3s ease; {{ request()->routeIs('admin.settings*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
-                   onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
-                   onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
-                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3" 
-                         style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
+                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('admin.settings*') ? 'active' : '' }}"
+                    href="{{ route('admin.settings.index') }}"
+                    style="transition: all 0.3s ease; {{ request()->routeIs('admin.settings*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
+                    onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
+                    onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
+                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3"
+                        style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
                         <i class="fas fa-cog"></i>
                     </div>
                     <span class="fw-medium">Pengaturan</span>
