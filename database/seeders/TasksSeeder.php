@@ -44,7 +44,7 @@ class TasksSeeder extends Seeder
                 $task = [
                     'equipment_id' => $equipment->id,
                     'assigned_to' => $allWorkers->random()->id,
-                    'title' => $taskTitles[array_rand($taskTitles)] . ' - ' . $equipment->name,
+                    'title' => $taskTitles[array_rand($taskTitles)],
                     'status' => $status,
                     'priority' => $priorities[array_rand($priorities)],
                     'due_date' => now()->addDays(rand(-5, 10)),

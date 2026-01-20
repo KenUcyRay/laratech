@@ -21,6 +21,11 @@ class ReportController extends Controller
             $query->where('severity', $request->severity);
         }
 
+        // Filter status
+        if ($request->has('status')) {
+            $query->where('status', $request->status);
+        }
+
         $reports = $query->get();
 
         return view('mekanik.reports.index', compact('reports'));
@@ -32,12 +37,12 @@ class ReportController extends Controller
 
         $validated = $request->validate([
             'status' => 'nullable|in:pending,processing,resolved',
-            'assign_to_task' => 'nullable|boolean',
-            'task_title' => 'nullable|required_if:assign_to_task,true|string'
+            'action' => 'nullable|string', // Support 'assign_task' from JS
+            'task_title' => 'nullable|string'
         ]);
 
-        // Assign to task
-        if ($request->boolean('assign_to_task')) {
+        // Assign to task checks
+        if ($request->boolean('assign_to_task') || $request->input('action') === 'assign_task') {
             // Create a new task linked
             $task = Task::create([
                 'equipment_id' => $report->equipment_id,

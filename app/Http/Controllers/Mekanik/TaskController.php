@@ -11,13 +11,30 @@ class TaskController extends Controller
 {
     public function index(): View
     {
-        $tasks = Task::whereIn('status', ['todo', 'doing'])
-            ->with(['equipment', 'equipment.type'])
+        $query = Task::with(['equipment', 'equipment.type'])
             ->orderBy('priority', 'desc')
-            ->orderBy('due_date', 'asc')
-            ->get();
+            ->orderBy('due_date', 'asc');
 
-        return view('mekanik.tasks.index', compact('tasks'));
+        $pageTitle = 'Work Orders';
+        $allowStart = false;
+        $allowComplete = false;
+
+        if (request()->routeIs('mekanik.work-orders*')) {
+            $query->where('status', 'todo');
+            $pageTitle = 'Work Orders (Pending)';
+            $allowStart = true;
+        } elseif (request()->routeIs('mekanik.repairs*')) {
+            $query->whereIn('status', ['doing']);
+            $pageTitle = 'Perbaikan (In Progress)';
+            $allowComplete = true;
+        } else {
+            // Fallback or show all active
+            $query->whereIn('status', ['todo', 'doing']);
+        }
+
+        $tasks = $query->get();
+
+        return view('mekanik.tasks.index', compact('tasks', 'pageTitle', 'allowStart', 'allowComplete'));
     }
 
     public function update(Request $request, $id)

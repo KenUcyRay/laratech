@@ -21,11 +21,19 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     
     Route::resource('operators', App\Http\Controllers\Admin\OperatorController::class);
     Route::patch('operators/{id}/restore', [App\Http\Controllers\Admin\OperatorController::class, 'restore'])->name('operators.restore');
-    
+
     Route::resource('mekaniks', App\Http\Controllers\Admin\MekanikController::class);
     Route::patch('mekaniks/{id}/restore', [App\Http\Controllers\Admin\MekanikController::class, 'restore'])->name('mekaniks.restore');
-    Route::get('/reports', [App\Http\Controllers\Admin\ReportController::class, 'index'])->name('reports.index');
-    Route::get('/reports/{id}', [App\Http\Controllers\Admin\ReportController::class, 'show'])->name('reports.show');
+
+    // Master Data & Operations
+    Route::resource('equipment-types', App\Http\Controllers\Admin\EquipmentTypeController::class);
+    Route::resource('equipment', App\Http\Controllers\Admin\EquipmentController::class);
+    Route::resource('tasks', App\Http\Controllers\Admin\TaskController::class);
+    Route::resource('maintenance', App\Http\Controllers\Admin\MaintenanceController::class);
+
+    // Reports
+    Route::resource('reports', App\Http\Controllers\Admin\ReportController::class)->only(['index', 'show', 'update', 'destroy']);
+
     Route::get('settings', [App\Http\Controllers\Admin\SettingController::class, 'index'])->name('settings.index');
     Route::put('settings', [App\Http\Controllers\Admin\SettingController::class, 'update'])->name('settings.update');
     Route::post('settings/toggle-maintenance', [App\Http\Controllers\Admin\SettingController::class, 'toggleMaintenance'])->name('settings.toggle-maintenance');

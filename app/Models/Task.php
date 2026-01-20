@@ -34,6 +34,11 @@ class Task extends Model
         return $this->belongsTo(User::class, 'assigned_to');
     }
 
+    public function report(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Report::class);
+    }
+
     protected function casts(): array
     {
         return [
