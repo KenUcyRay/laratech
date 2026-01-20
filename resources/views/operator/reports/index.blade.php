@@ -10,7 +10,7 @@
 <div class="container-fluid mt-4">
 
     {{-- Ultra Modern Header --}}
-    <div class="position-relative overflow-hidden rounded-4 shadow-lg mb-4" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);">
+    <div class="position-relative overflow-hidden rounded-4 shadow-lg mb-4" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%);">
         <div class="position-absolute top-0 end-0 opacity-25">
             <i class="fas fa-exclamation-triangle" style="font-size: 8rem; color: white; transform: rotate(15deg); margin: -2rem;"></i>
         </div>
@@ -18,9 +18,6 @@
             <div class="d-flex justify-content-between align-items-center">
                 <div>
                     <div class="d-flex align-items-center mb-2">
-                        <div class="bg-white bg-opacity-20 rounded-circle p-2 me-3">
-                            <i class="fas fa-bug text-white fs-4"></i>
-                        </div>
                         <h1 class="fw-bold mb-0 text-white">Laporan Kerusakan</h1>
                     </div>
                     <p class="text-white-50 mb-0 fs-6">
@@ -28,7 +25,7 @@
                     </p>
                 </div>
                 <button class="btn btn-light rounded-pill px-4 py-3 shadow" data-bs-toggle="modal" data-bs-target="#reportModal" style="backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(255, 255, 255, 0.2);">
-                    <i class="fas fa-plus me-2 text-primary"></i>
+                    <i class="fas fa-plus me-2" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>
                     <span class="fw-semibold text-dark">Buat Laporan</span>
                 </button>
             </div>
@@ -63,9 +60,9 @@
             <div class="modal-header border-0 pb-0">
                 <div class="text-center w-100">
                     <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                        <i class="fas fa-exclamation-triangle fs-3 text-primary"></i>
+                        <i class="fas fa-exclamation-triangle fs-3" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>
                     </div>
-                    <h3 class="fw-bold text-dark mb-2" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">🚨 Laporan Kerusakan</h3>
+                    <h3 class="fw-bold text-dark mb-2" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">🚨 Laporan Kerusakan</h3>
                     <p class="text-muted mb-0 fs-6">Laporkan kerusakan equipment dengan detail lengkap</p>
                 </div>
                 <button type="button" class="btn-close position-absolute" data-bs-dismiss="modal" style="top: 15px; right: 15px;"></button>
@@ -75,7 +72,7 @@
                     <div class="mb-4">
                         <div class="form-floating">
                             <textarea class="form-control border-0 shadow-sm" id="description" placeholder="Jelaskan kerusakan yang ditemukan..." required style="background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; height: 120px; resize: none;"></textarea>
-                            <label for="description" class="text-muted"><i class="fas fa-align-left me-2 text-primary"></i>Deskripsi Kerusakan</label>
+                            <label for="description" class="text-muted"><i class="fas fa-align-left me-2" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>Deskripsi Kerusakan</label>
                         </div>
                     </div>
                     
@@ -87,12 +84,12 @@
                                 <option value="medium">🟡 Medium - Perlu perhatian</option>
                                 <option value="high">🔴 High - Mengganggu operasi</option>
                             </select>
-                            <label for="severity" class="text-muted"><i class="fas fa-exclamation-circle me-2 text-primary"></i>Tingkat Keparahan</label>
+                            <label for="severity" class="text-muted"><i class="fas fa-exclamation-circle me-2" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>Tingkat Keparahan</label>
                         </div>
                     </div>
 
                     <div class="mb-4">
-                        <label class="form-label text-muted fw-semibold"><i class="fas fa-camera me-2 text-primary"></i>Upload Foto Kerusakan</label>
+                        <label class="form-label text-muted fw-semibold"><i class="fas fa-camera me-2" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>Upload Foto Kerusakan</label>
                         <div class="border-2 border-dashed rounded-4 p-4 text-center" style="border-color: #dee2e6; background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%);">
                             <input type="file" class="form-control d-none" id="photo" accept="image/*" multiple>
                             <div id="uploadArea" onclick="document.getElementById('photo').click()" style="cursor: pointer;">
@@ -106,9 +103,9 @@
                         </div>
                     </div>
 
-                    <div class="p-3 rounded-3" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(29, 78, 216, 0.1) 100%); border: 1px dashed rgba(59, 130, 246, 0.3);">
+                    <div class="p-3 rounded-3" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%); border: 1px dashed rgba(16, 185, 129, 0.3);">
                         <div class="d-flex align-items-center">
-                            <i class="fas fa-info-circle text-primary me-3 fs-5"></i>
+                            <i class="fas fa-info-circle me-3 fs-5" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>
                             <div>
                                 <small class="fw-semibold text-dark d-block">📝 Tips Pelaporan</small>
                                 <small class="text-muted">Sertakan foto yang jelas dan deskripsi detail untuk mempercepat penanganan</small>
@@ -120,7 +117,7 @@
                     <button type="button" class="btn btn-light rounded-pill px-4 py-2 me-2" data-bs-dismiss="modal" style="background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%); border: none; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
                         <i class="fas fa-times me-2"></i>Batal
                     </button>
-                    <button type="submit" class="btn btn-primary rounded-pill px-4 py-2 shadow" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border: none; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);">
+                    <button type="submit" class="btn btn-primary rounded-pill px-4 py-2 shadow" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); border: none; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);">
                         <i class="fas fa-paper-plane me-2"></i>Kirim Laporan
                     </button>
                 </div>
@@ -213,7 +210,7 @@ document.getElementById('reportForm').addEventListener('submit', function(e) {
             <div class="card border-0 shadow-sm h-100 rounded-4" style="cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow=''" onclick="showReportDetail(${reportId})">
                 <div class="card-body p-4">
                     <div class="d-flex justify-content-between align-items-start mb-3">
-                        <div class="rounded-3 p-2" style="background: rgba(59,130,246,0.1);">
+                        <div class="rounded-3 p-2" style="background: rgba(16,185,129,0.1);">
                             <span class="fs-5">📋</span>
                         </div>
                         <span class="badge bg-${config.color} bg-opacity-10 text-${config.color} border border-${config.color} border-opacity-25 rounded-pill px-3 py-2">
@@ -265,8 +262,8 @@ function showReportDetail(reportId) {
                 <div class="modal-content border-0 shadow-lg rounded-4">
                     <div class="modal-header border-0 pb-0">
                         <div class="text-center w-100">
-                            <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                                <i class="fas fa-eye fs-3 text-primary"></i>
+                            <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%) !important;">
+                                <i class="fas fa-eye fs-3" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>
                             </div>
                             <h4 class="fw-bold text-dark mb-2">Detail Laporan #${reportId}</h4>
                         </div>

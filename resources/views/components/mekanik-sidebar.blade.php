@@ -41,9 +41,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('mekanik.reparations*') ? 'active' : '' }}"
+                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('mekanik.repairs*') ? 'active' : '' }}"
                     href="{{ route('mekanik.repairs.index') }}"
-                    style="transition: all 0.3s ease; {{ request()->routeIs('mekanik.reparations*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
+                    style="transition: all 0.3s ease; {{ request()->routeIs('mekanik.repairs*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
                     onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
                     onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
                     <div class="d-flex align-items-center justify-content-center rounded-2 me-3"
