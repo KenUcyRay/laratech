@@ -8,74 +8,6 @@
                 <small class="opacity-75">LaraTech System</small>
             </div>
         </div>
-        
-        <nav class="nav flex-column gap-2">
-            <a class="nav-link d-flex align-items-center p-3 rounded-3 text-decoration-none {{ request()->routeIs('operator.dashboard') ? 'active-modern' : 'nav-modern' }}" 
-               href="{{ route('operator.dashboard') }}" style="transition: all 0.3s ease;">
-                <div class="icon-container me-3">
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <div>
-                    <div class="fw-semibold">Dashboard</div>
-                    <small class="text-muted">Overview & statistik</small>
-                </div>
-            </a>
-            
-            <a class="nav-link d-flex align-items-center p-3 rounded-3 text-decoration-none {{ request()->routeIs('operator.tasks*') ? 'active-modern' : 'nav-modern' }}" 
-               href="{{ route('operator.tasks.index') }}" style="transition: all 0.3s ease;">
-                <div class="icon-container me-3">
-                    <i class="fas fa-tasks"></i>
-                </div>
-                <div>
-                    <div class="fw-semibold">Tugas Saya</div>
-                    <small class="text-muted">Kelola tugas harian</small>
-                </div>
-            </a>
-            
-            <a class="nav-link d-flex align-items-center p-3 rounded-3 text-decoration-none {{ request()->routeIs('operator.schedules*') ? 'active-modern' : 'nav-modern' }}" 
-               href="{{ route('operator.schedules.index') }}" style="transition: all 0.3s ease;">
-                <div class="icon-container me-3">
-                    <i class="fas fa-calendar-alt"></i>
-                </div>
-                <div>
-                    <div class="fw-semibold">Jadwal Kerja</div>
-                    <small class="text-muted">Atur waktu kerja</small>
-                </div>
-            </a>
-
-             <a class="nav-link d-flex align-items-center p-3 rounded-3 text-decoration-none {{ request()->routeIs('operator.equipment*') ? 'active-modern' : 'nav-modern' }}" 
-               href="{{ route('operator.equipment.index') }}" style="transition: all 0.3s ease;">
-                <div class="icon-container me-3">
-                    <i class="fas fa-cogs"></i>
-                </div>
-                <div>
-                    <div class="fw-semibold">Equipment</div>
-                    <small class="text-muted">Lihat list & detail equipment</small>
-                </div>
-            </a>
-            
-            <a class="nav-link d-flex align-items-center p-3 rounded-3 text-decoration-none {{ request()->routeIs('operator.reports*') ? 'active-modern' : 'nav-modern' }}" 
-               href="{{ route('operator.reports.index') }}" style="transition: all 0.3s ease;">
-                <div class="icon-container me-3">
-                    <i class="fas fa-exclamation-triangle"></i>
-                </div>
-                <div>
-                    <div class="fw-semibold">Laporan Harian</div>
-                    <small class="text-muted">Buat & lihat laporan</small>
-                </div>
-            </a>
-            
-            <a class="nav-link d-flex align-items-center p-3 rounded-3 text-decoration-none {{ request()->routeIs('operator.maintenance*') ? 'active-modern' : 'nav-modern' }}" 
-               href="{{ route('operator.maintenance.index') }}" style="transition: all 0.3s ease;">
-                <div class="icon-container me-3">
-                    <i class="fas fa-tools"></i>
-                </div>
-                <div>
-                    <div class="fw-semibold">Maintenance</div>
-                    <small class="text-muted">Perawatan sistem</small>
-                </div>
-            </a>
-        </nav>
     </div>
 
     <!-- Navigation Menu -->
@@ -118,6 +50,19 @@
                         <i class="fas fa-calendar"></i>
                     </div>
                     <span class="fw-medium">Jadwal Kerja</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('operator.equipment*') ? 'active' : '' }}" 
+                   href="{{ route('operator.equipment.index') }}"
+                   style="transition: all 0.3s ease; {{ request()->routeIs('operator.equipment*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
+                   onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
+                   onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
+                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3" 
+                         style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <span class="fw-medium">Equipment</span>
                 </a>
             </li>
             <li class="nav-item">
