@@ -17,7 +17,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('users', App\Http\Controllers\Admin\UserController::class);
-    Route::post('users/{id}/restore', [App\Http\Controllers\Admin\UserController::class, 'restore'])->name('users.restore');
+    Route::patch('users/{id}/restore', [App\Http\Controllers\Admin\UserController::class, 'restore'])->name('users.restore');
     Route::get('/operators', function() { return view('admin.operators.index'); })->name('operators.index');
     Route::get('/mekaniks', function() { return view('admin.mekaniks.index'); })->name('mekaniks.index');
     Route::get('/reports', [App\Http\Controllers\Admin\ReportController::class, 'index'])->name('reports.index');
