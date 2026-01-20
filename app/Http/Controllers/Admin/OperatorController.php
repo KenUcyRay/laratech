@@ -10,20 +10,17 @@ use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 
-class UserController extends Controller
+class OperatorController extends Controller
 {
-    /**
-     * Display users (active and deleted).
-     */
     public function index(): View
     {
-        $users = User::withTrashed()->latest()->get();
-        return view('admin.users.index', compact('users'));
+        $operators = User::where('role', 'operator')->withTrashed()->latest()->get();
+        return view('admin.operators.index', compact('operators'));
     }
 
     public function create(): View
     {
-        return view('admin.users.create');
+        return view('admin.operators.create');
     }
 
     public function store(Request $request): RedirectResponse
@@ -32,60 +29,62 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'role' => ['required', 'string', Rule::in(['admin', 'operator', 'mekanik'])],
         ]);
 
         User::create([
             'name' => $validated['name'],
             'username' => $validated['username'],
             'password' => Hash::make($validated['password']),
-            'role' => $validated['role'],
+            'role' => 'operator',
         ]);
 
-        return redirect()->route('admin.users.index')->with('success', 'User created successfully.');
+        return redirect()->route('admin.operators.index')->with('success', 'Operator created successfully.');
     }
 
-    public function edit(User $user): View
+    public function show(User $operator): View
     {
-        return view('admin.users.edit', compact('user'));
+        return view('admin.operators.show', compact('operator'));
     }
 
-    public function update(Request $request, User $user): RedirectResponse
+    public function edit(User $operator): View
+    {
+        return view('admin.operators.edit', compact('operator'));
+    }
+
+    public function update(Request $request, User $operator): RedirectResponse
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'username' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($operator->id)],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
-            'role' => ['required', 'string', Rule::in(['admin', 'operator', 'mekanik'])],
         ]);
 
         $data = [
             'name' => $validated['name'],
             'username' => $validated['username'],
-            'role' => $validated['role'],
         ];
 
         if ($request->filled('password')) {
             $data['password'] = Hash::make($validated['password']);
         }
 
-        $user->update($data);
+        $operator->update($data);
 
-        return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');
+        return redirect()->route('admin.operators.index')->with('success', 'Operator updated successfully.');
     }
 
-    public function destroy(User $user): RedirectResponse
+    public function destroy(User $operator): RedirectResponse
     {
-        $user->delete();
+        $operator->delete();
 
-        return redirect()->route('admin.users.index')->with('success', 'User deleted successfully.');
+        return redirect()->route('admin.operators.index')->with('success', 'Operator deleted successfully.');
     }
 
     public function restore(string $id): RedirectResponse
     {
-        $user = User::onlyTrashed()->findOrFail($id);
-        $user->restore();
+        $operator = User::onlyTrashed()->findOrFail($id);
+        $operator->restore();
 
-        return redirect()->route('admin.users.index')->with('success', 'User restored successfully.');
+        return redirect()->route('admin.operators.index')->with('success', 'Operator restored successfully.');
     }
 }

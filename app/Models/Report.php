@@ -18,6 +18,8 @@ class Report extends Model
         'user_id',
         'description',
         'severity',
+        'status',
+        'task_id',
     ];
 
     public function equipment(): BelongsTo
@@ -28,6 +30,11 @@ class Report extends Model
     public function reporter(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function task(): BelongsTo
+    {
+        return $this->belongsTo(Task::class);
     }
 
     public function images(): HasMany

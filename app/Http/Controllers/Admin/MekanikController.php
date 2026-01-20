@@ -10,20 +10,17 @@ use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 
-class UserController extends Controller
+class MekanikController extends Controller
 {
-    /**
-     * Display users (active and deleted).
-     */
     public function index(): View
     {
-        $users = User::withTrashed()->latest()->get();
-        return view('admin.users.index', compact('users'));
+        $mekaniks = User::where('role', 'mekanik')->withTrashed()->latest()->get();
+        return view('admin.mekaniks.index', compact('mekaniks'));
     }
 
     public function create(): View
     {
-        return view('admin.users.create');
+        return view('admin.mekaniks.create');
     }
 
     public function store(Request $request): RedirectResponse
@@ -32,60 +29,62 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'role' => ['required', 'string', Rule::in(['admin', 'operator', 'mekanik'])],
         ]);
 
         User::create([
             'name' => $validated['name'],
             'username' => $validated['username'],
             'password' => Hash::make($validated['password']),
-            'role' => $validated['role'],
+            'role' => 'mekanik',
         ]);
 
-        return redirect()->route('admin.users.index')->with('success', 'User created successfully.');
+        return redirect()->route('admin.mekaniks.index')->with('success', 'Mekanik created successfully.');
     }
 
-    public function edit(User $user): View
+    public function show(User $mekanik): View
     {
-        return view('admin.users.edit', compact('user'));
+        return view('admin.mekaniks.show', compact('mekanik'));
     }
 
-    public function update(Request $request, User $user): RedirectResponse
+    public function edit(User $mekanik): View
+    {
+        return view('admin.mekaniks.edit', compact('mekanik'));
+    }
+
+    public function update(Request $request, User $mekanik): RedirectResponse
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'username' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($mekanik->id)],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
-            'role' => ['required', 'string', Rule::in(['admin', 'operator', 'mekanik'])],
         ]);
 
         $data = [
             'name' => $validated['name'],
             'username' => $validated['username'],
-            'role' => $validated['role'],
         ];
 
         if ($request->filled('password')) {
             $data['password'] = Hash::make($validated['password']);
         }
 
-        $user->update($data);
+        $mekanik->update($data);
 
-        return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');
+        return redirect()->route('admin.mekaniks.index')->with('success', 'Mekanik updated successfully.');
     }
 
-    public function destroy(User $user): RedirectResponse
+    public function destroy(User $mekanik): RedirectResponse
     {
-        $user->delete();
+        $mekanik->delete();
 
-        return redirect()->route('admin.users.index')->with('success', 'User deleted successfully.');
+        return redirect()->route('admin.mekaniks.index')->with('success', 'Mekanik deleted successfully.');
     }
 
     public function restore(string $id): RedirectResponse
     {
-        $user = User::onlyTrashed()->findOrFail($id);
-        $user->restore();
+        $mekanik = User::onlyTrashed()->findOrFail($id);
+        $mekanik->restore();
 
-        return redirect()->route('admin.users.index')->with('success', 'User restored successfully.');
+        return redirect()->route('admin.mekaniks.index')->with('success', 'Mekanik restored successfully.');
     }
 }
