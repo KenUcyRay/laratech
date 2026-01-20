@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 // Auth Routes
@@ -17,11 +17,20 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('users', App\Http\Controllers\Admin\UserController::class);
-    Route::post('users/{id}/restore', [App\Http\Controllers\Admin\UserController::class, 'restore'])->name('users.restore');
-    Route::get('/operators', function() { return view('admin.operators.index'); })->name('operators.index');
-    Route::get('/mekaniks', function() { return view('admin.mekaniks.index'); })->name('mekaniks.index');
+    Route::patch('users/{id}/restore', [App\Http\Controllers\Admin\UserController::class, 'restore'])->name('users.restore');
+    
+    Route::resource('operators', App\Http\Controllers\Admin\OperatorController::class);
+    Route::patch('operators/{id}/restore', [App\Http\Controllers\Admin\OperatorController::class, 'restore'])->name('operators.restore');
+    
+    Route::resource('mekaniks', App\Http\Controllers\Admin\MekanikController::class);
+    Route::patch('mekaniks/{id}/restore', [App\Http\Controllers\Admin\MekanikController::class, 'restore'])->name('mekaniks.restore');
     Route::get('/reports', [App\Http\Controllers\Admin\ReportController::class, 'index'])->name('reports.index');
-    Route::get('/settings', function() { return view('admin.settings.index'); })->name('settings.index');
+    Route::get('/reports/{id}', [App\Http\Controllers\Admin\ReportController::class, 'show'])->name('reports.show');
+    Route::get('settings', [App\Http\Controllers\Admin\SettingController::class, 'index'])->name('settings.index');
+    Route::put('settings', [App\Http\Controllers\Admin\SettingController::class, 'update'])->name('settings.update');
+    Route::post('settings/toggle-maintenance', [App\Http\Controllers\Admin\SettingController::class, 'toggleMaintenance'])->name('settings.toggle-maintenance');
+    Route::post('settings/backup', [App\Http\Controllers\Admin\SettingController::class, 'backup'])->name('settings.backup');
+    Route::post('settings/clear-cache', [App\Http\Controllers\Admin\SettingController::class, 'clearCache'])->name('settings.clear-cache');
 });
 
 // Operator Routes

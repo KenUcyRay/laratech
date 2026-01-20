@@ -3,10 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Equipment;
-use App\Models\Task;
-use App\Models\Maintenance;
-use App\Models\Report;
 use App\Models\User;
 use Illuminate\View\View;
 
@@ -17,35 +13,87 @@ class DashboardController extends Controller
         $totalUsers = User::count();
         $activeOperators = User::where('role', 'operator')->count();
         $activeMekaniks = User::where('role', 'mekanik')->count();
-        $pendingTasks = Task::whereIn('status', ['todo', 'doing'])->count();
-
-        $totalEquipment = Equipment::count();
+        
+        // Default values for models that might not exist yet
+        $pendingTasks = 0;
+        $totalEquipment = 0;
         $equipmentStatus = [
-            'idle' => Equipment::where('status', 'idle')->count(),
-            'operasi' => Equipment::where('status', 'operasi')->count(),
-            'rusak' => Equipment::where('status', 'rusak')->count(),
-            'servis' => Equipment::where('status', 'servis')->count(),
+            'idle' => 0,
+            'operasi' => 0,
+            'rusak' => 0,
+            'servis' => 0,
         ];
-
         $taskSummary = [
-            'todo' => Task::where('status', 'todo')->count(),
-            'doing' => Task::where('status', 'doing')->count(),
-            'done' => Task::where('status', 'done')->count(),
-            'cancelled' => Task::where('status', 'cancelled')->count(),
-            'total' => Task::count(),
+            'todo' => 0,
+            'doing' => 0,
+            'done' => 0,
+            'cancelled' => 0,
+            'total' => 0,
         ];
-
-        // Maintenance due within 7 days
-        $maintenanceDue = Maintenance::where('next_service', '<=', now()->addDays(7))
-            ->with('equipment')
-            ->get();
-
+        $maintenanceDue = collect();
         $reportSeverity = [
-            'low' => Report::where('severity', 'low')->count(),
-            'medium' => Report::where('severity', 'medium')->count(),
-            'high' => Report::where('severity', 'high')->count(),
-            'total' => Report::count(),
+            'low' => 0,
+            'medium' => 0,
+            'high' => 0,
+            'total' => 0,
         ];
+
+        // Try to get data from models if they exist
+        try {
+            if (class_exists('App\Models\Task')) {
+                $taskModel = app('App\Models\Task');
+                $pendingTasks = $taskModel::whereIn('status', ['todo', 'doing'])->count();
+                $taskSummary = [
+                    'todo' => $taskModel::where('status', 'todo')->count(),
+                    'doing' => $taskModel::where('status', 'doing')->count(),
+                    'done' => $taskModel::where('status', 'done')->count(),
+                    'cancelled' => $taskModel::where('status', 'cancelled')->count(),
+                    'total' => $taskModel::count(),
+                ];
+            }
+        } catch (\Exception $e) {
+            // Model doesn't exist or table doesn't exist
+        }
+
+        try {
+            if (class_exists('App\Models\Equipment')) {
+                $equipmentModel = app('App\Models\Equipment');
+                $totalEquipment = $equipmentModel::count();
+                $equipmentStatus = [
+                    'idle' => $equipmentModel::where('status', 'idle')->count(),
+                    'operasi' => $equipmentModel::where('status', 'operasi')->count(),
+                    'rusak' => $equipmentModel::where('status', 'rusak')->count(),
+                    'servis' => $equipmentModel::where('status', 'servis')->count(),
+                ];
+            }
+        } catch (\Exception $e) {
+            // Model doesn't exist or table doesn't exist
+        }
+
+        try {
+            if (class_exists('App\Models\Maintenance')) {
+                $maintenanceModel = app('App\Models\Maintenance');
+                $maintenanceDue = $maintenanceModel::where('next_service', '<=', now()->addDays(7))
+                    ->with('equipment')
+                    ->get();
+            }
+        } catch (\Exception $e) {
+            // Model doesn't exist or table doesn't exist
+        }
+
+        try {
+            if (class_exists('App\Models\Report')) {
+                $reportModel = app('App\Models\Report');
+                $reportSeverity = [
+                    'low' => $reportModel::where('severity', 'low')->count(),
+                    'medium' => $reportModel::where('severity', 'medium')->count(),
+                    'high' => $reportModel::where('severity', 'high')->count(),
+                    'total' => $reportModel::count(),
+                ];
+            }
+        } catch (\Exception $e) {
+            // Model doesn't exist or table doesn't exist
+        }
 
         return view('admin.dashboard', compact(
             'totalUsers',
