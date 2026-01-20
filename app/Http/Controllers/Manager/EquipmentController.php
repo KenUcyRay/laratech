@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Manager;
 
 use App\Http\Controllers\Controller;
 use App\Models\Equipment;
@@ -17,7 +17,7 @@ class EquipmentController extends Controller
         // Load types for the Create/Edit modal/form
         $types = EquipmentType::all();
 
-        return view('admin.equipment.index', compact('equipments', 'types'));
+        return view('manager.equipment.index', compact('equipments', 'types'));
     }
 
     public function store(Request $request)

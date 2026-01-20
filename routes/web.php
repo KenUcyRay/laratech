@@ -19,6 +19,11 @@ Route::prefix('manager')->name('manager.')->middleware(['auth', 'manager'])->gro
     Route::resource('tasks', App\Http\Controllers\Manager\TaskController::class);
     Route::get('/team', [App\Http\Controllers\Manager\TeamController::class, 'index'])->name('team.index');
     Route::resource('reports', App\Http\Controllers\Manager\ReportController::class)->only(['index', 'show']);
+
+    // Equipment & Maintenance
+    Route::resource('equipment-types', App\Http\Controllers\Manager\EquipmentTypeController::class);
+    Route::resource('equipment', App\Http\Controllers\Manager\EquipmentController::class);
+    Route::resource('maintenance', App\Http\Controllers\Manager\MaintenanceController::class);
 });
 
 // Admin Routes
@@ -27,7 +32,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
     Route::resource('users', App\Http\Controllers\Admin\UserController::class);
     Route::patch('users/{id}/restore', [App\Http\Controllers\Admin\UserController::class, 'restore'])->name('users.restore');
-    
+
     Route::resource('operators', App\Http\Controllers\Admin\OperatorController::class);
     Route::patch('operators/{id}/restore', [App\Http\Controllers\Admin\OperatorController::class, 'restore'])->name('operators.restore');
 
@@ -35,9 +40,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::patch('mekaniks/{id}/restore', [App\Http\Controllers\Admin\MekanikController::class, 'restore'])->name('mekaniks.restore');
 
     // Master Data & Operations
-    Route::resource('equipment-types', App\Http\Controllers\Admin\EquipmentTypeController::class);
-    Route::resource('equipment', App\Http\Controllers\Admin\EquipmentController::class);
-    Route::resource('maintenance', App\Http\Controllers\Admin\MaintenanceController::class);
+
 
     // Reports
     Route::resource('reports', App\Http\Controllers\Admin\ReportController::class)->only(['index', 'show', 'update', 'destroy']);
