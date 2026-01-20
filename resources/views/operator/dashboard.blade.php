@@ -10,7 +10,7 @@
 <div class="container-fluid mt-4">
 
  <div class="mb-5">
-    <div class="bg-dark rounded p-4 mb-4 shadow text-center" style="background: linear-gradient(135deg, #22c55e 0%, #10b981 100%);">
+    <div class="bg-dark rounded p-4 mb-4 shadow text-center" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);">
         <div class="d-flex align-items-center justify-content-center">
             <div class="bg-white bg-opacity-25 rounded-circle p-3 me-3">
                 <i class="fas fa-chart-line fs-4 text-white"></i>

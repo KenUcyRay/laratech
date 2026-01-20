@@ -23,6 +23,28 @@ class TaskController extends Controller
         return view('operator.tasks.index', compact('tasks'));
     }
 
+    public function store(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'priority' => ['required', 'string', 'in:low,medium,high'],
+            'due_date' => ['nullable', 'date'],
+        ]);
+
+        Task::create([
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+            'priority' => $validated['priority'],
+            'due_date' => $validated['due_date'],
+            'assigned_to' => Auth::id(),
+            'status' => 'todo',
+            'equipment_id' => null, // Set null untuk task umum
+        ]);
+
+        return redirect()->route('operator.tasks.index')->with('success', 'Task berhasil dibuat.');
+    }
+
     public function updateStatus(Request $request, string $id): RedirectResponse
     {
         $user = Auth::user();
@@ -30,22 +52,18 @@ class TaskController extends Controller
         $task = Task::where('assigned_to', $user->id)->findOrFail($id);
 
         $validated = $request->validate([
-            'status' => ['required', 'string', 'in:todo,doing,done,cancelled'],
+            'status' => ['required', 'string', 'in:pending,in_progress,completed'],
         ]);
 
         $data = ['status' => $validated['status']];
 
         // Auto-set timestamps
-        if ($validated['status'] === 'doing' && is_null($task->started_at)) {
+        if ($validated['status'] === 'in_progress' && is_null($task->started_at)) {
             $data['started_at'] = now();
         }
 
-        if ($validated['status'] === 'done' && is_null($task->completed_at)) {
+        if ($validated['status'] === 'completed' && is_null($task->completed_at)) {
             $data['completed_at'] = now();
-        }
-
-        if ($validated['status'] === 'cancelled' && is_null($task->cancelled_at)) {
-            $data['cancelled_at'] = now();
         }
 
         $task->update($data);
