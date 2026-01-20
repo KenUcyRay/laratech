@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Create User')
+@section('title', 'Create Mekanik')
 
 @section('sidebar')
     @include('components.admin-sidebar')
@@ -8,10 +8,10 @@
 
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Create New User</h1>
+    <h1 class="h2">Create New Mekanik</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
-        <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Back to Users
+        <a href="{{ route('admin.mekaniks.index') }}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to Mekaniks
         </a>
     </div>
 </div>
@@ -30,7 +30,7 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('admin.users.store') }}" method="POST">
+                <form action="{{ route('admin.mekaniks.store') }}" method="POST">
                     @csrf
                     
                     <div class="mb-3">
@@ -52,19 +52,6 @@
                     </div>
                     
                     <div class="mb-3">
-                        <label for="role" class="form-label">Role</label>
-                        <select class="form-select @error('role') is-invalid @enderror" id="role" name="role" required>
-                            <option value="">Select Role</option>
-                            <option value="admin" {{ old('role') === 'admin' ? 'selected' : '' }}>Admin</option>
-                            <option value="operator" {{ old('role') === 'operator' ? 'selected' : '' }}>Operator</option>
-                            <option value="mekanik" {{ old('role') === 'mekanik' ? 'selected' : '' }}>Mekanik</option>
-                        </select>
-                        @error('role')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    
-                    <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
                         <input type="password" class="form-control @error('password') is-invalid @enderror" 
                                id="password" name="password" required>
@@ -80,8 +67,8 @@
                     </div>
                     
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <a href="{{ route('admin.users.index') }}" class="btn btn-secondary me-md-2">Cancel</a>
-                        <button type="submit" class="btn btn-primary">Create User</button>
+                        <a href="{{ route('admin.mekaniks.index') }}" class="btn btn-secondary me-md-2">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Create Mekanik</button>
                     </div>
                 </form>
             </div>
