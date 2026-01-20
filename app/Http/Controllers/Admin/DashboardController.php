@@ -52,7 +52,7 @@ class DashboardController extends Controller
                 ];
             }
         } catch (\Exception $e) {
-            // Model doesn't exist or table doesn't exist
+            // Model doesn't exist or table doesn't exist - Admin can still see task overview
         }
 
         try {
