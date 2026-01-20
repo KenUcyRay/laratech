@@ -147,7 +147,7 @@
                         <div class="form-floating">
                             <textarea class="form-control border-0 shadow-sm" id="scheduleDescription" placeholder="Deskripsi jadwal..." style="background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; height: 120px; resize: none;"></textarea>
                             <label for="scheduleDescription" class="text-muted"><i class="fas fa-align-left me-2" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>Deskripsi</label>
-                        </div>
+                            </div>
                     </div>
                 </div>
                 <div class="modal-footer border-0 pt-2">
