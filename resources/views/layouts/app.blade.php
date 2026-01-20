@@ -16,15 +16,23 @@
 </head>
 <body>
     <div id="app">
-        @include('components.navbar')
+        @if(request()->is('operator/*'))
+            <div class="sticky-top">
+                @include('components.operator-navbar')
+            </div>
+        @else
+            <div class="sticky-top">
+                @include('components.navbar')
+            </div>
+        @endif
         
         <div class="container-fluid p-0">
             <div class="row g-0">
                 @hasSection('sidebar')
-                    <nav class="col-md-3 col-lg-2 d-md-block p-0 sidebar">
+                    <nav class="col-md-3 col-lg-2 d-md-block p-0 sidebar position-fixed" style="top: 0; height: 100vh; z-index: 1000;">
                         @yield('sidebar')
                     </nav>
-                    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" style="margin-left: 16.666667%;">
                         @yield('content')
                     </main>
                 @else
