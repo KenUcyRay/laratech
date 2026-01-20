@@ -57,10 +57,11 @@ class MaintenanceController extends Controller
         $validated = $request->validate([
             'equipment_id' => 'required|exists:equipments,id',
             'user_id' => 'required|exists:users,id',
-            'last_service' => 'nullable|date',
-            'last_service_hm' => 'nullable|integer|min:0',
-            'next_service_hm' => 'required|integer|min:0',
+            'last_service_date' => 'nullable|date',
         ]);
+
+        $lastService = $validated['last_service_date'] ? \Carbon\Carbon::parse($validated['last_service_date']) : now();
+        $validated['next_service_due'] = $lastService->copy()->addHours(1500);
 
         $maintenance->update($validated);
 
