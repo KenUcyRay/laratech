@@ -14,6 +14,7 @@ class TasksSeeder extends Seeder
         $equipments = Equipment::all();
         $operators = User::where('role', 'operator')->get();
         $mekaniks = User::where('role', 'mekanik')->get();
+        $managers = User::where('role', 'manager')->get();
 
         if ($equipments->isEmpty() || ($operators->isEmpty() && $mekaniks->isEmpty())) {
             return;

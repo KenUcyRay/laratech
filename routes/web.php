@@ -12,6 +12,15 @@ Route::controller(App\Http\Controllers\AuthController::class)->group(function ()
     Route::post('/login', 'login');
 });
 
+// Manager Routes
+Route::prefix('manager')->name('manager.')->middleware(['auth', 'manager'])->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\Manager\DashboardController::class, 'index'])->name('dashboard');
+    
+    Route::resource('tasks', App\Http\Controllers\Manager\TaskController::class);
+    Route::get('/team', [App\Http\Controllers\Manager\TeamController::class, 'index'])->name('team.index');
+    Route::resource('reports', App\Http\Controllers\Manager\ReportController::class)->only(['index', 'show']);
+});
+
 // Admin Routes
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
@@ -28,7 +37,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     // Master Data & Operations
     Route::resource('equipment-types', App\Http\Controllers\Admin\EquipmentTypeController::class);
     Route::resource('equipment', App\Http\Controllers\Admin\EquipmentController::class);
-    Route::resource('tasks', App\Http\Controllers\Admin\TaskController::class);
     Route::resource('maintenance', App\Http\Controllers\Admin\MaintenanceController::class);
 
     // Reports
