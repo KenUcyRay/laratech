@@ -61,6 +61,10 @@ class DashboardController extends Controller
             ->pluck('equipment')
             ->unique('id');
 
+        $maintenanceCount = \App\Models\Maintenance::where('user_id', $user->id)
+            ->where('next_service_due', '>=', now())
+            ->count();
+
         return view('operator.dashboard', compact(
             'myTasks',
             'todayTasks',
@@ -68,7 +72,8 @@ class DashboardController extends Controller
             'pendingTasks',
             'workingHours',
             'taskCounts',
-            'Equipment'
+            'Equipment',
+            'maintenanceCount'
         ));
     }
 }
