@@ -3,16 +3,18 @@
 @section('title', 'Jadwal Kerja')
 
 @section('sidebar')
-    @include('components.operator-sidebar')
+    @include('components.mekanik-sidebar')
 @endsection
 
 @section('content')
 <div class="container-fluid mt-4">
 
     {{-- Ultra Modern Header --}}
-    <div class="position-relative overflow-hidden rounded-4 shadow-lg mb-4" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%);">
+    <div class="position-relative overflow-hidden rounded-4 shadow-lg mb-4"
+        style="background: linear-gradient(135deg, #f6c23e 0%, #f4b619 100%);">
         <div class="position-absolute top-0 end-0 opacity-25">
-            <i class="fas fa-calendar-alt" style="font-size: 8rem; color: white; transform: rotate(15deg); margin: -2rem;"></i>
+            <i class="fas fa-calendar-alt"
+                style="font-size: 8rem; color: white; transform: rotate(15deg); margin: -2rem;"></i>
         </div>
         <div class="p-5 position-relative">
             <div class="d-flex justify-content-between align-items-center">
@@ -44,15 +46,17 @@
                 </div>
                 <div class="card-body p-4">
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                        <button class="btn btn-light rounded-circle" style="width: 40px; height: 40px;" onclick="changeMonth(-1)">
+                        <button class="btn btn-light rounded-circle" style="width: 40px; height: 40px;"
+                            onclick="changeMonth(-1)">
                             <i class="fas fa-chevron-left"></i>
                         </button>
                         <h4 class="fw-bold mb-0" id="calendar-title">Januari 2026</h4>
-                        <button class="btn btn-light rounded-circle" style="width: 40px; height: 40px;" onclick="changeMonth(1)">
+                        <button class="btn btn-light rounded-circle" style="width: 40px; height: 40px;"
+                            onclick="changeMonth(1)">
                             <i class="fas fa-chevron-right"></i>
                         </button>
                     </div>
-                    
+
                     {{-- Calendar Grid --}}
                     <div class="table-responsive">
                         <table class="table table-borderless">
@@ -92,88 +96,88 @@
 </div>
 
 <script>
-        /* =========================
-        CONSTANTS
-        ========================= */
-        const monthNames = [
-            "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-            "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-        ];
+    /* =========================
+    CONSTANTS
+    ========================= */
+    const monthNames = [
+        "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+        "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+    ];
 
-        const dayNames = [
-            "Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"
-        ];
+    const dayNames = [
+        "Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"
+    ];
 
-        /* =========================
-        STATE
-        ========================= */
-        let currentMonth = new Date().getMonth();
-        let currentYear = new Date().getFullYear();
-        let selectedDate = new Date();
+    /* =========================
+    STATE
+    ========================= */
+    let currentMonth = new Date().getMonth();
+    let currentYear = new Date().getFullYear();
+    let selectedDate = new Date();
 
-        // Injected schedules from Controller
-        let schedules = @json($schedules);
+    // Injected schedules from Controller
+    let schedules = @json($schedules);
 
-        /* =========================
-        UTIL
-        ========================= */
-        function formatDate(date) {
-            const y = date.getFullYear();
-            const m = String(date.getMonth() + 1).padStart(2, "0");
-            const d = String(date.getDate()).padStart(2, "0");
-            return `${y}-${m}-${d}`;
+    /* =========================
+    UTIL
+    ========================= */
+    function formatDate(date) {
+        const y = date.getFullYear();
+        const m = String(date.getMonth() + 1).padStart(2, "0");
+        const d = String(date.getDate()).padStart(2, "0");
+        return `${y}-${m}-${d}`;
+    }
+
+    /* =========================
+    MONTH NAVIGATION
+    ========================= */
+    function changeMonth(direction) {
+        currentMonth += direction;
+
+        if (currentMonth > 11) {
+            currentMonth = 0;
+            currentYear++;
+        } else if (currentMonth < 0) {
+            currentMonth = 11;
+            currentYear--;
         }
 
-        /* =========================
-        MONTH NAVIGATION
-        ========================= */
-        function changeMonth(direction) {
-            currentMonth += direction;
-            
-            if (currentMonth > 11) {
-                currentMonth = 0;
-                currentYear++;
-            } else if (currentMonth < 0) {
-                currentMonth = 11;
-                currentYear--;
-            }
-            
-            renderCalendar();
+        renderCalendar();
+    }
+
+    /* =========================
+    CALENDAR RENDER
+    ========================= */
+    function renderCalendar() {
+        const tbody = document.getElementById("calendar-body");
+        tbody.innerHTML = "";
+
+        document.getElementById("calendar-title").textContent =
+            `${monthNames[currentMonth]} ${currentYear}`;
+
+        const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+        const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+        let row = document.createElement("tr");
+
+        // kosong awal
+        for (let i = 0; i < firstDay; i++) {
+            row.innerHTML += `<td></td>`;
         }
 
-        /* =========================
-        CALENDAR RENDER
-        ========================= */
-        function renderCalendar() {
-            const tbody = document.getElementById("calendar-body");
-            tbody.innerHTML = "";
+        for (let day = 1; day <= daysInMonth; day++) {
+            const isActive =
+                day === selectedDate.getDate() &&
+                currentMonth === selectedDate.getMonth() &&
+                currentYear === selectedDate.getFullYear();
 
-            document.getElementById("calendar-title").textContent =
-                `${monthNames[currentMonth]} ${currentYear}`;
+            const dateStr = formatDate(new Date(currentYear, currentMonth, day));
+            const hasSchedule = schedules.some(s => s.date === dateStr);
 
-            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            const buttonClass = isActive ? "btn-warning text-white" : "btn-light";
+            const underline = hasSchedule ? "border-bottom: 3px solid #f6c23e;" : "";
 
-            let row = document.createElement("tr");
-
-            // kosong awal
-            for (let i = 0; i < firstDay; i++) {
-                row.innerHTML += `<td></td>`;
-            }
-
-            for (let day = 1; day <= daysInMonth; day++) {
-                const isActive =
-                    day === selectedDate.getDate() &&
-                    currentMonth === selectedDate.getMonth() &&
-                    currentYear === selectedDate.getFullYear();
-
-                const dateStr = formatDate(new Date(currentYear, currentMonth, day));
-                const hasSchedule = schedules.some(s => s.date === dateStr);
-
-                const buttonClass = isActive ? "btn-success text-white" : "btn-light";
-                const underline = hasSchedule ? "border-bottom: 3px solid #10B981;" : "";
-
-                row.innerHTML += `
+            row.innerHTML += `
                     <td class="text-center">
                         <button class="btn btn-sm rounded-circle ${buttonClass}"
                                 style="${underline}"
@@ -183,76 +187,76 @@
                     </td>
                 `;
 
-                if ((firstDay + day) % 7 === 0) {
-                    tbody.appendChild(row);
-                    row = document.createElement("tr");
-                }
-            }
-
-            if (row.children.length > 0) {
+            if ((firstDay + day) % 7 === 0) {
                 tbody.appendChild(row);
+                row = document.createElement("tr");
             }
         }
 
-        /* =========================
-        DATE SELECT
-        ========================= */
-        function selectDate(day) {
-            selectedDate = new Date(currentYear, currentMonth, day);
+        if (row.children.length > 0) {
+            tbody.appendChild(row);
+        }
+    }
 
-            document.getElementById("current-date").textContent =
-                `${dayNames[selectedDate.getDay()]}, ${day} ${monthNames[currentMonth]} ${currentYear}`;
+    /* =========================
+    DATE SELECT
+    ========================= */
+    function selectDate(day) {
+        selectedDate = new Date(currentYear, currentMonth, day);
 
-            renderCalendar();
-            renderSchedules();
+        document.getElementById("current-date").textContent =
+            `${dayNames[selectedDate.getDay()]}, ${day} ${monthNames[currentMonth]} ${currentYear}`;
+
+        renderCalendar();
+        renderSchedules();
+    }
+
+    /* =========================
+    SCHEDULE LIST
+    ========================= */
+    function renderSchedules() {
+        const container = document.getElementById("schedule-content");
+        container.innerHTML = "";
+
+        const today = formatDate(selectedDate);
+        const todaySchedules = schedules.filter(s => s.date === today);
+
+        if (todaySchedules.length === 0) {
+            container.innerHTML = `<p class="text-muted">Tidak ada jadwal.</p>`;
+            return;
         }
 
-        /* =========================
-        SCHEDULE LIST
-        ========================= */
-        function renderSchedules() {
-            const container = document.getElementById("schedule-content");
-            container.innerHTML = "";
+        todaySchedules.forEach(item => {
+            let badgeClass = 'primary';
+            if (item.type === 'maintenance') badgeClass = 'danger';
+            if (item.type === 'task') badgeClass = 'info';
 
-            const today = formatDate(selectedDate);
-            const todaySchedules = schedules.filter(s => s.date === today);
-
-            if (todaySchedules.length === 0) {
-                container.innerHTML = `<p class="text-muted">Tidak ada jadwal.</p>`;
-                return;
-            }
-
-            todaySchedules.forEach(item => {
-                let badgeClass = 'primary';
-                if (item.type === 'maintenance') badgeClass = 'danger';
-                if (item.type === 'task') badgeClass = 'info';
-
-                container.innerHTML += `
+            container.innerHTML += `
                     <div class="mb-3 p-3 rounded-3 bg-light shadow-sm border-start border-4 border-${badgeClass}">
                         <div class="d-flex justify-content-between align-items-center mb-1">
-                                <strong>${item.title}</strong>
-                                <span class="badge bg-${badgeClass}">${item.type.toUpperCase()}</span>
-                            </div>
+                            <strong>${item.title}</strong>
+                            <span class="badge bg-${badgeClass}">${item.type.toUpperCase()}</span>
+                        </div>
                         <div class="text-muted small mb-1"><i class="fas fa-clock me-1"></i> ${item.time}</div>
                         <div class="text-muted small">${item.description}</div>
                         ${item.status ? `<div class="mt-2 text-end"><span class="badge bg-secondary">${item.status}</span></div>` : ''}
                     </div>
                 `;
-            });
-        }
+        });
+    }
 
-        /* =========================
-        STATS GENERATION
-        ========================= */
-        function generateStats() {
-            const today = formatDate(new Date());
-            const todaySchedules = schedules.filter(s => s.date === today);
+    /* =========================
+    STATS GENERATION
+    ========================= */
+    function generateStats() {
+        const today = formatDate(new Date());
+        const todaySchedules = schedules.filter(s => s.date === today);
 
-            // Stats logic can be expanded
-            const maintenanceCount = schedules.filter(s => s.type === 'maintenance').length;
-            const taskCount = schedules.filter(s => s.type === 'task').length;
+        // Stats logic can be expanded
+        const maintenanceCount = schedules.filter(s => s.type === 'maintenance').length;
+        const taskCount = schedules.filter(s => s.type === 'task').length;
 
-            document.getElementById('stats-container').innerHTML = `
+        document.getElementById('stats-container').innerHTML = `
                 <div class="col-md-4">
                     <div class="card border-0 shadow-sm rounded-4 h-100">
                         <div class="card-body p-4 text-center">
@@ -287,14 +291,14 @@
                     </div>
                 </div>
             `;
-        }
+    }
 
-        /* =========================
-        INIT
-        ========================= */
-        document.addEventListener("DOMContentLoaded", () => {
-            generateStats();
-            selectDate(selectedDate.getDate());
-        });
-    </script>
+    /* =========================
+    INIT
+    ========================= */
+    document.addEventListener("DOMContentLoaded", () => {
+        generateStats();
+        selectDate(selectedDate.getDate());
+    });
+</script>
 @endsection

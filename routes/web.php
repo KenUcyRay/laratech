@@ -48,8 +48,7 @@ Route::prefix('operator')->name('operator.')->middleware(['auth', 'operator'])->
     Route::get('/tasks', [App\Http\Controllers\Operator\TaskController::class, 'index'])->name('tasks.index');
     Route::put('/tasks/{id}/status', [App\Http\Controllers\Operator\TaskController::class, 'updateStatus'])->name('tasks.updateStatus');
     Route::get('/equipment', [App\Http\Controllers\Operator\EquipmentController::class, 'index'])->name('equipment.index');
-    Route::get('/schedules', function () {
-        return view('operator.schedules.index'); })->name('schedules.index');
+    Route::get('/schedules', [App\Http\Controllers\Operator\ScheduleController::class, 'index'])->name('schedules.index');
     Route::get('/reports', function () {
         return view('operator.reports.index'); })->name('reports.index');
     Route::get('/maintenance', [App\Http\Controllers\Operator\MaintenanceController::class, 'index'])->name('maintenance.index');
@@ -62,6 +61,9 @@ Route::prefix('mekanik')->name('mekanik.')->middleware(['auth', 'mekanik'])->gro
     // Work Orders / Tasks
     Route::get('/work-orders', [App\Http\Controllers\Mekanik\TaskController::class, 'index'])->name('work-orders.index');
     Route::put('/work-orders/{id}', [App\Http\Controllers\Mekanik\TaskController::class, 'update'])->name('work-orders.update');
+
+    // Schedules
+    Route::get('/schedules', [App\Http\Controllers\Mekanik\ScheduleController::class, 'index'])->name('schedules.index');
 
     // Maintenance
     Route::get('/maintenance', [App\Http\Controllers\Mekanik\MaintenanceController::class, 'index'])->name('maintenance.index');
