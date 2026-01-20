@@ -1,4 +1,14 @@
 <div class="h-100 pt-0" style="background: linear-gradient(180deg, #10B981 0%, #059669 100%); box-shadow: 2px 0 10px rgba(0,0,0,0.1); height: 100vh; overflow-y: auto;">
+    <!-- Sidebar Header -->
+    <div class="p-4 border-bottom border-white border-opacity-25">
+        <div class="d-flex align-items-center text-white">
+            <i class="fas fa-user-shield fs-4 me-3" style="color: rgba(255,255,255,0.9);"></i>
+            <div>
+                <h6 class="mb-0 fw-bold">Operator Panel</h6>
+                <small class="opacity-75">LaraTech System</small>
+            </div>
+        </div>
+    </div>
 
     <!-- Navigation Menu -->
     <div class="p-3">
