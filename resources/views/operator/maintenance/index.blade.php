@@ -36,30 +36,31 @@
                     <thead class="table-light">
                         <tr>
                             <th class="fw-semibold">Equipment</th>
-                            <th class="fw-semibold">Tipe Jadwal</th>
-                            <th class="fw-semibold">Last Service</th>
-                            <th class="fw-semibold">Next Service</th>
+                            <th class="fw-semibold">Assigne</th>
+                            <th class="fw-semibold">Last Service Date</th>
+                            <th class="fw-semibold">Next Service Due</th>
                             <th class="fw-semibold">Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($maintenances ?? [] as $maintenance)
                             <tr>
-                                <td class="fw-medium">{{ $maintenance->equipment->name ?? 'Equipment A' }} ({{ $maintenance->equipment->code ?? 'EQ001' }})</td>
-                                <td>{{ ucfirst($maintenance->schedule_type ?? 'monthly') }}</td>
-                                <td>{{ $maintenance->last_service ? $maintenance->last_service->format('d/m/Y') : '15/12/2024' }}</td>
-                                <td>{{ $maintenance->next_service ? $maintenance->next_service->format('d/m/Y') : '15/01/2025' }}</td>
+                                <td class="fw-medium">{{ $maintenance->equipment->name ?? 'Equipment A' }}
+                                    ({{ $maintenance->equipment->code ?? 'EQ001' }})</td>
+                                <td>{{ $maintenance->assignee->name ?? '-' }}</td>
+                                <td>{{ $maintenance->last_service_date ? $maintenance->last_service_date->format('d/m/Y') : '-' }}
+                                </td>
+                                <td>
+                                    {{ $maintenance->next_service_due ? $maintenance->next_service_due->format('d/m/Y H:i') : '-' }}
+                                </td>
                                 <td>
                                     @php
-                                        $status = 'scheduled';
-                                        if(isset($maintenance->next_service)) {
-                                            if($maintenance->next_service->isPast()) $status = 'overdue';
-                                            elseif($maintenance->next_service->diffInDays(now()) <= 7) $status = 'due_soon';
-                                        }
+                                        $isDue = now()->greaterThanOrEqualTo($maintenance->next_service_due);
+                                        $isClose = now()->addDays(2)->greaterThanOrEqualTo($maintenance->next_service_due);
                                     @endphp
-                                    @if($status === 'overdue')
+                                    @if($isDue)
                                         <span class="badge bg-danger">Overdue</span>
-                                    @elseif($status === 'due_soon')
+                                    @elseif($isClose)
                                         <span class="badge bg-warning">Due Soon</span>
                                     @else
                                         <span class="badge bg-success">Scheduled</span>

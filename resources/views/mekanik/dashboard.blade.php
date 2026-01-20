@@ -108,15 +108,21 @@
                                     <tr>
                                         <th width="45%">Equipment</th>
                                         <th width="30%">Due Date</th>
-                                        <th width="25%">Type</th>
+                                        <th width="25%">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($maintenanceDue as $m)
                                         <tr>
                                             <td>{{ $m->equipment->name ?? '-' }}</td>
-                                            <td>{{ $m->next_service ? $m->next_service->format('Y-m-d') : '-' }}</td>
-                                            <td>{{ ucfirst($m->schedule_type) }}</td>
+                                            <td>{{ $m->next_service_due ? $m->next_service_due->format('d M Y') : '-' }}</td>
+                                            <td>
+                                                @if(now()->greaterThanOrEqualTo($m->next_service_due))
+                                                    <span class="badge bg-danger">Overdue</span>
+                                                @else
+                                                    <span class="badge bg-warning">Upcoming</span>
+                                                @endif
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

@@ -13,9 +13,9 @@ return new class extends Migration {
         Schema::create('maintenances', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('equipment_id')->constrained('equipments');
-            $table->string('schedule_type');
-            $table->timestamp('last_service')->nullable();
-            $table->timestamp('next_service');
+            $table->foreignUuid('user_id')->constrained('users'); // Assigned to Mekanik or Operator
+            $table->timestamp('last_service_date')->nullable(); // Waktu service terakhir dilakukan
+            $table->timestamp('next_service_due');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -5,27 +5,31 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Maintenance;
 use App\Models\Equipment;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class MaintenanceController extends Controller
 {
     public function index()
     {
-        $maintenances = Maintenance::with('equipment')->orderBy('next_service', 'asc')->get();
+        $maintenances = Maintenance::with(['equipment', 'assignee'])->orderBy('next_service_due', 'asc')->get();
         // For Create Modal
         $equipments = Equipment::all();
+        $assignees = User::whereIn('role', ['mekanik', 'operator'])->get();
 
-        return view('admin.maintenance.index', compact('maintenances', 'equipments'));
+        return view('admin.maintenance.index', compact('maintenances', 'equipments', 'assignees'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'equipment_id' => 'required|exists:equipments,id',
-            'schedule_type' => 'required|string', // e.g., monthly, weekly, or 500-hours
-            'last_service' => 'nullable|date',
-            'next_service' => 'required|date|after_or_equal:today',
+            'user_id' => 'required|exists:users,id',
+            'last_service_date' => 'nullable|date',
         ]);
+
+        $lastService = $validated['last_service_date'] ? \Carbon\Carbon::parse($validated['last_service_date']) : now();
+        $validated['next_service_due'] = $lastService->copy()->addHours(1500);
 
         $maintenance = Maintenance::create($validated);
 
@@ -38,7 +42,7 @@ class MaintenanceController extends Controller
 
     public function show($id)
     {
-        $maintenance = Maintenance::with('equipment')->findOrFail($id);
+        $maintenance = Maintenance::with(['equipment', 'assignee'])->findOrFail($id);
 
         return response()->json([
             'status' => 'success',
@@ -52,9 +56,10 @@ class MaintenanceController extends Controller
 
         $validated = $request->validate([
             'equipment_id' => 'required|exists:equipments,id',
-            'schedule_type' => 'required|string',
+            'user_id' => 'required|exists:users,id',
             'last_service' => 'nullable|date',
-            'next_service' => 'required|date',
+            'last_service_hm' => 'nullable|integer|min:0',
+            'next_service_hm' => 'required|integer|min:0',
         ]);
 
         $maintenance->update($validated);

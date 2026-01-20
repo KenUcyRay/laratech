@@ -2,21 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Maintenance extends Model
 {
-    use HasFactory, HasUuids, SoftDeletes;
+    use HasUuids;
 
     protected $fillable = [
         'equipment_id',
-        'schedule_type',
-        'last_service',
-        'next_service',
+        'user_id',
+        'last_service_date',
+        'next_service_due',
+    ];
+
+    protected $casts = [
+        'last_service_date' => 'datetime',
+        'next_service_due' => 'datetime',
     ];
 
     public function equipment(): BelongsTo
@@ -24,11 +27,8 @@ class Maintenance extends Model
         return $this->belongsTo(Equipment::class);
     }
 
-    protected function casts(): array
+    public function assignee(): BelongsTo
     {
-        return [
-            'last_service' => 'datetime',
-            'next_service' => 'datetime',
-        ];
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

@@ -16,21 +16,28 @@
                     <thead>
                         <tr>
                             <th>Equipment</th>
-                            <th>Type</th>
-                            <th>Last Service</th>
-                            <th>Next Service</th>
+                            <th>Assignee</th>
+                            <th>Last Service Date</th>
+                            <th>Next Service Due</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($maintenances as $m)
-                            <tr id="row-{{ $m->id }}">
                                 <td>{{ $m->equipment->name ?? '-' }}</td>
-                                <td>{{ $m->schedule_type }}</td>
-                                <td>{{ $m->last_service ? $m->last_service->format('Y-m-d') : '-' }}</td>
+                                <td>{{ $m->assignee->name ?? '-' }} ({{ ucfirst($m->assignee->role ?? '') }})</td>
+                                <td>{{ $m->last_service_date ? $m->last_service_date->format('d M Y H:i') : '-' }}</td>
                                 <td>
-                                    <span class="{{ $m->next_service <= now() ? 'text-danger fw-bold' : '' }}">
-                                        {{ $m->next_service ? $m->next_service->format('Y-m-d') : '-' }}
+                                    {{ $m->next_service_due ? $m->next_service_due->format('d M Y H:i') : '-' }}
+                                </td>
+                                <td>
+                                    @php
+                                        $isDue = now()->greaterThanOrEqualTo($m->next_service_due);
+                                        $isClose = now()->addDays(2)->greaterThanOrEqualTo($m->next_service_due);
+                                    @endphp
+                                    <span class="badge bg-{{ $isDue ? 'danger' : ($isClose ? 'warning' : 'success') }}">
+                                        {{ $isDue ? 'Overdue' : ($isClose ? 'Upcoming' : 'OK') }}
                                     </span>
                                 </td>
                                 <td>
@@ -63,20 +70,18 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label>Schedule Type</label>
-                            <select name="schedule_type" class="form-select">
-                                <option value="monthly">Monthly</option>
-                                <option value="weekly">Weekly</option>
-                                <option value="500-hours">500 Hours</option>
+                            <label>Assign To</label>
+                            <select name="user_id" class="form-select" required>
+                                @foreach($assignees as $user)
+                                    <option value="{{ $user->id }}">{{ $user->name }} ({{ ucfirst($user->role) }})</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label>Last Service</label>
-                            <input type="date" name="last_service" class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label>Next Service</label>
-                            <input type="date" name="next_service" class="form-control" required>
+                            <label>Last Service Date (Optional)</label>
+                            <input type="date" name="last_service_date" class="form-control">
+                            <small class="text-muted">Next service will be automatically set to +1500 hours from this date
+                                (or now).</small>
                         </div>
                     </div>
                     <div class="modal-footer">

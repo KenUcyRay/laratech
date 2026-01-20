@@ -11,9 +11,9 @@ class MaintenanceController extends Controller
 {
     public function index(): View
     {
-        $maintenances = Maintenance::where('next_service', '<=', now()->addDays(14)) // Show upcoming 2 weeks
-            ->with(['equipment', 'equipment.type'])
-            ->orderBy('next_service', 'asc')
+        // Show upcoming maintenance
+        $maintenances = Maintenance::with(['equipment', 'equipment.type', 'assignee'])
+            ->orderBy('next_service_due', 'asc')
             ->get();
 
         return view('mekanik.maintenance.index', compact('maintenances'));
@@ -25,13 +25,13 @@ class MaintenanceController extends Controller
 
         $validated = $request->validate([
             'action' => 'required|in:complete',
-            'notes' => 'nullable|string'
+            'notes' => 'nullable|string',
         ]);
 
         if ($validated['action'] === 'complete') {
             $maintenance->update([
-                'last_service' => now(),
-                'next_service' => now()->addMonth(), // Default increment
+                'last_service_date' => now(),
+                'next_service_due' => now()->addHours(1500), // Real-time 1500 hours
             ]);
         }
 

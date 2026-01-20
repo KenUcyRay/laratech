@@ -73,7 +73,7 @@ class DashboardController extends Controller
         try {
             if (class_exists('App\Models\Maintenance')) {
                 $maintenanceModel = app('App\Models\Maintenance');
-                $maintenanceDue = $maintenanceModel::where('next_service', '<=', now()->addDays(7))
+                $maintenanceDue = $maintenanceModel::where('next_service_due', '<=', now()->addDays(7))
                     ->with('equipment')
                     ->get();
             }

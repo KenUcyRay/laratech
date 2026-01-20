@@ -11,30 +11,25 @@ class MaintenancesSeeder extends Seeder
     public function run(): void
     {
         $equipments = Equipment::all();
+        $assignees = \App\Models\User::whereIn('role', ['mekanik', 'operator'])->get();
 
-        if ($equipments->isEmpty()) {
+        if ($equipments->isEmpty() || $assignees->isEmpty()) {
             return;
         }
 
-        $scheduleTypes = ['daily', 'weekly', 'monthly', 'hour_based', 'yearly'];
+        foreach ($equipments as $equipment) {
+            // Randomly determine if it has a last service
+            $hasLastService = rand(0, 1);
 
-        foreach ($equipments as $index => $equipment) {
-            $scheduleType = $scheduleTypes[$index % count($scheduleTypes)];
-
-            $daysToNext = match ($scheduleType) {
-                'daily' => rand(-2, 2),
-                'weekly' => rand(-7, 7),
-                'monthly' => rand(-30, 30),
-                'yearly' => rand(-60, 90),
-                'hour_based' => rand(-15, 45),
-                default => 30,
-            };
+            $lastServiceDate = $hasLastService ? now()->subHours(rand(100, 1000)) : null;
+            // 1500 jam = 62.5 hari.
+            $nextServiceDue = $lastServiceDate ? $lastServiceDate->copy()->addHours(1500) : now()->addHours(1500);
 
             Maintenance::create([
                 'equipment_id' => $equipment->id,
-                'schedule_type' => $scheduleType,
-                'last_service' => now()->subDays(rand(10, 60)),
-                'next_service' => now()->addDays($daysToNext),
+                'user_id' => $assignees->random()->id,
+                'last_service_date' => $lastServiceDate,
+                'next_service_due' => $nextServiceDue,
             ]);
         }
     }
