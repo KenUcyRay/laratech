@@ -47,6 +47,7 @@ Route::prefix('operator')->name('operator.')->middleware(['auth', 'operator'])->
 
     Route::get('/tasks', [App\Http\Controllers\Operator\TaskController::class, 'index'])->name('tasks.index');
     Route::put('/tasks/{id}/status', [App\Http\Controllers\Operator\TaskController::class, 'updateStatus'])->name('tasks.updateStatus');
+    Route::get('/equipment', [App\Http\Controllers\Operator\EquipmentController::class, 'index'])->name('equipment.index');
     Route::get('/schedules', function () {
         return view('operator.schedules.index'); })->name('schedules.index');
     Route::get('/reports', function () {
