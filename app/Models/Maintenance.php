@@ -23,4 +23,12 @@ class Maintenance extends Model
     {
         return $this->belongsTo(Equipment::class);
     }
+
+    protected function casts(): array
+    {
+        return [
+            'last_service' => 'datetime',
+            'next_service' => 'datetime',
+        ];
+    }
 }
