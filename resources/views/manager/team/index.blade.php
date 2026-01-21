@@ -41,9 +41,9 @@
                     </p>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-light btn-lg rounded-3 shadow-sm">
-                        <i class="fas fa-download me-2"></i>Export
-                    </button>
+                    <a href="{{ route('manager.team.export.pdf') }}" class="btn btn-light btn-lg rounded-3 shadow-sm">
+                        <i class="fas fa-download me-2"></i>Export to PDF
+                    </a>
                 </div>
             </div>
         </div>

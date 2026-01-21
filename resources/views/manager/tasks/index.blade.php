@@ -25,6 +25,13 @@
 @section('content')
 <div class="container-fluid mt-4">
 
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show rounded-4 mb-4" role="alert">
+            <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
+
     {{-- Ultra Modern Header --}}
     <div class="position-relative overflow-hidden rounded-4 shadow-lg mb-4" style="background: linear-gradient(135deg, #111827 0%, #374151 100%);">
         <div class="position-absolute top-0 end-0 opacity-25">
@@ -148,10 +155,19 @@
                             <td class="py-3">{{ $task->due_date ? $task->due_date->format('Y-m-d') : 'N/A' }}</td>
                             <td class="py-3">
                                 <div class="btn-group" role="group">
-                                    <button class="btn btn-sm btn-warning rounded-start edit-task" data-id="{{ $task->id }}">
+                                    <button class="btn btn-sm btn-warning rounded-start" data-bs-toggle="modal" data-bs-target="#editTaskModal" 
+                                        data-task-id="{{ $task->id }}"
+                                        data-task-title="{{ $task->title }}"
+                                        data-task-equipment="{{ $task->equipment_id }}"
+                                        data-task-assigned="{{ $task->assigned_to }}"
+                                        data-task-priority="{{ $task->priority }}"
+                                        data-task-due="{{ $task->due_date }}"
+                                        data-task-status="{{ $task->status }}"
+                                        onclick="populateEditFormFromData(this)">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <button class="btn btn-sm btn-danger rounded-end delete-task" data-id="{{ $task->id }}">
+                                    <button class="btn btn-sm btn-danger rounded-end" data-bs-toggle="modal" data-bs-target="#deleteTaskModal" 
+                                        onclick="setDeleteForm({{ $task->id }}, '{{ addslashes($task->title) }}')">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
@@ -206,7 +222,8 @@
                 <h5 class="modal-title text-white fw-bold"><i class="fas fa-plus me-2"></i>Create New Task</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
-            <form id="createTaskForm">
+            <form action="{{ route('manager.tasks.store') }}" method="POST">
+                @csrf
                 <div class="modal-body p-4">
                     <div class="row g-3">
                         <div class="col-12">
@@ -262,30 +279,140 @@
         </div>
     </div>
 </div>
+
+<!-- Edit Task Modal -->
+<div class="modal fade" id="editTaskModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header border-0 p-4" style="background: linear-gradient(135deg, #111827 0%, #374151 100%);">
+                <h5 class="modal-title text-white fw-bold"><i class="fas fa-edit me-2"></i>Edit Task</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="" method="POST" id="editTaskForm">
+                @csrf
+                @method('PUT')
+                <div class="modal-body p-4">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label class="form-label fw-semibold">Title</label>
+                            <input type="text" class="form-control rounded-3 border-2" name="title" id="editTitle" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Equipment</label>
+                            <select class="form-control rounded-3 border-2" name="equipment_id" id="editEquipmentId" required>
+                                <option value="">Select Equipment</option>
+                                @foreach($equipments as $equipment)
+                                    <option value="{{ $equipment->id }}">{{ $equipment->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Assign To</label>
+                            <select class="form-control rounded-3 border-2" name="assigned_to" id="editAssignedTo" required>
+                                <option value="">Select Person</option>
+                                @foreach($assignees as $assignee)
+                                    <option value="{{ $assignee->id }}">{{ $assignee->name }} ({{ ucfirst($assignee->role) }})</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Priority</label>
+                            <select class="form-control rounded-3 border-2" name="priority" id="editPriority" required>
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Due Date</label>
+                            <input type="date" class="form-control rounded-3 border-2" name="due_date" id="editDueDate">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Status</label>
+                            <select class="form-control rounded-3 border-2" name="status" id="editStatus" required>
+                                <option value="todo">Todo</option>
+                                <option value="doing">Doing</option>
+                                <option value="done">Done</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 p-4">
+                    <button type="button" class="btn btn-secondary rounded-3" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary rounded-3"><i class="fas fa-save me-2"></i>Update Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Task Modal -->
+<div class="modal fade" id="deleteTaskModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header border-0 p-4" style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);">
+                <h5 class="modal-title text-white fw-bold"><i class="fas fa-trash me-2"></i>Delete Task</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4 text-center">
+                <div class="mb-3">
+                    <i class="fas fa-exclamation-triangle text-warning" style="font-size: 3rem;"></i>
+                </div>
+                <h6 class="fw-bold mb-2">Are you sure?</h6>
+                <p class="text-muted mb-0">You are about to delete the task: <strong id="deleteTaskTitle"></strong></p>
+                <p class="text-muted small">This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer border-0 p-4 justify-content-center">
+                <button type="button" class="btn btn-secondary rounded-3 me-2" data-bs-dismiss="modal">Cancel</button>
+                <form action="" method="POST" id="deleteTaskForm" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger rounded-3">
+                        <i class="fas fa-trash me-2"></i>Delete Task
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
-@push('scripts')
 <script>
-$(document).ready(function() {
-    $('#createTaskForm').on('submit', function(e) {
-        e.preventDefault();
-        
-        $.ajax({
-            url: '{{ route("manager.tasks.store") }}',
-            method: 'POST',
-            data: $(this).serialize(),
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(response) {
-                $('#createTaskModal').modal('hide');
-                location.reload();
-            },
-            error: function(xhr) {
-                alert('Error creating task');
-            }
-        });
-    });
-});
+function populateEditFormFromData(button) {
+    const id = button.getAttribute('data-task-id');
+    const title = button.getAttribute('data-task-title');
+    const equipmentId = button.getAttribute('data-task-equipment');
+    const assignedTo = button.getAttribute('data-task-assigned');
+    const priority = button.getAttribute('data-task-priority');
+    const dueDate = button.getAttribute('data-task-due');
+    const status = button.getAttribute('data-task-status');
+    
+    console.log('Edit data:', {id, title, equipmentId, assignedTo, priority, dueDate, status});
+    
+    document.getElementById('editTaskForm').action = `/manager/tasks/${id}`;
+    document.getElementById('editTitle').value = title || '';
+    document.getElementById('editEquipmentId').value = equipmentId || '';
+    document.getElementById('editAssignedTo').value = assignedTo || '';
+    document.getElementById('editPriority').value = priority || 'low';
+    document.getElementById('editDueDate').value = dueDate || '';
+    document.getElementById('editStatus').value = status || 'todo';
+}
+
+function populateEditForm(id, title, equipmentId, assignedTo, priority, dueDate, status) {
+    console.log('Populating form with:', {id, title, equipmentId, assignedTo, priority, dueDate, status});
+    
+    document.getElementById('editTaskForm').action = `/manager/tasks/${id}`;
+    document.getElementById('editTitle').value = title || '';
+    document.getElementById('editEquipmentId').value = equipmentId || '';
+    document.getElementById('editAssignedTo').value = assignedTo || '';
+    document.getElementById('editPriority').value = priority || 'low';
+    document.getElementById('editDueDate').value = dueDate || '';
+    document.getElementById('editStatus').value = status || 'todo';
+}
+
+function setDeleteForm(id, title) {
+    document.getElementById('deleteTaskForm').action = `/manager/tasks/${id}`;
+    document.getElementById('deleteTaskTitle').textContent = title;
+}
 </script>
-@endpush
