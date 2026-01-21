@@ -10,7 +10,7 @@
     <div class="container-fluid mt-4">
         {{-- Ultra Modern Header --}}
         <div class="position-relative overflow-hidden rounded-4 shadow-lg mb-4"
-            style="background: linear-gradient(135deg, #f6c23e 0%, #f4b619 100%);">
+            style="background: linear-gradient(135deg, #B6771D 0%, #7B542F 100%);">
             <div class="position-absolute top-0 end-0 opacity-25">
                 <i class="fas fa-tachometer-alt"
                     style="font-size: 8rem; color: white; transform: rotate(15deg); margin: -2rem;"></i>
