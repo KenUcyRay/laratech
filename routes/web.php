@@ -15,7 +15,7 @@ Route::controller(App\Http\Controllers\AuthController::class)->group(function ()
 // Manager Routes
 Route::prefix('manager')->name('manager.')->middleware(['auth', 'manager'])->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Manager\DashboardController::class, 'index'])->name('dashboard');
-    
+
     Route::resource('tasks', App\Http\Controllers\Manager\TaskController::class);
     Route::get('/team', [App\Http\Controllers\Manager\TeamController::class, 'index'])->name('team.index');
     Route::get('/team/export/pdf', [App\Http\Controllers\Manager\TeamController::class, 'exportPdf'])->name('team.export.pdf');
@@ -71,22 +71,22 @@ Route::prefix('operator')->name('operator.')->middleware(['auth', 'operator'])->
     Route::post('/reports', [\App\Http\Controllers\Operator\ReportController::class, 'store'])
         ->name('reports.store');
 
-         Route::delete('/reports/{report}', [ReportController::class, 'destroy'])
+    Route::delete('/reports/{report}', [ReportController::class, 'destroy'])
         ->name('reports.destroy');
-        
-         Route::get('/reports/{report}/pdf', [ReportController::class, 'pdf'])
+
+    Route::get('/reports/{report}/pdf', [ReportController::class, 'pdf'])
         ->name('reports.pdf');
 
-        Route::get('/maintenance', [App\Http\Controllers\Operator\MaintenanceController::class, 'index'])->name('maintenance.index');
+    Route::get('/maintenance', [App\Http\Controllers\Operator\MaintenanceController::class, 'index'])->name('maintenance.index');
 });
 
 // Mekanik Routes
 Route::prefix('mekanik')->name('mekanik.')->middleware(['auth', 'mekanik'])->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Mekanik\DashboardController::class, 'index'])->name('dashboard');
 
-    // Work Orders / Tasks
-    Route::get('/work-orders', [App\Http\Controllers\Mekanik\TaskController::class, 'index'])->name('work-orders.index');
-    Route::put('/work-orders/{id}', [App\Http\Controllers\Mekanik\TaskController::class, 'update'])->name('work-orders.update');
+    // Unified Tasks
+    Route::get('/tasks', [App\Http\Controllers\Mekanik\TaskController::class, 'index'])->name('tasks.index');
+    Route::put('/tasks/{id}', [App\Http\Controllers\Mekanik\TaskController::class, 'update'])->name('tasks.update');
 
     // Schedules
     Route::get('/schedules', [App\Http\Controllers\Mekanik\ScheduleController::class, 'index'])->name('schedules.index');
@@ -94,9 +94,6 @@ Route::prefix('mekanik')->name('mekanik.')->middleware(['auth', 'mekanik'])->gro
     // Maintenance
     Route::get('/maintenance', [App\Http\Controllers\Mekanik\MaintenanceController::class, 'index'])->name('maintenance.index');
     Route::put('/maintenance/{id}', [App\Http\Controllers\Mekanik\MaintenanceController::class, 'update'])->name('maintenance.update');
-
-    // Repairs
-    Route::get('/repairs', [App\Http\Controllers\Mekanik\TaskController::class, 'index'])->name('repairs.index');
 
     // Inventory / Equipment
     Route::get('/inventory', [App\Http\Controllers\Mekanik\EquipmentController::class, 'index'])->name('inventory.index');
@@ -114,4 +111,5 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
-Route::get('/password/request', function() { return view('auth.forgot-password'); })->name('password.request');
+Route::get('/password/request', function () {
+    return view('auth.forgot-password'); })->name('password.request');

@@ -65,13 +65,13 @@
                                         </td>
                                         <td>{{ $task->due_date ? $task->due_date->format('Y-m-d') : '-' }}</td>
                                         <td>
-                                            @if(isset($allowStart) && $allowStart && $task->status == 'todo')
+                                            @if($task->status == 'todo')
                                                 <button class="btn btn-sm btn-warning start-task-btn" data-id="{{ $task->id }}">
                                                     <i class="fas fa-play"></i> Start
                                                 </button>
                                             @endif
 
-                                            @if(isset($allowComplete) && $allowComplete && $task->status == 'doing')
+                                            @if($task->status == 'doing')
                                                 <button class="btn btn-sm btn-success complete-task-btn" data-id="{{ $task->id }}">
                                                     <i class="fas fa-check"></i> Complete
                                                 </button>
@@ -179,7 +179,7 @@
             function updateTaskStatus(id, status) {
                 if (!confirm('Are you sure you want to update task status to ' + status + '?')) return;
 
-                fetch(`/mekanik/work-orders/${id}`, {
+                fetch(`/mekanik/tasks/${id}`, {
                     method: "POST",
                     headers: {
                         "X-CSRF-TOKEN": "{{ csrf_token() }}",

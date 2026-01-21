@@ -28,29 +28,16 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('mekanik.work-orders*') ? 'active' : '' }}"
-                    href="{{ route('mekanik.work-orders.index') }}"
-                    style="transition: all 0.3s ease; {{ request()->routeIs('mekanik.work-orders*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
+                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('mekanik.tasks*') ? 'active' : '' }}"
+                    href="{{ route('mekanik.tasks.index') }}"
+                    style="transition: all 0.3s ease; {{ request()->routeIs('mekanik.tasks*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
                     onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
                     onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
                     <div class="d-flex align-items-center justify-content-center rounded-2 me-3"
                         style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
-                        <i class="fas fa-clipboard-list"></i>
+                        <i class="fas fa-tasks"></i>
                     </div>
-                    <span class="fw-medium">New Tasks</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('mekanik.repairs*') ? 'active' : '' }}"
-                    href="{{ route('mekanik.repairs.index') }}"
-                    style="transition: all 0.3s ease; {{ request()->routeIs('mekanik.repairs*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
-                    onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
-                    onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
-                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3"
-                        style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
-                        <i class="fas fa-tools"></i>
-                    </div>
-                    <span class="fw-medium">In Progress</span>
+                    <span class="fw-medium">My Tasks</span>
                 </a>
             </li>
             <li class="nav-item">

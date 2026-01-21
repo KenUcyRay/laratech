@@ -13,29 +13,16 @@ class TaskController extends Controller
     {
         $query = Task::with(['equipment', 'equipment.type', 'report'])
             ->where('assigned_to', auth()->id())
+            ->whereIn('status', ['todo', 'doing'])
+            ->orderByRaw("FIELD(status, 'doing', 'todo')") // Show 'doing' first, then 'todo'
             ->orderBy('priority', 'desc')
             ->orderBy('due_date', 'asc');
 
-        $pageTitle = 'Work Orders';
-        $allowStart = false;
-        $allowComplete = false;
-
-        if (request()->routeIs('mekanik.work-orders*')) {
-            $query->where('status', 'todo');
-            $pageTitle = 'Work Orders (Pending)';
-            $allowStart = true;
-        } elseif (request()->routeIs('mekanik.repairs*')) {
-            $query->whereIn('status', ['doing']);
-            $pageTitle = 'Repairs (In Progress)';
-            $allowComplete = true;
-        } else {
-            // Fallback or show all active
-            $query->whereIn('status', ['todo', 'doing']);
-        }
+        $pageTitle = 'My Tasks';
 
         $tasks = $query->paginate(10);
 
-        return view('mekanik.tasks.index', compact('tasks', 'pageTitle', 'allowStart', 'allowComplete'));
+        return view('mekanik.tasks.index', compact('tasks', 'pageTitle'));
     }
 
     public function update(Request $request, $id)
@@ -55,9 +42,6 @@ class TaskController extends Controller
         if ($validated['status'] === 'done' && $task->status !== 'done') {
             $data['completed_at'] = now();
 
-            // Auto-resolve linked report if exists
-            // Since Report belongsTo Task (optional) or Task belongsTo Equipment
-            // The relationship is Report -> Task (report has task_id)
             $report = \App\Models\Report::where('task_id', $task->id)->first();
             if ($report) {
                 $report->update(['status' => 'resolved']);
