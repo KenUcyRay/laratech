@@ -86,15 +86,33 @@
                             </td>
                             <td>{{ $eq->hour_meter }}</td>
                             <td>
-                                <button class="btn btn-sm btn-info me-1 view-btn" data-id="{{ $eq->id }}">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button class="btn btn-sm btn-warning me-1 edit-btn" data-id="{{ $eq->id }}">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="btn btn-sm btn-danger delete-btn" data-id="{{ $eq->id }}">
-                                    <i class="fas fa-trash"></i>
-                                </button>
+                                <div class="btn-group" role="group">
+                                    <button class="btn btn-sm btn-info rounded-start" data-bs-toggle="modal" data-bs-target="#viewModal" 
+                                        data-equipment-id="{{ $eq->id }}"
+                                        data-equipment-code="{{ $eq->code }}"
+                                        data-equipment-name="{{ $eq->name }}"
+                                        data-equipment-type="{{ $eq->type->name ?? '-' }}"
+                                        data-equipment-status="{{ $eq->status }}"
+                                        data-equipment-hour="{{ $eq->hour_meter }}"
+                                        data-equipment-image="{{ $eq->images->count() > 0 ? $eq->images->first()->image_url : '' }}"
+                                        onclick="populateViewModal(this)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editModal" 
+                                        data-equipment-id="{{ $eq->id }}"
+                                        data-equipment-code="{{ $eq->code }}"
+                                        data-equipment-name="{{ $eq->name }}"
+                                        data-equipment-type-id="{{ $eq->equipment_type_id }}"
+                                        data-equipment-status="{{ $eq->status }}"
+                                        data-equipment-hour="{{ $eq->hour_meter }}"
+                                        onclick="populateEditForm(this)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger rounded-end" data-bs-toggle="modal" data-bs-target="#deleteModal" 
+                                        onclick="setDeleteForm({{ $eq->id }}, '{{ addslashes($eq->name) }}')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
@@ -138,98 +156,257 @@
 
 <!-- Create Modal -->
 <div class="modal fade" id="createModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <form id="createForm" enctype="multipart/form-data">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add Equipment</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header border-0 p-4" style="background: linear-gradient(135deg, #111827 0%, #374151 100%);">
+                <h5 class="modal-title text-white fw-bold"><i class="fas fa-plus me-2"></i>Add Equipment</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ route('manager.equipment.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body p-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Code</label>
+                                <input type="text" name="code" class="form-control rounded-3 border-2" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Name</label>
+                                <input type="text" name="name" class="form-control rounded-3 border-2" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Type</label>
+                                <select name="equipment_type_id" class="form-select rounded-3 border-2" required>
+                                    <option value="">Select Type</option>
+                                    @foreach($types as $type)
+                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Status</label>
+                                <select name="status" class="form-select rounded-3 border-2">
+                                    <option value="idle">Idle</option>
+                                    <option value="operasi">Operasi</option>
+                                    <option value="rusak">Rusak</option>
+                                    <option value="servis">Servis</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Hour Meter</label>
+                        <input type="number" name="hour_meter" class="form-control rounded-3 border-2" min="0" value="0">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Images</label>
+                        <input type="file" name="images[]" class="form-control rounded-3 border-2" multiple accept="image/*">
+                        <div class="form-text">You can select multiple images</div>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">Code</label>
-                        <input type="text" name="code" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Name</label>
-                        <input type="text" name="name" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Type</label>
-                        <select name="equipment_type_id" class="form-select" required>
-                            @foreach($types as $type)
-                                <option value="{{ $type->id }}">{{ $type->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Status</label>
-                        <select name="status" class="form-select">
-                            <option value="idle">Idle</option>
-                            <option value="operasi">Operasi</option>
-                            <option value="rusak">Rusak</option>
-                            <option value="servis">Servis</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Hour Meter</label>
-                        <input type="number" name="hour_meter" class="form-control" min="0" value="0">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Images</label>
-                        <input type="file" name="images[]" class="form-control" multiple accept="image/*">
-                    </div>
+                <div class="modal-footer border-0 p-4">
+                    <button type="button" class="btn btn-secondary rounded-3" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary rounded-3"><i class="fas fa-save me-2"></i>Save Equipment</button>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save Equipment</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- View Modal -->
+<div class="modal fade" id="viewModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header border-0 p-4" style="background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);">
+                <h5 class="modal-title text-white fw-bold"><i class="fas fa-eye me-2"></i>Equipment Details</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <div class="mb-3">
+                            <img id="viewImage" src="" alt="Equipment Image" class="img-fluid rounded-3" style="max-height: 200px; display: none;">
+                            <div id="viewNoImage" class="bg-light rounded-3 d-flex align-items-center justify-content-center" style="height: 200px; display: none;">
+                                <i class="fas fa-image text-muted fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <table class="table table-borderless">
+                            <tr>
+                                <td class="fw-semibold">Code:</td>
+                                <td id="viewCode"></td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold">Name:</td>
+                                <td id="viewName"></td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold">Type:</td>
+                                <td id="viewType"></td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold">Status:</td>
+                                <td><span id="viewStatus" class="badge"></span></td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold">Hour Meter:</td>
+                                <td id="viewHour"></td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </form>
+            <div class="modal-footer border-0 p-4">
+                <button type="button" class="btn btn-secondary rounded-3" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header border-0 p-4" style="background: linear-gradient(135deg, #111827 0%, #374151 100%);">
+                <h5 class="modal-title text-white fw-bold"><i class="fas fa-edit me-2"></i>Edit Equipment</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="" method="POST" id="editForm" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <div class="modal-body p-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Code</label>
+                                <input type="text" name="code" id="editCode" class="form-control rounded-3 border-2" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Name</label>
+                                <input type="text" name="name" id="editName" class="form-control rounded-3 border-2" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Type</label>
+                                <select name="equipment_type_id" id="editType" class="form-select rounded-3 border-2" required>
+                                    @foreach($types as $type)
+                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Status</label>
+                                <select name="status" id="editStatus" class="form-select rounded-3 border-2">
+                                    <option value="idle">Idle</option>
+                                    <option value="operasi">Operasi</option>
+                                    <option value="rusak">Rusak</option>
+                                    <option value="servis">Servis</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Hour Meter</label>
+                        <input type="number" name="hour_meter" id="editHour" class="form-control rounded-3 border-2" min="0">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Add New Images</label>
+                        <input type="file" name="images[]" class="form-control rounded-3 border-2" multiple accept="image/*">
+                        <div class="form-text">Leave empty to keep existing images</div>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 p-4">
+                    <button type="button" class="btn btn-secondary rounded-3" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary rounded-3"><i class="fas fa-save me-2"></i>Update Equipment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header border-0 p-4" style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);">
+                <h5 class="modal-title text-white fw-bold"><i class="fas fa-trash me-2"></i>Delete Equipment</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4 text-center">
+                <div class="mb-3">
+                    <i class="fas fa-exclamation-triangle text-warning" style="font-size: 3rem;"></i>
+                </div>
+                <h6 class="fw-bold mb-2">Are you sure?</h6>
+                <p class="text-muted mb-0">You are about to delete: <strong id="deleteEquipmentName"></strong></p>
+                <p class="text-muted small">This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer border-0 p-4 justify-content-center">
+                <button type="button" class="btn btn-secondary rounded-3 me-2" data-bs-dismiss="modal">Cancel</button>
+                <form action="" method="POST" id="deleteForm" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger rounded-3"><i class="fas fa-trash me-2"></i>Delete</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 @endsection
 
 @push('scripts')
 <script>
-document.getElementById('createForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    let formData = new FormData(this);
+function populateViewModal(button) {
+    document.getElementById('viewCode').textContent = button.dataset.equipmentCode;
+    document.getElementById('viewName').textContent = button.dataset.equipmentName;
+    document.getElementById('viewType').textContent = button.dataset.equipmentType;
+    document.getElementById('viewHour').textContent = button.dataset.equipmentHour;
+    
+    const statusBadge = document.getElementById('viewStatus');
+    const status = button.dataset.equipmentStatus;
+    statusBadge.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+    statusBadge.className = 'badge bg-' + (status === 'idle' ? 'secondary' : (status === 'operasi' ? 'success' : (status === 'rusak' ? 'danger' : 'warning')));
+    
+    const imageUrl = button.dataset.equipmentImage;
+    if (imageUrl) {
+        document.getElementById('viewImage').src = imageUrl;
+        document.getElementById('viewImage').style.display = 'block';
+        document.getElementById('viewNoImage').style.display = 'none';
+    } else {
+        document.getElementById('viewImage').style.display = 'none';
+        document.getElementById('viewNoImage').style.display = 'flex';
+    }
+}
 
-    fetch("{{ route('manager.equipment.store') }}", {
-        method: "POST",
-        headers: {
-            "X-CSRF-TOKEN": "{{ csrf_token() }}",
-            "Accept": "application/json"
-        },
-        body: formData
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                location.reload();
-            } else {
-                alert('Error: ' + JSON.stringify(data));
-            }
-        });
-});
+function populateEditForm(button) {
+    const id = button.dataset.equipmentId;
+    document.getElementById('editForm').action = `/manager/equipment/${id}`;
+    document.getElementById('editCode').value = button.dataset.equipmentCode;
+    document.getElementById('editName').value = button.dataset.equipmentName;
+    document.getElementById('editType').value = button.dataset.equipmentTypeId;
+    document.getElementById('editStatus').value = button.dataset.equipmentStatus;
+    document.getElementById('editHour').value = button.dataset.equipmentHour;
+}
 
-document.querySelectorAll('.delete-btn').forEach(btn => {
-    btn.addEventListener('click', function () {
-        if (!confirm('Delete equipment?')) return;
-        let id = this.dataset.id;
-        fetch(`/manager/equipment/${id}`, {
-            method: "DELETE",
-            headers: {
-                "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                "Accept": "application/json"
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') document.getElementById(`row-${id}`).remove();
-            });
-    });
-});
+function setDeleteForm(id, name) {
+    document.getElementById('deleteForm').action = `/manager/equipment/${id}`;
+    document.getElementById('deleteEquipmentName').textContent = name;
+}
 </script>
 @endpush

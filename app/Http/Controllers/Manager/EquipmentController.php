@@ -44,11 +44,7 @@ class EquipmentController extends Controller
             }
         }
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Equipment berhasil ditambahkan',
-            'data' => $equipment
-        ]);
+        return redirect()->route('manager.equipment.index')->with('success', 'Equipment berhasil ditambahkan');
     }
 
     public function show($id) // For viewing detail in modal or page
@@ -87,22 +83,14 @@ class EquipmentController extends Controller
             }
         }
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Equipment berhasil diperbarui',
-            'data' => $equipment->load('images')
-        ]);
+        return redirect()->route('manager.equipment.index')->with('success', 'Equipment berhasil diperbarui');
     }
 
     public function destroy($id)
     {
         $equipment = Equipment::findOrFail($id);
-
         $equipment->delete(); // Soft delete
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Equipment berhasil dihapus'
-        ]);
+        
+        return redirect()->route('manager.equipment.index')->with('success', 'Equipment berhasil dihapus');
     }
 }
