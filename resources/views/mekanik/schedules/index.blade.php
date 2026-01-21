@@ -11,7 +11,7 @@
 
         {{-- Ultra Modern Header --}}
         <div class="position-relative overflow-hidden rounded-4 shadow-lg mb-4"
-            style="background: linear-gradient(135deg, #f6c23e 0%, #f4b619 100%);">
+            style="background: linear-gradient(135deg, #B6771D 0%, #7B542F 100%);">
             <div class="position-absolute top-0 end-0 opacity-25">
                 <i class="fas fa-calendar-alt"
                     style="font-size: 8rem; color: white; transform: rotate(15deg); margin: -2rem;"></i>
@@ -100,7 +100,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow-lg rounded-4">
                 <div class="modal-header border-0 pb-2"
-                    style="background: linear-gradient(135deg, #f6c23e 0%, #f4a20c 100%);">
+                    style="background: linear-gradient(135deg, #B6771D 0%, #7B542F 100%);">
                     <h5 class="modal-title fw-bold text-white" id="detailTitle">Detail Jadwal</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
@@ -141,7 +141,7 @@
                                 <i class="fas fa-spinner me-1"></i> Kerjakan
                             </button>
                             <button onclick="updateTaskStatus('done')" class="btn flex-grow-1 text-white"
-                                style="background: linear-gradient(135deg, #f6c23e 0%, #f4a20c 100%);">
+                                style="background: linear-gradient(135deg, #B6771D 0%, #7B542F 100%);">
                                 <i class="fas fa-check me-1"></i> Selesai
                             </button>
                         </div>
@@ -151,7 +151,7 @@
                     <div id="maintenanceActionSection" class="d-none mt-4 pt-3 border-top">
                         <label class="small text-muted text-uppercase fw-bold mb-2">Aksi Maintenance</label>
                         <button onclick="completeMaintenance()" class="btn w-100 text-white fw-bold"
-                            style="background: linear-gradient(135deg, #f6c23e 0%, #f4a20c 100%);">
+                            style="background: linear-gradient(135deg, #B6771D 0%, #7B542F 100%);">
                             <i class="fas fa-check-circle me-1"></i> Selesaikan Maintenance
                         </button>
                     </div>
@@ -351,7 +351,7 @@
             maintenanceActionSection.classList.add('d-none');
 
             if (item.type === 'task') {
-                typeBadge.innerHTML = '<span class="badge" style="background: linear-gradient(135deg, #f6c23e 0%, #f4a20c 100%);">TASK</span>';
+                typeBadge.innerHTML = '<span class="badge" style="background: linear-gradient(135deg, #B6771D 0%, #7B542F 100%);">TASK</span>';
 
                 if (item.status !== 'done') {
                     taskActionSection.classList.remove('d-none');

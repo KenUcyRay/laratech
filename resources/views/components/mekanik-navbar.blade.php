@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg" style="background: linear-gradient(135deg, #ca8a04 0%, #eab308 100%); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+<nav class="navbar navbar-expand-lg" style="background: linear-gradient(135deg, #B6771D 0%, #7B542F 100%); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
     <div class="container-fluid px-4">
         <div class="navbar-brand d-flex align-items-center text-white text-decoration-none">
             <img src="{{ asset('img/logo2.png') }}" alt="LaraTech Logo" 

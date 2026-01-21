@@ -10,7 +10,7 @@
     <div class="container-fluid mt-4">
         {{-- Ultra Modern Header --}}
         <div class="position-relative overflow-hidden rounded-4 shadow-lg mb-4"
-            style="background: linear-gradient(135deg, #f6c23e 0%, #f4b619 100%);">
+            style="background: linear-gradient(135deg, #B6771D 0%, #7B542F 100%);">
             <div class="position-absolute top-0 end-0 opacity-25">
                 <i class="fas fa-tools" style="font-size: 8rem; color: white; transform: rotate(15deg); margin: -2rem;"></i>
             </div>
@@ -86,7 +86,7 @@
             <form id="statusForm">
                 <div class="modal-content border-0 shadow-lg rounded-4">
                     <div class="modal-header border-0 pb-2"
-                        style="background: linear-gradient(135deg, #f6c23e 0%, #f4a20c 100%);">
+                        style="background: linear-gradient(135deg, #B6771D 0%, #7B542F 100%);">
                         <h5 class="modal-title fw-bold text-white">Update Status: <span id="eqName"></span></h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>
@@ -105,7 +105,7 @@
                     <div class="modal-footer border-0">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn text-white fw-bold"
-                            style="background: linear-gradient(135deg, #f6c23e 0%, #f4a20c 100%);">
+                            style="background: linear-gradient(135deg, #B6771D 0%, #7B542F 100%);">
                             <i class="fas fa-save me-1"></i> Save Changes
                         </button>
                     </div>
