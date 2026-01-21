@@ -17,7 +17,7 @@ class TeamController extends Controller
             }, 'tasks as completed_tasks' => function($query) {
                 $query->where('status', 'done');
             }])
-            ->get();
+            ->paginate(3, ['*'], 'operators');
 
         $mekaniks = User::where('role', 'mekanik')
             ->withCount(['tasks as total_tasks', 'tasks as pending_tasks' => function($query) {
@@ -25,7 +25,7 @@ class TeamController extends Controller
             }, 'tasks as completed_tasks' => function($query) {
                 $query->where('status', 'done');
             }])
-            ->get();
+            ->paginate(3, ['*'], 'mekaniks');
 
         return view('manager.team.index', compact('operators', 'mekaniks'));
     }

@@ -13,7 +13,7 @@ class EquipmentController extends Controller
 {
     public function index()
     {
-        $equipments = Equipment::with(['type', 'images'])->latest()->get();
+        $equipments = Equipment::with(['type', 'images'])->latest()->paginate(5);
         // Load types for the Create/Edit modal/form
         $types = EquipmentType::all();
 

@@ -13,7 +13,7 @@ class ReportController extends Controller
     {
         $reports = Report::with(['equipment', 'reporter', 'task'])
             ->latest()
-            ->get();
+            ->paginate(5);
 
         $reportStats = [
             'total' => Report::count(),

@@ -6,6 +6,22 @@
     @include('components.manager-sidebar')
 @endsection
 
+@push('styles')
+<style>
+.btn-outline-primary {
+    color: #374151;
+    border-color: #374151;
+    background: transparent;
+}
+.btn-outline-primary:hover {
+    color: #ffffff;
+    background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+    border-color: #4b5563;
+    box-shadow: 0 2px 4px rgba(75, 85, 99, 0.3);
+}
+</style>
+@endpush
+
 @section('content')
 <div class="container-fluid mt-4">
 
@@ -131,6 +147,38 @@
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <div class="text-muted small">
+                    Showing {{ $reports->firstItem() ?? 1 }} to {{ $reports->lastItem() ?? $reports->count() }} of {{ $reports->total() }} results
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    @if ($reports->onFirstPage())
+                        <button class="btn btn-sm btn-outline-secondary" disabled>
+                            <i class="fas fa-chevron-left"></i> Previous
+                        </button>
+                    @else
+                        <a href="{{ $reports->previousPageUrl() }}" class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-chevron-left"></i> Previous
+                        </a>
+                    @endif
+                    
+                    <span class="text-muted small mx-2">
+                        Page {{ $reports->currentPage() }} of {{ $reports->lastPage() }}
+                    </span>
+                    
+                    @if ($reports->hasMorePages())
+                        <a href="{{ $reports->nextPageUrl() }}" class="btn btn-sm btn-outline-primary">
+                            Next <i class="fas fa-chevron-right"></i>
+                        </a>
+                    @else
+                        <button class="btn btn-sm btn-outline-secondary" disabled>
+                            Next <i class="fas fa-chevron-right"></i>
+                        </button>
+                    @endif
+                </div>
             </div>
         </div>
     </div>
