@@ -85,9 +85,5 @@
 </div>
 
 {{-- Pagination --}}
-@if($operators->hasPages())
-    <div class="d-flex justify-content-end mt-4">
-        {{ $operators->links('custom.admin-pagination') }}
-    </div>
-@endif
+{{ $operators->links('custom.admin-pagination') }}
 @endsection

@@ -83,11 +83,7 @@
                 </div>
                 
                 {{-- Pagination --}}
-                @if($maintenances->hasPages())
-                    <div class="d-flex justify-content-end mt-4">
-                        {{ $maintenances->links('custom.pagination') }}
-                    </div>
-                @endif
+                {{ $maintenances->links('custom.pagination') }}
             </div>
         </div>
 

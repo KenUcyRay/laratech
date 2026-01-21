@@ -88,11 +88,7 @@
                     </div>
                     
                     {{-- Pagination --}}
-                    @if($tasks->hasPages())
-                        <div class="d-flex justify-content-end mt-4">
-                            {{ $tasks->links('custom.mekanik-pagination') }}
-                        </div>
-                    @endif
+                    {{ $tasks->links('custom.mekanik-pagination') }}
                 @else
                     <div class="text-center py-5">
                         <i class="fas fa-clipboard-list fa-3x text-muted mb-3"></i>

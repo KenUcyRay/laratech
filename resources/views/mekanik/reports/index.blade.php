@@ -110,11 +110,7 @@
                     </div>
                     
                     {{-- Pagination --}}
-                    @if($reports->hasPages())
-                        <div class="d-flex justify-content-end mt-4">
-                            {{ $reports->links('custom.mekanik-pagination') }}
-                        </div>
-                    @endif
+                    {{ $reports->links('custom.mekanik-pagination') }}
                 @else
                     <div class="text-center py-5">
                         <i class="fas fa-clipboard-list fa-3x text-muted mb-3"></i>
