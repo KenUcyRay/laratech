@@ -139,9 +139,17 @@
                             </td>
                             <td class="py-3">{{ $report->created_at->format('Y-m-d H:i') }}</td>
                             <td class="py-3">
-                                <a href="{{ route('manager.reports.show', $report->id) }}" class="btn btn-sm btn-info rounded-3">
+                                <button class="btn btn-sm btn-info rounded-3" data-bs-toggle="modal" data-bs-target="#viewModal" 
+                                    data-report-id="{{ $report->id }}"
+                                    data-report-equipment="{{ $report->equipment->name ?? 'N/A' }}"
+                                    data-report-reporter="{{ $report->reporter->name ?? 'N/A' }}"
+                                    data-report-description="{{ $report->description }}"
+                                    data-report-severity="{{ $report->severity }}"
+                                    data-report-status="{{ $report->status }}"
+                                    data-report-date="{{ $report->created_at->format('Y-m-d H:i') }}"
+                                    onclick="populateViewModal(this)">
                                     <i class="fas fa-eye"></i>
-                                </a>
+                                </button>
                             </td>
                         </tr>
                         @endforeach
@@ -184,4 +192,77 @@
     </div>
 
 </div>
+
+<!-- View Modal -->
+<div class="modal fade" id="viewModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header border-0 p-4" style="background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);">
+                <h5 class="modal-title text-white fw-bold"><i class="fas fa-eye me-2"></i>Report Details</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="row">
+                    <div class="col-md-6">
+                        <table class="table table-borderless">
+                            <tr>
+                                <td class="fw-semibold">Equipment:</td>
+                                <td id="viewEquipment"></td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold">Reporter:</td>
+                                <td id="viewReporter"></td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold">Severity:</td>
+                                <td><span id="viewSeverity" class="badge"></span></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table table-borderless">
+                            <tr>
+                                <td class="fw-semibold">Status:</td>
+                                <td><span id="viewStatus" class="badge bg-secondary"></span></td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold">Date:</td>
+                                <td id="viewDate"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <label class="fw-semibold">Description:</label>
+                    <div class="bg-light p-3 rounded-3 mt-2">
+                        <p id="viewDescription" class="mb-0"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer border-0 p-4">
+                <button type="button" class="btn btn-secondary rounded-3" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@push('scripts')
+<script>
+function populateViewModal(button) {
+    document.getElementById('viewEquipment').textContent = button.dataset.reportEquipment;
+    document.getElementById('viewReporter').textContent = button.dataset.reportReporter;
+    document.getElementById('viewDescription').textContent = button.dataset.reportDescription;
+    document.getElementById('viewDate').textContent = button.dataset.reportDate;
+    
+    const severityBadge = document.getElementById('viewSeverity');
+    const severity = button.dataset.reportSeverity;
+    severityBadge.textContent = severity.charAt(0).toUpperCase() + severity.slice(1);
+    severityBadge.className = 'badge ' + (severity === 'high' ? 'bg-danger' : (severity === 'medium' ? 'bg-warning' : 'bg-info'));
+    
+    const statusBadge = document.getElementById('viewStatus');
+    const status = button.dataset.reportStatus;
+    statusBadge.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+}
+</script>
+@endpush
 @endsection
