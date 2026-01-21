@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('sidebar')
+    @include('components.manager-sidebar')
+@endsection
+
 @section('title', 'Equipment Types')
 
 @section('content')
@@ -104,7 +108,7 @@
                 e.preventDefault();
                 let formData = new FormData(this);
 
-                fetch("{{ route('admin.equipment-types.store') }}", {
+                fetch("{{ route('manager.equipment-types.store') }}", {
                     method: "POST",
                     headers: {
                         "X-CSRF-TOKEN": "{{ csrf_token() }}",
@@ -127,7 +131,7 @@
                 btn.addEventListener('click', function () {
                     if (!confirm('Are you sure?')) return;
                     let id = this.dataset.id;
-                    fetch(`/admin/equipment-types/${id}`, {
+                    fetch(`/manager/equipment-types/${id}`, {
                         method: "DELETE",
                         headers: {
                             "X-CSRF-TOKEN": "{{ csrf_token() }}",
@@ -149,7 +153,7 @@
             document.querySelectorAll('.edit-btn').forEach(btn => {
                 btn.addEventListener('click', function () {
                     let id = this.dataset.id;
-                    fetch(`/admin/equipment-types/${id}/edit`, {
+                    fetch(`/manager/equipment-types/${id}/edit`, {
                         headers: { "Accept": "application/json" }
                     })
                         .then(response => response.json())
@@ -172,7 +176,7 @@
                 let formData = new FormData(this);
                 formData.append('_method', 'PUT'); // Method spoofing
 
-                fetch(`/admin/equipment-types/${id}`, {
+                fetch(`/manager/equipment-types/${id}`, {
                     method: "POST",
                     headers: {
                         "X-CSRF-TOKEN": "{{ csrf_token() }}",

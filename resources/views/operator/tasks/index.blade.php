@@ -90,8 +90,7 @@
                         </div>
 
                         {{-- Task Title & Description --}}
-                        <h5 class="fw-bold text-dark mb-2">{{ $task->title }}</h5>
-                        <p class="text-muted mb-3 fs-6">{{ $task->description ?? 'Tidak ada deskripsi tambahan' }}</p>
+                        <h5 class="fw-bold text-dark mb-2 py-2">{{ $task->title }}</h5>
 
                         {{-- Status badge + Priority badge + Deadline --}}
                         <div class="d-flex justify-content-between align-items-center">

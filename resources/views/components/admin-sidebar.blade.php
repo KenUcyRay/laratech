@@ -66,45 +66,6 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('admin.equipment-types*') ? 'active' : '' }}"
-                    href="{{ route('admin.equipment-types.index') }}"
-                    style="transition: all 0.3s ease; {{ request()->routeIs('admin.equipment-types*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
-                    onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
-                    onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
-                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3"
-                        style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
-                        <i class="fas fa-tags"></i>
-                    </div>
-                    <span class="fw-medium">Tipe Equipment</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('admin.equipment.*') ? 'active' : '' }}"
-                    href="{{ route('admin.equipment.index') }}"
-                    style="transition: all 0.3s ease; {{ request()->routeIs('admin.equipment.*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
-                    onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
-                    onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
-                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3"
-                        style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
-                        <i class="fas fa-tools"></i>
-                    </div>
-                    <span class="fw-medium">Equipment</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('admin.maintenance*') ? 'active' : '' }}"
-                    href="{{ route('admin.maintenance.index') }}"
-                    style="transition: all 0.3s ease; {{ request()->routeIs('admin.maintenance*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
-                    onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
-                    onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
-                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3"
-                        style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
-                        <i class="fas fa-calendar-check"></i>
-                    </div>
-                    <span class="fw-medium">Jadwal Maintenance</span>
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('admin.reports*') ? 'active' : '' }}"
                     href="{{ route('admin.reports.index') }}"
                     style="transition: all 0.3s ease; {{ request()->routeIs('admin.reports*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"

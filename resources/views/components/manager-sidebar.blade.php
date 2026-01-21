@@ -52,6 +52,48 @@
                     <span class="fw-medium">Team Management</span>
                 </a>
             </li>
+
+            <!-- Equipment Management -->
+            <li class="nav-item">
+                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('manager.equipment-types*') ? 'active' : '' }}"
+                    href="{{ route('manager.equipment-types.index') }}"
+                    style="transition: all 0.3s ease; {{ request()->routeIs('manager.equipment-types*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
+                    onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
+                    onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
+                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3"
+                        style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <span class="fw-medium">Equipment Types</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('manager.equipment.*') ? 'active' : '' }}"
+                    href="{{ route('manager.equipment.index') }}"
+                    style="transition: all 0.3s ease; {{ request()->routeIs('manager.equipment.*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
+                    onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
+                    onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
+                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3"
+                        style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <span class="fw-medium">Equipment</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('manager.maintenance*') ? 'active' : '' }}"
+                    href="{{ route('manager.maintenance.index') }}"
+                    style="transition: all 0.3s ease; {{ request()->routeIs('manager.maintenance*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
+                    onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
+                    onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
+                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3"
+                        style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <span class="fw-medium">Maintenance</span>
+                </a>
+            </li>
+
             <li class="nav-item">
                 <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('manager.reports*') ? 'active' : '' }}"
                     href="{{ route('manager.reports.index') }}"

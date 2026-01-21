@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Manager;
 
 use App\Http\Controllers\Controller;
 use App\Models\Maintenance;
@@ -14,10 +14,11 @@ class MaintenanceController extends Controller
     {
         $maintenances = Maintenance::with(['equipment', 'assignee'])->orderBy('next_service_due', 'asc')->get();
         // For Create Modal
-        $equipments = Equipment::all();
+        $equipments = Equipment::all(); // Keep for Edit modal
+        $availableEquipments = Equipment::doesntHave('maintenances')->get(); // For Create modal
         $assignees = User::whereIn('role', ['mekanik', 'operator'])->get();
 
-        return view('admin.maintenance.index', compact('maintenances', 'equipments', 'assignees'));
+        return view('manager.maintenance.index', compact('maintenances', 'equipments', 'availableEquipments', 'assignees'));
     }
 
     public function store(Request $request)
@@ -27,6 +28,15 @@ class MaintenanceController extends Controller
             'user_id' => 'required|exists:users,id',
             'last_service_date' => 'nullable|date',
         ]);
+
+        // Check if equipment already has a schedule
+        $exists = Maintenance::where('equipment_id', $validated['equipment_id'])->exists();
+        if ($exists) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Equipment ini sudah memiliki jadwal maintenance.'
+            ], 422);
+        }
 
         $lastService = $validated['last_service_date'] ? \Carbon\Carbon::parse($validated['last_service_date']) : now();
         $validated['next_service_due'] = $lastService->copy()->addHours(1500);
@@ -59,6 +69,18 @@ class MaintenanceController extends Controller
             'user_id' => 'required|exists:users,id',
             'last_service_date' => 'nullable|date',
         ]);
+
+        // Check if equipment already has a schedule (excluding current one)
+        $exists = Maintenance::where('equipment_id', $validated['equipment_id'])
+            ->where('id', '!=', $id)
+            ->exists();
+
+        if ($exists) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Equipment ini sudah memiliki jadwal maintenance.'
+            ], 422);
+        }
 
         $lastService = $validated['last_service_date'] ? \Carbon\Carbon::parse($validated['last_service_date']) : now();
         $validated['next_service_due'] = $lastService->copy()->addHours(1500);

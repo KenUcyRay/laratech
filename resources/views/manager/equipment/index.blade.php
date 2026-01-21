@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('sidebar')
+    @include('components.manager-sidebar')
+@endsection
+
 @section('title', 'Equipment Inventory')
 
 @section('sidebar')
@@ -166,7 +170,7 @@
             e.preventDefault();
             let formData = new FormData(this);
 
-            fetch("{{ route('admin.equipment.store') }}", {
+            fetch("{{ route('manager.equipment.store') }}", {
                 method: "POST",
                 headers: {
                     "X-CSRF-TOKEN": "{{ csrf_token() }}",
@@ -184,11 +188,12 @@
                 });
         });
 
+        // Delete logic
         document.querySelectorAll('.delete-btn').forEach(btn => {
             btn.addEventListener('click', function () {
                 if (!confirm('Delete equipment?')) return;
                 let id = this.dataset.id;
-                fetch(`/admin/equipment/${id}`, {
+                fetch(`/manager/equipment/${id}`, {
                     method: "DELETE",
                     headers: {
                         "X-CSRF-TOKEN": "{{ csrf_token() }}",
@@ -201,6 +206,6 @@
                     });
             });
         });
-    </script>
-@endpush
+        </script>
+    @endpush
 @endsection
