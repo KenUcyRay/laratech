@@ -59,8 +59,19 @@
                             <td>{{ $type->description }}</td>
                             <td>{{ $type->equipments_count }}</td>
                             <td>
-                                <button class="btn btn-sm btn-warning edit-btn" data-id="{{ $type->id }}">Edit</button>
-                                <button class="btn btn-sm btn-danger delete-btn" data-id="{{ $type->id }}">Delete</button>
+                                <div class="btn-group" role="group">
+                                    <button class="btn btn-sm btn-warning rounded-start" data-bs-toggle="modal" data-bs-target="#editModal" 
+                                        data-type-id="{{ $type->id }}"
+                                        data-type-name="{{ $type->name }}"
+                                        data-type-description="{{ $type->description }}"
+                                        onclick="populateEditForm(this)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger rounded-end" data-bs-toggle="modal" data-bs-target="#deleteModal" 
+                                        onclick="setDeleteForm({{ $type->id }}, '{{ addslashes($type->name) }}')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
@@ -105,152 +116,106 @@
 <!-- Create Modal -->
 <div class="modal fade" id="createModal" tabindex="-1">
     <div class="modal-dialog">
-        <form id="createForm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add Equipment Type</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">Name</label>
-                        <input type="text" name="name" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Description</label>
-                        <textarea name="description" class="form-control"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header border-0 p-4" style="background: linear-gradient(135deg, #111827 0%, #374151 100%);">
+                <h5 class="modal-title text-white fw-bold"><i class="fas fa-plus me-2"></i>Add Equipment Type</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
-        </form>
+            <form action="{{ route('manager.equipment-types.store') }}" method="POST">
+                @csrf
+                <div class="modal-body p-4">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Name</label>
+                        <input type="text" name="name" class="form-control rounded-3 border-2" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Description</label>
+                        <textarea name="description" class="form-control rounded-3 border-2" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 p-4">
+                    <button type="button" class="btn btn-secondary rounded-3" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary rounded-3"><i class="fas fa-save me-2"></i>Save</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
 <!-- Edit Modal -->
 <div class="modal fade" id="editModal" tabindex="-1">
     <div class="modal-dialog">
-        <form id="editForm">
-            <input type="hidden" name="id" id="editId">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Equipment Type</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">Name</label>
-                        <input type="text" name="name" id="editName" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Description</label>
-                        <textarea name="description" id="editDescription" class="form-control"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Update</button>
-                </div>
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header border-0 p-4" style="background: linear-gradient(135deg, #111827 0%, #374151 100%);">
+                <h5 class="modal-title text-white fw-bold"><i class="fas fa-edit me-2"></i>Edit Equipment Type</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
-        </form>
+            <form action="" method="POST" id="editForm">
+                @csrf
+                @method('PUT')
+                <div class="modal-body p-4">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Name</label>
+                        <input type="text" name="name" id="editName" class="form-control rounded-3 border-2" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Description</label>
+                        <textarea name="description" id="editDescription" class="form-control rounded-3 border-2" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 p-4">
+                    <button type="button" class="btn btn-secondary rounded-3" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary rounded-3"><i class="fas fa-save me-2"></i>Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header border-0 p-4" style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);">
+                <h5 class="modal-title text-white fw-bold"><i class="fas fa-trash me-2"></i>Delete Equipment Type</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4 text-center">
+                <div class="mb-3">
+                    <i class="fas fa-exclamation-triangle text-warning" style="font-size: 3rem;"></i>
+                </div>
+                <h6 class="fw-bold mb-2">Are you sure?</h6>
+                <p class="text-muted mb-0">You are about to delete: <strong id="deleteTypeName"></strong></p>
+                <p class="text-muted small">This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer border-0 p-4 justify-content-center">
+                <button type="button" class="btn btn-secondary rounded-3 me-2" data-bs-dismiss="modal">Cancel</button>
+                <form action="" method="POST" id="deleteForm" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger rounded-3">
+                        <i class="fas fa-trash me-2"></i>Delete Type
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 @endsection
 
-@push('scripts')
 <script>
-// Create
-document.getElementById('createForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    let formData = new FormData(this);
+function populateEditForm(button) {
+    const id = button.getAttribute('data-type-id');
+    const name = button.getAttribute('data-type-name');
+    const description = button.getAttribute('data-type-description');
+    
+    document.getElementById('editForm').action = `/manager/equipment-types/${id}`;
+    document.getElementById('editName').value = name || '';
+    document.getElementById('editDescription').value = description || '';
+}
 
-    fetch("{{ route('manager.equipment-types.store') }}", {
-        method: "POST",
-        headers: {
-            "X-CSRF-TOKEN": "{{ csrf_token() }}",
-            "Accept": "application/json"
-        },
-        body: formData
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                location.reload();
-            } else {
-                alert('Error: ' + JSON.stringify(data));
-            }
-        });
-});
-
-// Delete
-document.querySelectorAll('.delete-btn').forEach(btn => {
-    btn.addEventListener('click', function () {
-        if (!confirm('Are you sure?')) return;
-        let id = this.dataset.id;
-        fetch(`/manager/equipment-types/${id}`, {
-            method: "DELETE",
-            headers: {
-                "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                "Accept": "application/json"
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    document.getElementById(`row-${id}`).remove();
-                } else {
-                    alert(data.message);
-                }
-            });
-    });
-});
-
-// Edit
-document.querySelectorAll('.edit-btn').forEach(btn => {
-    btn.addEventListener('click', function () {
-        let id = this.dataset.id;
-        fetch(`/manager/equipment-types/${id}/edit`, {
-            headers: { "Accept": "application/json" }
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    let type = data.data;
-                    document.getElementById('editId').value = type.id;
-                    document.getElementById('editName').value = type.name;
-                    document.getElementById('editDescription').value = type.description;
-                    new bootstrap.Modal(document.getElementById('editModal')).show();
-                }
-            });
-    });
-});
-
-// Update
-document.getElementById('editForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    let id = document.getElementById('editId').value;
-    let formData = new FormData(this);
-    formData.append('_method', 'PUT');
-
-    fetch(`/manager/equipment-types/${id}`, {
-        method: "POST",
-        headers: {
-            "X-CSRF-TOKEN": "{{ csrf_token() }}",
-            "Accept": "application/json"
-        },
-        body: formData
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                location.reload();
-            } else {
-                alert('Error: ' + JSON.stringify(data));
-            }
-        });
-});
+function setDeleteForm(id, name) {
+    document.getElementById('deleteForm').action = `/manager/equipment-types/${id}`;
+    document.getElementById('deleteTypeName').textContent = name;
+}
 </script>
-@endpush

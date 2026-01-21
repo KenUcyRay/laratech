@@ -21,13 +21,9 @@ class EquipmentTypeController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        $type = EquipmentType::create($validated);
+        EquipmentType::create($validated);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Tipe equipment berhasil ditambahkan',
-            'data' => $type
-        ]);
+        return redirect()->route('manager.equipment-types.index')->with('success', 'Equipment type berhasil ditambahkan');
     }
 
     public function edit($id)
@@ -52,11 +48,7 @@ class EquipmentTypeController extends Controller
 
         $type->update($validated);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Tipe equipment berhasil diperbarui',
-            'data' => $type
-        ]);
+        return redirect()->route('manager.equipment-types.index')->with('success', 'Equipment type berhasil diperbarui');
     }
 
     public function destroy($id)
@@ -64,17 +56,11 @@ class EquipmentTypeController extends Controller
         $type = EquipmentType::findOrFail($id);
 
         if ($type->equipments()->count() > 0) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Tidak dapat menghapus tipe ini karena masih digunakan oleh equipment.'
-            ], 400);
+            return redirect()->route('manager.equipment-types.index')->with('error', 'Tidak dapat menghapus tipe ini karena masih digunakan oleh equipment.');
         }
 
         $type->delete();
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Tipe equipment berhasil dihapus'
-        ]);
+        return redirect()->route('manager.equipment-types.index')->with('success', 'Equipment type berhasil dihapus');
     }
 }
