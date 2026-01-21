@@ -34,7 +34,7 @@
             <div class="card border-0 shadow-lg rounded-4 h-100" style="background: linear-gradient(145deg, #3b82f6 0%, #1d4ed8 100%); transform: translateY(0); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
                 <div class="card-body p-4 text-center">
                     <div class="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                        <i class="fas fa-tasks fs-3 text-white"></i>
+                        <i class="fas fa-tasks fs-3 text-black"></i>
                     </div>
                     <h3 class="fw-bold text-white mb-1">{{ $totalTasks }}</h3>
                     <p class="text-white text-opacity-75 mb-0">Total Tasks</p>
@@ -45,7 +45,7 @@
             <div class="card border-0 shadow-lg rounded-4 h-100" style="background: linear-gradient(145deg, #f59e0b 0%, #d97706 100%); transform: translateY(0); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
                 <div class="card-body p-4 text-center">
                     <div class="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                        <i class="fas fa-clock fs-3 text-white"></i>
+                        <i class="fas fa-clock fs-3 text-black"></i>
                     </div>
                     <h3 class="fw-bold text-white mb-1">{{ $pendingTasks }}</h3>
                     <p class="text-white text-opacity-75 mb-0">Pending Tasks</p>
@@ -56,7 +56,7 @@
             <div class="card border-0 shadow-lg rounded-4 h-100" style="background: linear-gradient(145deg, #10b981 0%, #059669 100%); transform: translateY(0); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
                 <div class="card-body p-4 text-center">
                     <div class="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                        <i class="fas fa-check fs-3 text-white"></i>
+                        <i class="fas fa-check fs-3 text-black"></i>
                     </div>
                     <h3 class="fw-bold text-white mb-1">{{ $completedTasks }}</h3>
                     <p class="text-white text-opacity-75 mb-0">Completed Tasks</p>
@@ -67,7 +67,7 @@
             <div class="card border-0 shadow-lg rounded-4 h-100" style="background: linear-gradient(145deg, #06b6d4 0%, #0891b2 100%); transform: translateY(0); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
                 <div class="card-body p-4 text-center">
                     <div class="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                        <i class="fas fa-users fs-3 text-white"></i>
+                        <i class="fas fa-users fs-3 text-black"></i>
                     </div>
                     <h3 class="fw-bold text-white mb-1">{{ $totalOperators + $totalMekaniks }}</h3>
                     <p class="text-white text-opacity-75 mb-0">Total Team</p>

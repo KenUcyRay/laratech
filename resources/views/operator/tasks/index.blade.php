@@ -134,11 +134,7 @@
     </div>
     
     {{-- Pagination --}}
-    @if($tasks->hasPages())
-        <div class="d-flex justify-content-end mt-5">
-            {{ $tasks->links('custom.pagination') }}
-        </div>
-    @endif
+    {{ $tasks->links('custom.pagination') }}
 
 </div>
 

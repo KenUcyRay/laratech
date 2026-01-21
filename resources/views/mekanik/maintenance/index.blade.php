@@ -75,11 +75,7 @@
                     </div>
                     
                     {{-- Pagination --}}
-                    @if($maintenances->hasPages())
-                        <div class="d-flex justify-content-end mt-4">
-                            {{ $maintenances->links('custom.mekanik-pagination') }}
-                        </div>
-                    @endif
+                    {{ $maintenances->links('custom.mekanik-pagination') }}
                 @else
                     <div class="text-center py-5">
                         <i class="fas fa-calendar-check fa-3x text-muted mb-3"></i>

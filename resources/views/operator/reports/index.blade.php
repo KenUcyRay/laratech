@@ -109,11 +109,7 @@
             </div>
             
             {{-- Pagination --}}
-            @if($reports->hasPages())
-                <div class="d-flex justify-content-end mt-4">
-                    {{ $reports->links('custom.pagination') }}
-                </div>
-            @endif
+            {{ $reports->links('custom.pagination') }}
 
         </div>
     </div>
