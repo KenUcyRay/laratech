@@ -100,7 +100,7 @@
                                                 </button>
 
                                                 @if($report->task)
-                                                    <a href="{{ route('mekanik.work-orders.index') }}" class="btn btn-sm btn-secondary"
+                                                    <a href="{{ route('mekanik.tasks.index') }}" class="btn btn-sm btn-secondary"
                                                         title="View Task">
                                                         <i class="fas fa-link"></i>
                                                     </a>

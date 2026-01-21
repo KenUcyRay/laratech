@@ -77,7 +77,7 @@ Route::prefix('operator')->name('operator.')->middleware(['auth', 'operator'])->
     Route::get('/reports/{report}/pdf', [ReportController::class, 'pdf'])
         ->name('reports.pdf');
 
-    Route::get('/maintenance', [App\Http\Controllers\Operator\MaintenanceController::class, 'index'])->name('maintenance.index');
+
 });
 
 // Mekanik Routes
@@ -112,4 +112,5 @@ Route::middleware('auth')->group(function () {
 
 Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 Route::get('/password/request', function () {
-    return view('auth.forgot-password'); })->name('password.request');
+    return view('auth.forgot-password');
+})->name('password.request');

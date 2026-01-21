@@ -16,7 +16,14 @@ class TaskController extends Controller
         $equipments = Equipment::all();
         $assignees = User::whereIn('role', ['mekanik', 'operator'])->get();
 
-        return view('manager.tasks.index', compact('tasks', 'equipments', 'assignees'));
+        $taskCounts = [
+            'total' => Task::count(),
+            'todo' => Task::where('status', 'todo')->count(),
+            'doing' => Task::where('status', 'doing')->count(),
+            'done' => Task::where('status', 'done')->count(),
+        ];
+
+        return view('manager.tasks.index', compact('tasks', 'equipments', 'assignees', 'taskCounts'));
     }
 
     public function store(Request $request)
@@ -27,8 +34,9 @@ class TaskController extends Controller
             'assigned_to' => 'required|exists:users,id',
             'priority' => 'required|in:low,medium,high',
             'due_date' => 'nullable|date',
-            'status' => 'required|in:todo,doing,done,cancelled',
         ]);
+
+        $validated['status'] = 'todo';
 
         Task::create($validated);
 
@@ -40,7 +48,7 @@ class TaskController extends Controller
         $task = Task::with(['equipment', 'assignee'])->findOrFail($id);
         $equipments = Equipment::all();
         $assignees = User::whereIn('role', ['mekanik', 'operator'])->get();
-        
+
         return view('manager.tasks.edit', compact('task', 'equipments', 'assignees'));
     }
 

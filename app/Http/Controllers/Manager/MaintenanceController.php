@@ -16,7 +16,8 @@ class MaintenanceController extends Controller
         // For Create Modal
         $equipments = Equipment::all(); // Keep for Edit modal
         $availableEquipments = Equipment::doesntHave('maintenances')->get(); // For Create modal
-        $assignees = User::whereIn('role', ['mekanik', 'operator'])->get();
+        $availableEquipments = Equipment::doesntHave('maintenances')->get(); // For Create modal
+        $assignees = User::where('role', 'mekanik')->get();
 
         return view('manager.maintenance.index', compact('maintenances', 'equipments', 'availableEquipments', 'assignees'));
     }
@@ -27,6 +28,7 @@ class MaintenanceController extends Controller
             'equipment_id' => 'required|exists:equipments,id',
             'user_id' => 'required|exists:users,id',
             'last_service_date' => 'nullable|date',
+            'interval_days' => 'required|integer|min:1',
         ]);
 
         // Check if equipment already has a schedule
@@ -36,7 +38,7 @@ class MaintenanceController extends Controller
         }
 
         $lastService = $validated['last_service_date'] ? \Carbon\Carbon::parse($validated['last_service_date']) : now();
-        $validated['next_service_due'] = $lastService->copy()->addHours(1500);
+        $validated['next_service_due'] = $lastService->copy()->addDays((int) $validated['interval_days']);
 
         Maintenance::create($validated);
 
@@ -61,6 +63,7 @@ class MaintenanceController extends Controller
             'equipment_id' => 'required|exists:equipments,id',
             'user_id' => 'required|exists:users,id',
             'last_service_date' => 'nullable|date',
+            'interval_days' => 'required|integer|min:1',
         ]);
 
         // Check if equipment already has a schedule (excluding current one)
@@ -73,7 +76,7 @@ class MaintenanceController extends Controller
         }
 
         $lastService = $validated['last_service_date'] ? \Carbon\Carbon::parse($validated['last_service_date']) : now();
-        $validated['next_service_due'] = $lastService->copy()->addHours(1500);
+        $validated['next_service_due'] = $lastService->copy()->addDays((int) $validated['interval_days']);
 
         $maintenance->update($validated);
 

@@ -69,13 +69,11 @@ class DashboardController extends Controller
             ->pluck('equipment')
             ->unique('id');
 
-        $maintenanceCount = \App\Models\Maintenance::where('user_id', $user->id)
-            ->where('next_service_due', '>=', now())
-            ->count();
+        $myReportsCount = \App\Models\Report::where('user_id', $user->id)->count();
 
         return view('operator.dashboard', compact(
             'myTasks',
-            'todayTasks', 
+            'todayTasks',
             'completedTasks',
             'pendingTasks', // Kept as alias for todo
             'todoTasks',
@@ -86,8 +84,7 @@ class DashboardController extends Controller
             'taskCounts',
             'Equipment',
             'totalTasks',
-            'maintenance',
-            'maintenanceCount'
+            'myReportsCount'
         ));
     }
 }

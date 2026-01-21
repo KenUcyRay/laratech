@@ -324,14 +324,14 @@
                 const underline = hasSchedule ? "border-bottom: 3px solid #10B981;" : "";
 
                 row.innerHTML += `
-                                <td class="text-center">
-                                    <button class="btn btn-sm rounded-circle ${buttonClass}"
-                                            style="${underline}"
-                                            onclick="selectDate(${day})">
-                                        ${day}
-                                    </button>
-                                </td>
-                            `;
+                                    <td class="text-center">
+                                        <button class="btn btn-sm rounded-circle ${buttonClass}"
+                                                style="${underline}"
+                                                onclick="selectDate(${day})">
+                                            ${day}
+                                        </button>
+                                    </td>
+                                `;
 
                 if ((firstDay + day) % 7 === 0) {
                     tbody.appendChild(row);
@@ -381,19 +381,19 @@
                 const itemJson = JSON.stringify(item).replace(/"/g, '&quot;');
 
                 container.innerHTML += `
-                                <div class="mb-3 p-3 rounded-3 bg-light shadow-sm border-start border-4 border-${badgeClass}" 
-                                     style="cursor: pointer; transition: transform 0.2s;"
-                                     onmouseover="this.style.transform='translateX(5px)'"
-                                     onmouseout="this.style.transform='translateX(0)'"
-                                     onclick="showDetailModal(${itemJson})">
-                                    <div class="d-flex justify-content-between align-items-center mb-1">
-                                        <strong>${item.title}</strong>
-                                        <span class="badge bg-${badgeClass}">${item.type.toUpperCase()}</span>
+                                    <div class="mb-3 p-3 rounded-3 bg-light shadow-sm border-start border-4 border-${badgeClass}" 
+                                         style="cursor: pointer; transition: transform 0.2s;"
+                                         onmouseover="this.style.transform='translateX(5px)'"
+                                         onmouseout="this.style.transform='translateX(0)'"
+                                         onclick="showDetailModal(${itemJson})">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <strong>${item.title}</strong>
+                                            <span class="badge bg-${badgeClass}">${item.type.toUpperCase()}</span>
+                                        </div>
+                                        <div class="text-muted small mb-1"><i class="fas fa-clock me-1"></i> ${item.time}</div>
+                                        ${item.status ? `<div class="mt-2 text-end"><span class="badge bg-secondary">${item.status}</span></div>` : ''}
                                     </div>
-                                    <div class="text-muted small mb-1"><i class="fas fa-clock me-1"></i> ${item.time}</div>
-                                    ${item.status ? `<div class="mt-2 text-end"><span class="badge bg-secondary">${item.status}</span></div>` : ''}
-                                </div>
-                            `;
+                                `;
             });
         }
 
@@ -489,40 +489,29 @@
             const taskCount = schedules.filter(s => s.type === 'task').length;
 
             document.getElementById('stats-container').innerHTML = `
-                            <div class="col-md-4">
-                                <div class="card border-0 shadow-sm rounded-4 h-100">
-                                    <div class="card-body p-4 text-center">
-                                        <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                                            <i class="fas fa-calendar-check fs-3 text-primary"></i>
+                                <div class="col-md-6">
+                                    <div class="card border-0 shadow-sm rounded-4 h-100">
+                                        <div class="card-body p-4 text-center">
+                                            <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                                <i class="fas fa-calendar-check fs-3 text-primary"></i>
+                                            </div>
+                                            <h3 class="fw-bold text-primary mb-1">${todaySchedules.length}</h3>
+                                            <p class="text-muted mb-0">Jadwal Hari Ini</p>
                                         </div>
-                                        <h3 class="fw-bold text-primary mb-1">${todaySchedules.length}</h3>
-                                        <p class="text-muted mb-0">Jadwal Hari Ini</p>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card border-0 shadow-sm rounded-4 h-100">
-                                    <div class="card-body p-4 text-center">
-                                        <div class="bg-warning bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                                            <i class="fas fa-tools fs-3 text-warning"></i>
+                                <div class="col-md-6">
+                                    <div class="card border-0 shadow-sm rounded-4 h-100">
+                                        <div class="card-body p-4 text-center">
+                                            <div class="bg-info bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                                <i class="fas fa-tasks fs-3 text-info"></i>
+                                            </div>
+                                            <h3 class="fw-bold text-info mb-1">${taskCount}</h3>
+                                            <p class="text-muted mb-0">Total Tasks</p>
                                         </div>
-                                        <h3 class="fw-bold text-warning mb-1">${maintenanceCount}</h3>
-                                        <p class="text-muted mb-0">Total Maintenance</p>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card border-0 shadow-sm rounded-4 h-100">
-                                    <div class="card-body p-4 text-center">
-                                        <div class="bg-info bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                                            <i class="fas fa-tasks fs-3 text-info"></i>
-                                        </div>
-                                        <h3 class="fw-bold text-info mb-1">${taskCount}</h3>
-                                        <p class="text-muted mb-0">Total Tasks</p>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
+                            `;
         }
 
         /* =========================

@@ -64,6 +64,7 @@
                         <tr>
                             <th class="fw-semibold">Equipment</th>
                             <th class="fw-semibold">Assignee</th>
+                            <th class="fw-semibold">Interval (Days)</th>
                             <th class="fw-semibold">Last Service Date</th>
                             <th class="fw-semibold">Next Service Due</th>
                             <th class="fw-semibold">Status</th>
@@ -75,6 +76,7 @@
                             <tr id="row-{{ $m->id }}">
                                 <td>{{ $m->equipment->name ?? '-' }}</td>
                                 <td>{{ $m->assignee->name ?? '-' }} ({{ ucfirst($m->assignee->role ?? '') }})</td>
+                                <td>{{ $m->interval_days }} Days</td>
                                 <td>{{ $m->last_service_date ? $m->last_service_date->format('d M Y H:i') : '-' }}</td>
                                 <td>
                                     {{ $m->next_service_due ? $m->next_service_due->format('d M Y H:i') : '-' }}
@@ -94,13 +96,14 @@
                                             data-bs-target="#editModal" data-maintenance-id="{{ $m->id }}"
                                             data-maintenance-equipment="{{ $m->equipment_id }}"
                                             data-maintenance-user="{{ $m->user_id }}"
+                                            data-maintenance-interval="{{ $m->interval_days }}"
                                             data-maintenance-date="{{ $m->last_service_date ? $m->last_service_date->format('Y-m-d') : '' }}"
                                             onclick="populateEditForm(this)">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button class="btn btn-sm btn-danger rounded-end" data-bs-toggle="modal"
                                             data-bs-target="#deleteModal"
-                                            onclick="setDeleteForm({{ $m->id }}, '{{ addslashes($m->equipment->name ?? 'N/A') }}')">
+                                            onclick="setDeleteForm('{{ $m->id }}', '{{ addslashes($m->equipment->name ?? 'N/A') }}')">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </div>
@@ -177,10 +180,16 @@
                             </select>
                         </div>
                         <div class="mb-3">
+                            <label class="form-label fw-semibold">Interval (Days)</label>
+                            <input type="number" name="interval_days" class="form-control rounded-3 border-2" min="1"
+                                required placeholder="e.g. 60">
+                            <div class="form-text">Maintenance cycle in days.</div>
+                        </div>
+                        <div class="mb-3">
                             <label class="form-label fw-semibold">Last Service Date (Optional)</label>
                             <input type="date" name="last_service_date" class="form-control rounded-3 border-2">
-                            <div class="form-text">Next service will be automatically set to +1500 hours from this date (or
-                                now).</div>
+                            <div class="form-text">Next service will be automatically set based on the interval + last
+                                service date.</div>
                         </div>
                     </div>
                     <div class="modal-footer border-0 p-4">
@@ -225,11 +234,16 @@
                             </select>
                         </div>
                         <div class="mb-3">
+                            <label class="form-label fw-semibold">Interval (Days)</label>
+                            <input type="number" name="interval_days" id="editIntervalDays"
+                                class="form-control rounded-3 border-2" min="1" required>
+                        </div>
+                        <div class="mb-3">
                             <label class="form-label fw-semibold">Last Service Date (Optional)</label>
                             <input type="date" name="last_service_date" id="editLastServiceDate"
                                 class="form-control rounded-3 border-2">
-                            <div class="form-text">Next service will be automatically set to +1500 hours from this date (or
-                                now).</div>
+                            <div class="form-text">Next service will be automatically set based on the interval + last
+                                service date.</div>
                         </div>
                     </div>
                     <div class="modal-footer border-0 p-4">
@@ -281,6 +295,7 @@
                 document.getElementById('editForm').action = `/manager/maintenance/${id}`;
                 document.getElementById('editEquipmentId').value = button.dataset.maintenanceEquipment;
                 document.getElementById('editUserId').value = button.dataset.maintenanceUser;
+                document.getElementById('editIntervalDays').value = button.dataset.maintenanceInterval;
                 document.getElementById('editLastServiceDate').value = button.dataset.maintenanceDate;
             }
 

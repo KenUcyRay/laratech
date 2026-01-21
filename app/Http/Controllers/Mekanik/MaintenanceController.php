@@ -30,9 +30,11 @@ class MaintenanceController extends Controller
         ]);
 
         if ($validated['action'] === 'complete') {
+            $nextDue = now()->addDays($maintenance->interval_days ?? 60);
+
             $maintenance->update([
                 'last_service_date' => now(),
-                'next_service_due' => now()->addHours(1500), // Real-time 1500 hours
+                'next_service_due' => $nextDue,
             ]);
         }
 

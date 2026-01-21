@@ -15,6 +15,7 @@ class Maintenance extends Model
         'user_id',
         'last_service_date',
         'next_service_due',
+        'interval_days',
     ];
 
     protected $casts = [

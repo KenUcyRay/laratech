@@ -37,6 +37,10 @@ class TaskController extends Controller
 
         if ($validated['status'] === 'doing' && $task->status !== 'doing') {
             $data['started_at'] = now();
+
+            if ($task->equipment) {
+                $task->equipment->update(['status' => 'servis']);
+            }
         }
 
         if ($validated['status'] === 'done' && $task->status !== 'done') {
@@ -45,6 +49,10 @@ class TaskController extends Controller
             $report = \App\Models\Report::where('task_id', $task->id)->first();
             if ($report) {
                 $report->update(['status' => 'resolved']);
+            }
+
+            if ($task->equipment) {
+                $task->equipment->update(['status' => 'idle']);
             }
         }
 

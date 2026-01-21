@@ -38,9 +38,10 @@
                             <thead>
                                 <tr>
                                     <th class="fw-semibold" width="25%">Equipment</th>
+                                    <th class="fw-semibold" width="15%">Interval</th>
                                     <th class="fw-semibold" width="20%">Last Service Date</th>
                                     <th class="fw-semibold" width="20%">Next Service Due</th>
-                                    <th class="fw-semibold" width="15%">Status</th>
+                                    <th class="fw-semibold" width="10%">Status</th>
                                     <th class="fw-semibold" width="20%">Action</th>
                                 </tr>
                             </thead>
@@ -48,6 +49,7 @@
                                 @foreach($maintenances as $m)
                                     <tr id="row-{{ $m->id }}">
                                         <td>{{ $m->equipment->name ?? '-' }}</td>
+                                        <td>{{ $m->interval_days }} Days</td>
                                         <td>{{ $m->last_service_date ? $m->last_service_date->format('Y-m-d H:i') : '-' }}</td>
                                         <td>
                                             {{ $m->next_service_due ? $m->next_service_due->format('Y-m-d H:i') : '-' }}
