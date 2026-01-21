@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ReportController extends Controller
 {
-  public function pdf(Report $report)
+    public function pdf(Report $report)
     {
         $report->load(['equipment', 'user', 'images']);
 
@@ -23,32 +23,46 @@ class ReportController extends Controller
             'laporan-kerusakan-' . $report->id . '.pdf'
         );
     }
-    
-   public function index()
+
+    public function index()
     {
-        $reports = Report::with(['images', 'user', 'equipment'])
+        // Semua laporan
+        $allReports = Report::with(['images', 'user', 'equipment'])
+            ->whereNotIn('status', ['resolved'])
             ->latest()
-            ->paginate(10);
+            ->paginate(10, ['*'], 'all_page');
 
-        $equipments = Equipment::all();
+        // Laporan Saya
+        $myReports = Report::with(['images', 'user', 'equipment'])
+            ->whereNotIn('status', ['resolved'])
+            ->where('user_id', Auth::id())
+            ->latest()
+            ->paginate(10, ['*'], 'my_page');
 
-        return view('operator.reports.index', compact('reports', 'equipments'));
+        // exclude (pending/processing)
+        $activeReportEquipmentIds = Report::whereIn('status', ['pending', 'processing'])
+            ->pluck('equipment_id')
+            ->toArray();
+
+        $equipments = Equipment::whereNotIn('id', $activeReportEquipmentIds)->get();
+
+        return view('operator.reports.index', compact('allReports', 'myReports', 'equipments'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'equipment_id' => 'required|exists:equipments,id',
-            'description'  => 'required|string',
-            'severity'     => 'required|in:low,medium,high',
-            'photos.*'     => 'image|max:2048'
+            'description' => 'required|string',
+            'severity' => 'required|in:low,medium,high',
+            'photos.*' => 'image|max:2048'
         ]);
 
         $report = Report::create([
             'equipment_id' => $request->equipment_id,
-            'user_id'      => Auth::id(),
-            'description'  => $request->description,
-            'severity'     => $request->severity,
+            'user_id' => Auth::id(),
+            'description' => $request->description,
+            'severity' => $request->severity,
         ]);
 
         if ($request->hasFile('photos')) {
@@ -62,14 +76,14 @@ class ReportController extends Controller
             }
         }
 
-        return redirect() ->route('operator.reports.index') ->with('success', 'Laporan berhasil dikirim');
+        return redirect()->route('operator.reports.index')->with('success', 'Laporan berhasil dikirim');
     }
 
     public function destroy(Report $report)
     {
         // hapus foto dari storage
         foreach ($report->images as $image) {
-           Storage::disk('public')->delete($image->image_url);
+            Storage::disk('public')->delete($image->image_url);
 
         }
 
