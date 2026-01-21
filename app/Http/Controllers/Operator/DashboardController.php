@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Operator;
 
 use App\Http\Controllers\Controller;
 use App\Models\Task;
+use App\Models\Maintenance;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Carbon\Carbon;
@@ -28,19 +29,21 @@ class DashboardController extends Controller
             ->count();
 
         // (todo + doing)
-        $pendingTasks = Task::where('assigned_to', $user->id)
-            ->whereIn('status', ['todo', 'doing'])
-            ->count();
+        $pendingTasks = $myTasks->whereIn('status', ['todo', 'doing'])->count();
 
-        // (selisih waktu antara started_at ~ completed_at)
-        $workingMinutes = Task::where('assigned_to', $user->id)
-            ->where('status', 'done')
+        // total tasks
+        $totalTasks = $myTasks->count();
+
+        // semua maintenance
+        $maintenance = Maintenance::all();
+
+        // working hours
+        $workingMinutes = $myTasks->where('status','done')
             ->whereNotNull('started_at')
             ->whereNotNull('completed_at')
-            ->whereDate('completed_at', Carbon::today())
-            ->get()
             ->sum(function ($task) {
-                return Carbon::parse($task->started_at)->diffInMinutes(Carbon::parse($task->completed_at));
+                return Carbon::parse($task->started_at)
+                    ->diffInMinutes(Carbon::parse($task->completed_at));
             });
 
         $hours = floor($workingMinutes / 60);
@@ -68,7 +71,9 @@ class DashboardController extends Controller
             'pendingTasks',
             'workingHours',
             'taskCounts',
-            'Equipment'
+            'Equipment',
+            'totalTasks',   // ditambahkan
+            'maintenance'   // ditambahkan
         ));
     }
 }

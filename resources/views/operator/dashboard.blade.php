@@ -22,7 +22,6 @@
     </div>
 </div>
 
-
     @include('operator.partials.summary-cards')
 
 </div>

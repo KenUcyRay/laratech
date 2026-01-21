@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\Operator\ReportController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -47,12 +47,24 @@ Route::prefix('operator')->name('operator.')->middleware(['auth', 'operator'])->
 
     Route::get('/tasks', [App\Http\Controllers\Operator\TaskController::class, 'index'])->name('tasks.index');
     Route::put('/tasks/{id}/status', [App\Http\Controllers\Operator\TaskController::class, 'updateStatus'])->name('tasks.updateStatus');
+
     Route::get('/equipment', [App\Http\Controllers\Operator\EquipmentController::class, 'index'])->name('equipment.index');
     Route::get('/schedules', function () {
         return view('operator.schedules.index'); })->name('schedules.index');
-    Route::get('/reports', function () {
-        return view('operator.reports.index'); })->name('reports.index');
-    Route::get('/maintenance', [App\Http\Controllers\Operator\MaintenanceController::class, 'index'])->name('maintenance.index');
+
+    Route::get('/reports', [\App\Http\Controllers\Operator\ReportController::class, 'index'])
+        ->name('reports.index');
+
+    Route::post('/reports', [\App\Http\Controllers\Operator\ReportController::class, 'store'])
+        ->name('reports.store');
+
+         Route::delete('/reports/{report}', [ReportController::class, 'destroy'])
+        ->name('reports.destroy');
+        
+         Route::get('/reports/{report}/pdf', [ReportController::class, 'pdf'])
+        ->name('reports.pdf');
+
+        Route::get('/maintenance', [App\Http\Controllers\Operator\MaintenanceController::class, 'index'])->name('maintenance.index');
 });
 
 // Mekanik Routes
