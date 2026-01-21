@@ -24,21 +24,19 @@ class DashboardController extends Controller
             ->whereDate('created_at', Carbon::today())
             ->count();
 
-        $completedTasks = Task::where('assigned_to', $user->id)
-            ->where('status', 'done')
-            ->count();
+        $completedTasks = $myTasks->where('status', 'done')->count();
 
-        // (todo + doing)
-        $pendingTasks = $myTasks->whereIn('status', ['todo', 'doing'])->count();
+        // (todo)
+        $pendingTasks = $myTasks->where('status', 'todo')->count();
 
         // total tasks
         $totalTasks = $myTasks->count();
 
-        // semua maintenance
-        $maintenance = Maintenance::all();
+        // semua maintenance with equipment
+        $maintenance = Maintenance::with(['equipment.type'])->get();
 
         // working hours
-        $workingMinutes = $myTasks->where('status','done')
+        $workingMinutes = $myTasks->where('status', 'done')
             ->whereNotNull('started_at')
             ->whereNotNull('completed_at')
             ->sum(function ($task) {
@@ -54,8 +52,15 @@ class DashboardController extends Controller
             'todo' => $myTasks->where('status', 'todo')->count(),
             'doing' => $myTasks->where('status', 'doing')->count(),
             'done' => $myTasks->where('status', 'done')->count(),
+            'cancelled' => $myTasks->where('status', 'cancelled')->count(),
             'total' => $myTasks->count(),
         ];
+
+        // Specific vars for view backward compatibility or cleaner access
+        $todoTasks = $taskCounts['todo'];
+        $doingTasks = $taskCounts['doing'];
+        $doneTasks = $taskCounts['done'];
+        $cancelledTasks = $taskCounts['cancelled'];
 
         $Equipment = Task::where('assigned_to', $user->id)
             ->where('status', 'doing')
@@ -70,14 +75,18 @@ class DashboardController extends Controller
 
         return view('operator.dashboard', compact(
             'myTasks',
-            'todayTasks',
+            'todayTasks', 
             'completedTasks',
-            'pendingTasks',
+            'pendingTasks', // Kept as alias for todo
+            'todoTasks',
+            'doingTasks',
+            'doneTasks',
+            'cancelledTasks',
             'workingHours',
             'taskCounts',
             'Equipment',
-            'totalTasks',   // ditambahkan
-            'maintenance',  // ditambahkan
+            'totalTasks',
+            'maintenance',
             'maintenanceCount'
         ));
     }

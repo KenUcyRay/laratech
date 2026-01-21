@@ -52,18 +52,22 @@ class TaskController extends Controller
         $task = Task::where('assigned_to', $user->id)->findOrFail($id);
 
         $validated = $request->validate([
-            'status' => ['required', 'string', 'in:pending,in_progress,completed'],
+            'status' => ['required', 'string', 'in:todo,doing,done,cancelled'],
         ]);
 
         $data = ['status' => $validated['status']];
 
         // Auto-set timestamps
-        if ($validated['status'] === 'in_progress' && is_null($task->started_at)) {
+        if ($validated['status'] === 'doing' && is_null($task->started_at)) {
             $data['started_at'] = now();
         }
 
-        if ($validated['status'] === 'completed' && is_null($task->completed_at)) {
+        if ($validated['status'] === 'done' && is_null($task->completed_at)) {
             $data['completed_at'] = now();
+        }
+
+        if ($validated['status'] === 'cancelled' && is_null($task->cancelled_at)) {
+            $data['cancelled_at'] = now();
         }
 
         $task->update($data);
