@@ -1,4 +1,4 @@
-<div class="h-100 pt-0" style="background: linear-gradient(180deg, #1e40af 0%, #0891b2 100%); box-shadow: 2px 0 10px rgba(0,0,0,0.1); height: 100vh; overflow-y: auto;">
+<div class="h-100" style="background: linear-gradient(180deg, #1e40af 0%, #0891b2 100%); box-shadow: 2px 0 10px rgba(0,0,0,0.1); height: 100vh; overflow-y: auto; padding-top: 80px;">
     <!-- Sidebar Header -->
     <div class="p-4 border-bottom border-white border-opacity-25">
         <div class="d-flex align-items-center text-white">

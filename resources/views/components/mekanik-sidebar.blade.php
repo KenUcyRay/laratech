@@ -1,5 +1,5 @@
-<div class="h-100 position-sticky pt-0"
-    style="background: linear-gradient(180deg, #ca8a04 0%, #eab308 100%); box-shadow: 2px 0 10px rgba(0,0,0,0.1);">
+<div class="h-100 position-sticky"
+    style="background: linear-gradient(180deg, #ca8a04 0%, #eab308 100%); box-shadow: 2px 0 10px rgba(0,0,0,0.1); height: 100vh; overflow-y: auto; padding-top: 10px;">
     <!-- Sidebar Header -->
     <div class="p-4 border-bottom border-white border-opacity-25">
     </div>

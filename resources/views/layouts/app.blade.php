@@ -20,6 +20,10 @@
             <div class="sticky-top">
                 @include('components.operator-navbar')
             </div>
+        @elseif(request()->is('mekanik/*'))
+            <div class="sticky-top">
+                @include('components.mekanik-navbar')
+            </div>
         @elseif(request()->is('manager/*'))
             <div class="sticky-top">
                 @include('components.manager-navbar')

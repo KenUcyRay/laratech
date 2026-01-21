@@ -6,177 +6,174 @@
     @include('components.manager-sidebar')
 @endsection
 
-@push('styles')
-<style>
-.border-left-primary {
-    border-left: 0.25rem solid #7c3aed !important;
-}
-.border-left-success {
-    border-left: 0.25rem solid #1cc88a !important;
-}
-.border-left-info {
-    border-left: 0.25rem solid #36b9cc !important;
-}
-.border-left-warning {
-    border-left: 0.25rem solid #f6c23e !important;
-}
-</style>
-@endpush
-
 @section('content')
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2"><i class="fas fa-users me-2"></i>Team Management</h1>
-    <div class="btn-toolbar mb-2 mb-md-0">
-        <div class="btn-group me-2">
-            <button type="button" class="btn btn-sm btn-outline-secondary">
-                <i class="fas fa-download"></i> Export
-            </button>
-        </div>
-    </div>
-</div>
+<div class="container-fluid mt-4">
 
-<!-- Team Statistics -->
-<div class="row mb-4">
-    <div class="col-xl-6 col-md-6 mb-4">
-        <div class="card border-left-success shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                            Total Operators
-                        </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $operators->count() }}</div>
+    {{-- Ultra Modern Header --}}
+    <div class="position-relative overflow-hidden rounded-4 shadow-lg mb-4" style="background: linear-gradient(135deg, #111827 0%, #374151 100%);">
+        <div class="position-absolute top-0 end-0 opacity-25">
+            <i class="fas fa-users" style="font-size: 8rem; color: white; transform: rotate(15deg); margin: -2rem;"></i>
+        </div>
+        <div class="p-5 position-relative">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="d-flex align-items-center mb-2">
+                        <h1 class="fw-bold mb-0 text-white">Team Management</h1>
                     </div>
-                    <div class="col-auto">
-                        <i class="fas fa-desktop fa-2x text-gray-300"></i>
-                    </div>
+                    <p class="text-white-50 mb-0 fs-6">
+                        👥 Monitor performa dan kelola anggota tim
+                    </p>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-light btn-lg rounded-3 shadow-sm">
+                        <i class="fas fa-download me-2"></i>Export
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="col-xl-6 col-md-6 mb-4">
-        <div class="card border-left-warning shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                            Total Mekaniks
-                        </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $mekaniks->count() }}</div>
+    {{-- Team Statistics Cards --}}
+    <div class="row g-4 mb-4">
+        <div class="col-xl-6 col-md-6">
+            <div class="card border-0 shadow-lg rounded-4 h-100" style="background: linear-gradient(145deg, #10b981 0%, #059669 100%); transform: translateY(0); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                <div class="card-body p-4 text-center">
+                    <div class="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fas fa-desktop fs-3 text-white"></i>
                     </div>
-                    <div class="col-auto">
-                        <i class="fas fa-wrench fa-2x text-gray-300"></i>
+                    <h3 class="fw-bold text-white mb-1">{{ $operators->count() }}</h3>
+                    <p class="text-white text-opacity-75 mb-0">Total Operators</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-md-6">
+            <div class="card border-0 shadow-lg rounded-4 h-100" style="background: linear-gradient(145deg, #f59e0b 0%, #d97706 100%); transform: translateY(0); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                <div class="card-body p-4 text-center">
+                    <div class="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fas fa-wrench fs-3 text-white"></i>
                     </div>
+                    <h3 class="fw-bold text-white mb-1">{{ $mekaniks->count() }}</h3>
+                    <p class="text-white text-opacity-75 mb-0">Total Mekaniks</p>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Operators Section -->
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Operators</h6>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Username</th>
-                        <th>Total Tasks</th>
-                        <th>Pending Tasks</th>
-                        <th>Completed Tasks</th>
-                        <th>Performance</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($operators as $operator)
-                    <tr>
-                        <td>{{ $operator->name }}</td>
-                        <td>{{ $operator->username }}</td>
-                        <td>{{ $operator->total_tasks }}</td>
-                        <td>
-                            <span class="badge bg-warning">{{ $operator->pending_tasks }}</span>
-                        </td>
-                        <td>
-                            <span class="badge bg-success">{{ $operator->completed_tasks }}</span>
-                        </td>
-                        <td>
-                            @php
-                                $performance = $operator->total_tasks > 0 ? 
-                                    round(($operator->completed_tasks / $operator->total_tasks) * 100) : 0;
-                            @endphp
-                            <div class="progress" style="height: 20px;">
-                                <div class="progress-bar 
-                                    @if($performance >= 80) bg-success 
-                                    @elseif($performance >= 60) bg-warning 
-                                    @else bg-danger @endif" 
-                                    style="width: {{ $performance }}%">
-                                    {{ $performance }}%
+    {{-- Operators Section --}}
+    <div class="card border-0 shadow-lg rounded-4 mb-4" style="background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%);">
+        <div class="card-header bg-transparent border-0 p-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="fw-bold mb-0 text-gray-800">🖥️ Operators</h5>
+                <span class="badge bg-success rounded-pill fs-6">{{ $operators->count() }} members</span>
+            </div>
+        </div>
+        <div class="card-body p-4">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="fw-semibold border-0 py-3">Name</th>
+                            <th class="fw-semibold border-0 py-3">Username</th>
+                            <th class="fw-semibold border-0 py-3">Total Tasks</th>
+                            <th class="fw-semibold border-0 py-3">Pending Tasks</th>
+                            <th class="fw-semibold border-0 py-3">Completed Tasks</th>
+                            <th class="fw-semibold border-0 py-3">Performance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($operators as $operator)
+                        <tr class="border-0">
+                            <td class="fw-medium py-3">{{ $operator->name }}</td>
+                            <td class="py-3">{{ $operator->username }}</td>
+                            <td class="py-3">
+                                <span class="badge bg-primary rounded-pill px-3 py-2">{{ $operator->total_tasks }}</span>
+                            </td>
+                            <td class="py-3">
+                                <span class="badge bg-warning rounded-pill px-3 py-2">{{ $operator->pending_tasks }}</span>
+                            </td>
+                            <td class="py-3">
+                                <span class="badge bg-success rounded-pill px-3 py-2">{{ $operator->completed_tasks }}</span>
+                            </td>
+                            <td class="py-3">
+                                @php
+                                    $performance = $operator->total_tasks > 0 ? 
+                                        round(($operator->completed_tasks / $operator->total_tasks) * 100) : 0;
+                                @endphp
+                                <div class="progress rounded-pill shadow-sm" style="height: 25px; width: 120px;">
+                                    <div class="progress-bar rounded-pill fw-semibold
+                                        @if($performance >= 80) bg-success 
+                                        @elseif($performance >= 60) bg-warning 
+                                        @else bg-danger @endif" 
+                                        style="width: {{ $performance }}%">
+                                        {{ $performance }}%
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Mekaniks Section -->
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Mekaniks</h6>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Username</th>
-                        <th>Total Tasks</th>
-                        <th>Pending Tasks</th>
-                        <th>Completed Tasks</th>
-                        <th>Performance</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($mekaniks as $mekanik)
-                    <tr>
-                        <td>{{ $mekanik->name }}</td>
-                        <td>{{ $mekanik->username }}</td>
-                        <td>{{ $mekanik->total_tasks }}</td>
-                        <td>
-                            <span class="badge bg-warning">{{ $mekanik->pending_tasks }}</span>
-                        </td>
-                        <td>
-                            <span class="badge bg-success">{{ $mekanik->completed_tasks }}</span>
-                        </td>
-                        <td>
-                            @php
-                                $performance = $mekanik->total_tasks > 0 ? 
-                                    round(($mekanik->completed_tasks / $mekanik->total_tasks) * 100) : 0;
-                            @endphp
-                            <div class="progress" style="height: 20px;">
-                                <div class="progress-bar 
-                                    @if($performance >= 80) bg-success 
-                                    @elseif($performance >= 60) bg-warning 
-                                    @else bg-danger @endif" 
-                                    style="width: {{ $performance }}%">
-                                    {{ $performance }}%
+    {{-- Mekaniks Section --}}
+    <div class="card border-0 shadow-lg rounded-4" style="background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%);">
+        <div class="card-header bg-transparent border-0 p-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="fw-bold mb-0 text-gray-800">🔧 Mekaniks</h5>
+                <span class="badge bg-warning rounded-pill fs-6">{{ $mekaniks->count() }} members</span>
+            </div>
+        </div>
+        <div class="card-body p-4">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="fw-semibold border-0 py-3">Name</th>
+                            <th class="fw-semibold border-0 py-3">Username</th>
+                            <th class="fw-semibold border-0 py-3">Total Tasks</th>
+                            <th class="fw-semibold border-0 py-3">Pending Tasks</th>
+                            <th class="fw-semibold border-0 py-3">Completed Tasks</th>
+                            <th class="fw-semibold border-0 py-3">Performance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($mekaniks as $mekanik)
+                        <tr class="border-0">
+                            <td class="fw-medium py-3">{{ $mekanik->name }}</td>
+                            <td class="py-3">{{ $mekanik->username }}</td>
+                            <td class="py-3">
+                                <span class="badge bg-primary rounded-pill px-3 py-2">{{ $mekanik->total_tasks }}</span>
+                            </td>
+                            <td class="py-3">
+                                <span class="badge bg-warning rounded-pill px-3 py-2">{{ $mekanik->pending_tasks }}</span>
+                            </td>
+                            <td class="py-3">
+                                <span class="badge bg-success rounded-pill px-3 py-2">{{ $mekanik->completed_tasks }}</span>
+                            </td>
+                            <td class="py-3">
+                                @php
+                                    $performance = $mekanik->total_tasks > 0 ? 
+                                        round(($mekanik->completed_tasks / $mekanik->total_tasks) * 100) : 0;
+                                @endphp
+                                <div class="progress rounded-pill shadow-sm" style="height: 25px; width: 120px;">
+                                    <div class="progress-bar rounded-pill fw-semibold
+                                        @if($performance >= 80) bg-success 
+                                        @elseif($performance >= 60) bg-warning 
+                                        @else bg-danger @endif" 
+                                        style="width: {{ $performance }}%">
+                                        {{ $performance }}%
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+
 </div>
 @endsection

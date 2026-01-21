@@ -6,278 +6,238 @@
     @include('components.manager-sidebar')
 @endsection
 
-@push('styles')
-<style>
-.stat-card {
-    transition: transform 0.2s;
-}
-.stat-card:hover {
-    transform: translateY(-2px);
-}
-.border-left-primary {
-    border-left: 0.25rem solid #7c3aed !important;
-}
-.border-left-success {
-    border-left: 0.25rem solid #1cc88a !important;
-}
-.border-left-info {
-    border-left: 0.25rem solid #36b9cc !important;
-}
-.border-left-warning {
-    border-left: 0.25rem solid #f6c23e !important;
-}
-</style>
-@endpush
-
 @section('content')
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2"><i class="fas fa-user-tie me-2"></i>Manager Dashboard</h1>
-    <div class="btn-toolbar mb-2 mb-md-0">
-        <div class="btn-group me-2">
-            <button type="button" class="btn btn-sm btn-outline-secondary">
-                <i class="fas fa-download"></i> Export
-            </button>
-        </div>
-    </div>
-</div>
+<div class="container-fluid mt-4">
 
-<!-- Statistics Cards -->
-<div class="row mb-4">
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2 stat-card">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Total Tasks
-                        </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalTasks }}</div>
+    {{-- Ultra Modern Header --}}
+    <div class="position-relative overflow-hidden rounded-4 shadow-lg mb-4" style="background: linear-gradient(135deg, #111827 0%, #374151 100%);">
+        <div class="position-absolute top-0 end-0 opacity-25">
+            <i class="fas fa-user-tie" style="font-size: 8rem; color: white; transform: rotate(15deg); margin: -2rem;"></i>
+        </div>
+        <div class="p-5 position-relative">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="d-flex align-items-center mb-2">
+                        <h1 class="fw-bold mb-0 text-white">Manager Dashboard</h1>
                     </div>
-                    <div class="col-auto">
-                        <i class="fas fa-tasks fa-2x text-gray-300"></i>
-                    </div>
+                    <p class="text-white-50 mb-0 fs-6">
+                        👔 Kelola tim dan monitor performa operasional
+                    </p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-warning shadow h-100 py-2 stat-card">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                            Pending Tasks
-                        </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $pendingTasks }}</div>
+    {{-- Statistics Cards --}}
+    <div class="row g-4 mb-4">
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-0 shadow-lg rounded-4 h-100" style="background: linear-gradient(145deg, #3b82f6 0%, #1d4ed8 100%); transform: translateY(0); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                <div class="card-body p-4 text-center">
+                    <div class="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fas fa-tasks fs-3 text-white"></i>
                     </div>
-                    <div class="col-auto">
-                        <i class="fas fa-clock fa-2x text-gray-300"></i>
+                    <h3 class="fw-bold text-white mb-1">{{ $totalTasks }}</h3>
+                    <p class="text-white text-opacity-75 mb-0">Total Tasks</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-0 shadow-lg rounded-4 h-100" style="background: linear-gradient(145deg, #f59e0b 0%, #d97706 100%); transform: translateY(0); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                <div class="card-body p-4 text-center">
+                    <div class="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fas fa-clock fs-3 text-white"></i>
                     </div>
+                    <h3 class="fw-bold text-white mb-1">{{ $pendingTasks }}</h3>
+                    <p class="text-white text-opacity-75 mb-0">Pending Tasks</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-0 shadow-lg rounded-4 h-100" style="background: linear-gradient(145deg, #10b981 0%, #059669 100%); transform: translateY(0); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                <div class="card-body p-4 text-center">
+                    <div class="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fas fa-check fs-3 text-white"></i>
+                    </div>
+                    <h3 class="fw-bold text-white mb-1">{{ $completedTasks }}</h3>
+                    <p class="text-white text-opacity-75 mb-0">Completed Tasks</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-0 shadow-lg rounded-4 h-100" style="background: linear-gradient(145deg, #06b6d4 0%, #0891b2 100%); transform: translateY(0); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                <div class="card-body p-4 text-center">
+                    <div class="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fas fa-users fs-3 text-white"></i>
+                    </div>
+                    <h3 class="fw-bold text-white mb-1">{{ $totalOperators + $totalMekaniks }}</h3>
+                    <p class="text-white text-opacity-75 mb-0">Total Team</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-success shadow h-100 py-2 stat-card">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                            Completed Tasks
-                        </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $completedTasks }}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-check fa-2x text-gray-300"></i>
-                    </div>
+    {{-- Charts Row --}}
+    <div class="row g-4 mb-4">
+        <div class="col-xl-6">
+            <div class="card border-0 shadow-lg rounded-4" style="background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%);">
+                <div class="card-header bg-transparent border-0 p-4">
+                    <h5 class="fw-bold mb-0 text-gray-800">📊 Equipment Status</h5>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-info shadow h-100 py-2 stat-card">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                            Total Team
-                        </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalOperators + $totalMekaniks }}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-users fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Charts Row -->
-<div class="row mb-4">
-    <!-- Equipment Status Chart -->
-    <div class="col-xl-6 col-lg-6">
-        <div class="card shadow mb-4">
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Equipment Status</h6>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="mb-3">
-                            <div class="d-flex align-items-center">
-                                <div class="bg-success rounded-circle me-2" style="width: 12px; height: 12px;"></div>
-                                <span class="small">Idle: {{ $equipmentStatus['idle'] }}</span>
+                <div class="card-body p-4">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-success rounded-circle me-2" style="width: 12px; height: 12px;"></div>
+                                    <span class="small">Idle: {{ $equipmentStatus['idle'] }}</span>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-primary rounded-circle me-2" style="width: 12px; height: 12px;"></div>
+                                    <span class="small">Operasi: {{ $equipmentStatus['operasi'] }}</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <div class="d-flex align-items-center">
-                                <div class="bg-primary rounded-circle me-2" style="width: 12px; height: 12px;"></div>
-                                <span class="small">Operasi: {{ $equipmentStatus['operasi'] }}</span>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-danger rounded-circle me-2" style="width: 12px; height: 12px;"></div>
+                                    <span class="small">Rusak: {{ $equipmentStatus['rusak'] }}</span>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-warning rounded-circle me-2" style="width: 12px; height: 12px;"></div>
+                                    <span class="small">Servis: {{ $equipmentStatus['servis'] }}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="mb-3">
-                            <div class="d-flex align-items-center">
-                                <div class="bg-danger rounded-circle me-2" style="width: 12px; height: 12px;"></div>
-                                <span class="small">Rusak: {{ $equipmentStatus['rusak'] }}</span>
+                    <div class="text-center mt-3">
+                        <h4 class="text-muted">Total Equipment: {{ array_sum($equipmentStatus) }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="card border-0 shadow-lg rounded-4" style="background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%);">
+                <div class="card-header bg-transparent border-0 p-4">
+                    <h5 class="fw-bold mb-0 text-gray-800">👥 Team Overview</h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-success rounded-circle me-2" style="width: 12px; height: 12px;"></div>
+                                    <span class="small">Operators: {{ $totalOperators }}</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <div class="d-flex align-items-center">
-                                <div class="bg-warning rounded-circle me-2" style="width: 12px; height: 12px;"></div>
-                                <span class="small">Servis: {{ $equipmentStatus['servis'] }}</span>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-warning rounded-circle me-2" style="width: 12px; height: 12px;"></div>
+                                    <span class="small">Mekaniks: {{ $totalMekaniks }}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="text-center mt-3">
-                    <h4 class="text-muted">Total Equipment: {{ array_sum($equipmentStatus) }}</h4>
+                    <div class="text-center mt-3">
+                        <h4 class="text-muted">Total Team: {{ $totalOperators + $totalMekaniks }}</h4>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Team Overview -->
-    <div class="col-xl-6 col-lg-6">
-        <div class="card shadow mb-4">
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Team Overview</h6>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="mb-3">
-                            <div class="d-flex align-items-center">
-                                <div class="bg-success rounded-circle me-2" style="width: 12px; height: 12px;"></div>
-                                <span class="small">Operators: {{ $totalOperators }}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="mb-3">
-                            <div class="d-flex align-items-center">
-                                <div class="bg-warning rounded-circle me-2" style="width: 12px; height: 12px;"></div>
-                                <span class="small">Mekaniks: {{ $totalMekaniks }}</span>
-                            </div>
-                        </div>
+    {{-- Tables Row --}}
+    <div class="row g-4">
+        <div class="col-xl-8">
+            <div class="card border-0 shadow-lg rounded-4" style="background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%);">
+                <div class="card-header bg-transparent border-0 p-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="fw-bold mb-0 text-gray-800">📋 Recent Tasks</h5>
+                        <span class="badge bg-primary rounded-pill">{{ $recentTasks->count() }} tasks</span>
                     </div>
                 </div>
-                <div class="text-center mt-3">
-                    <h4 class="text-muted">Total Team: {{ $totalOperators + $totalMekaniks }}</h4>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Tables Row -->
-<div class="row">
-    <!-- Recent Tasks -->
-    <div class="col-xl-8 col-lg-7">
-        <div class="card shadow mb-4">
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Recent Tasks</h6>
-                <span class="badge bg-primary">{{ $recentTasks->count() }} tasks</span>
-            </div>
-            <div class="card-body">
-                @if($recentTasks->count() > 0)
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-sm">
-                            <thead>
-                                <tr>
-                                    <th>Task</th>
-                                    <th>Assignee</th>
-                                    <th>Status</th>
-                                    <th>Equipment</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($recentTasks as $task)
+                <div class="card-body p-4">
+                    @if($recentTasks->count() > 0)
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-light">
                                     <tr>
-                                        <td>{{ $task->title }}</td>
-                                        <td>{{ $task->assignee->name ?? 'Unassigned' }}</td>
-                                        <td>
-                                            @if($task->status == 'todo')
-                                                <span class="badge bg-secondary">Todo</span>
-                                            @elseif($task->status == 'doing')
-                                                <span class="badge bg-warning">Doing</span>
-                                            @elseif($task->status == 'done')
-                                                <span class="badge bg-success">Done</span>
-                                            @else
-                                                <span class="badge bg-danger">Cancelled</span>
-                                            @endif
-                                        </td>
-                                        <td>{{ $task->equipment->name ?? '-' }}</td>
+                                        <th class="fw-semibold">Task</th>
+                                        <th class="fw-semibold">Assignee</th>
+                                        <th class="fw-semibold">Status</th>
+                                        <th class="fw-semibold">Equipment</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach($recentTasks as $task)
+                                        <tr>
+                                            <td class="fw-medium">{{ $task->title }}</td>
+                                            <td>{{ $task->assignee->name ?? 'Unassigned' }}</td>
+                                            <td>
+                                                @if($task->status == 'todo')
+                                                    <span class="badge bg-secondary rounded-pill">Todo</span>
+                                                @elseif($task->status == 'doing')
+                                                    <span class="badge bg-warning rounded-pill">Doing</span>
+                                                @elseif($task->status == 'done')
+                                                    <span class="badge bg-success rounded-pill">Done</span>
+                                                @else
+                                                    <span class="badge bg-danger rounded-pill">Cancelled</span>
+                                                @endif
+                                            </td>
+                                            <td>{{ $task->equipment->name ?? '-' }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @else
+                        <div class="text-center py-4">
+                            <i class="fas fa-tasks fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">No recent tasks found</p>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4">
+            <div class="card border-0 shadow-lg rounded-4" style="background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%);">
+                <div class="card-header bg-transparent border-0 p-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="fw-bold mb-0 text-gray-800">🚨 Critical Reports</h5>
+                        <span class="badge bg-danger rounded-pill">{{ $criticalReports->count() }} high priority</span>
                     </div>
-                @else
-                    <div class="text-center py-4">
-                        <i class="fas fa-tasks fa-3x text-muted mb-3"></i>
-                        <p class="text-muted">No recent tasks found</p>
-                    </div>
-                @endif
+                </div>
+                <div class="card-body p-4">
+                    @if($criticalReports->count() > 0)
+                        @foreach($criticalReports as $report)
+                            <div class="mb-3 p-3 rounded-3 bg-light shadow-sm border-start border-4 border-danger">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h6 class="mb-0 fw-bold">{{ $report->title }}</h6>
+                                    <span class="badge bg-danger rounded-pill">High</span>
+                                </div>
+                                <p class="small text-muted mb-1">{{ Str::limit($report->description, 60) }}</p>
+                                <div class="d-flex justify-content-between">
+                                    <small class="text-muted">{{ $report->equipment->name ?? 'N/A' }}</small>
+                                    <small class="text-muted">{{ $report->created_at->diffForHumans() }}</small>
+                                </div>
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="text-center py-4">
+                            <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+                            <p class="text-muted">No critical reports</p>
+                        </div>
+                    @endif
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Critical Reports -->
-    <div class="col-xl-4 col-lg-5">
-        <div class="card shadow mb-4">
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Critical Reports</h6>
-                <span class="badge bg-danger">{{ $criticalReports->count() }} high priority</span>
-            </div>
-            <div class="card-body">
-                @if($criticalReports->count() > 0)
-                    @foreach($criticalReports as $report)
-                        <div class="mb-3 p-3 border-left-danger border rounded">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h6 class="mb-0">{{ $report->title }}</h6>
-                                <span class="badge bg-danger">High</span>
-                            </div>
-                            <p class="small text-muted mb-1">{{ Str::limit($report->description, 60) }}</p>
-                            <div class="d-flex justify-content-between">
-                                <small class="text-muted">{{ $report->equipment->name ?? 'N/A' }}</small>
-                                <small class="text-muted">{{ $report->created_at->diffForHumans() }}</small>
-                            </div>
-                        </div>
-                    @endforeach
-                @else
-                    <div class="text-center py-4">
-                        <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
-                        <p class="text-muted">No critical reports</p>
-                    </div>
-                @endif
-            </div>
-        </div>
-    </div>
 </div>
 @endsection

@@ -1,4 +1,4 @@
-<div class="h-100 pt-0" style="background: linear-gradient(180deg, #10B981 0%, #059669 100%); box-shadow: 2px 0 10px rgba(0,0,0,0.1); height: 100vh; overflow-y: auto;">
+<div class="h-100" style="background: linear-gradient(180deg, #10B981 0%, #059669 100%); box-shadow: 2px 0 10px rgba(0,0,0,0.1); height: 100vh; overflow-y: auto; padding-top: 80px;">
 
     <!-- Navigation Menu -->
     <div class="p-3">
