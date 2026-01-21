@@ -33,7 +33,7 @@ class TaskController extends Controller
             $query->whereIn('status', ['todo', 'doing']);
         }
 
-        $tasks = $query->get();
+        $tasks = $query->paginate(10);
 
         return view('mekanik.tasks.index', compact('tasks', 'pageTitle', 'allowStart', 'allowComplete'));
     }

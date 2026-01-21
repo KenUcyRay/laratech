@@ -28,7 +28,7 @@ class ReportController extends Controller
     {
         $reports = Report::with(['images', 'user', 'equipment'])
             ->latest()
-            ->get();
+            ->paginate(10);
 
         $equipments = Equipment::all();
 

@@ -56,7 +56,7 @@
                     <tbody>
                         @forelse($reports as $report)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ ($reports->currentPage() - 1) * $reports->perPage() + $loop->iteration }}</td>
                                 <td>{{ $report->created_at->format('d-m-Y') }}</td>
                                 <td>{{ $report->equipment->name ?? '-' }}</td>
                                 <td>{{ $report->description }}</td>
@@ -107,6 +107,13 @@
                     </tbody>
                 </table>
             </div>
+            
+            {{-- Pagination --}}
+            @if($reports->hasPages())
+                <div class="d-flex justify-content-end mt-4">
+                    {{ $reports->links('custom.pagination') }}
+                </div>
+            @endif
 
         </div>
     </div>

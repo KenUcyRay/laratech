@@ -26,7 +26,7 @@ class ReportController extends Controller
             $query->where('status', $request->status);
         }
 
-        $reports = $query->get();
+        $reports = $query->paginate(10);
 
         return view('mekanik.reports.index', compact('reports'));
     }

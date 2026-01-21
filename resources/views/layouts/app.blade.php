@@ -12,6 +12,17 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
+    @if(request()->is('operator/*'))
+        <!-- Operator Pagination Styles -->
+        <link rel="stylesheet" href="{{ asset('css/operator-pagination.css') }}">
+    @elseif(request()->is('mekanik/*'))
+        <!-- Mekanik Pagination Styles -->
+        <link rel="stylesheet" href="{{ asset('css/mekanik-pagination.css') }}">
+    @elseif(request()->is('admin/*'))
+        <!-- Admin Pagination Styles -->
+        <link rel="stylesheet" href="{{ asset('css/admin-pagination.css') }}">
+    @endif
+    
     @stack('styles')
 </head>
 <body>

@@ -15,7 +15,7 @@ class EquipmentController extends Controller
     {
         $equipments = Equipment::with('type')
             ->orderBy('name')
-            ->get();
+            ->paginate(10);
 
         return view('mekanik.equipment.index', compact('equipments'));
     }

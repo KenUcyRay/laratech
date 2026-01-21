@@ -14,7 +14,7 @@ class OperatorController extends Controller
 {
     public function index(): View
     {
-        $operators = User::where('role', 'operator')->withTrashed()->latest()->get();
+        $operators = User::where('role', 'operator')->withTrashed()->latest()->paginate(10);
         return view('admin.operators.index', compact('operators'));
     }
 

@@ -14,7 +14,7 @@ class MekanikController extends Controller
 {
     public function index(): View
     {
-        $mekaniks = User::where('role', 'mekanik')->withTrashed()->latest()->get();
+        $mekaniks = User::where('role', 'mekanik')->withTrashed()->latest()->paginate(10);
         return view('admin.mekaniks.index', compact('mekaniks'));
     }
 

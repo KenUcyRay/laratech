@@ -18,7 +18,7 @@ class TaskController extends Controller
         $tasks = Task::where('assigned_to', $user->id)
             ->with(['equipment.type'])
             ->latest()
-            ->get();
+            ->paginate(10);
 
         return view('operator.tasks.index', compact('tasks'));
     }

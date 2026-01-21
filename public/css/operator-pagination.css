@@ -1,0 +1,22 @@
+/* Operator Pagination Styles */
+.btn-outline-primary {
+    color: #10B981;
+    border-color: #10B981;
+    background: transparent;
+}
+
+.btn-outline-primary:hover {
+    color: #ffffff;
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    border-color: #059669;
+    box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+}
+
+.btn-outline-primary:focus {
+    box-shadow: 0 0 0 0.2rem rgba(16, 185, 129, 0.25);
+}
+
+.btn-outline-primary:active {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    border-color: #047857;
+}

@@ -83,4 +83,11 @@
         </tbody>
     </table>
 </div>
+
+{{-- Pagination --}}
+@if($mekaniks->hasPages())
+    <div class="d-flex justify-content-end mt-4">
+        {{ $mekaniks->links('custom.admin-pagination') }}
+    </div>
+@endif
 @endsection
