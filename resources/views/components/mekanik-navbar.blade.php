@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-<nav class="navbar navbar-expand-lg" style="background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
-=======
 <nav class="navbar navbar-expand-lg" style="background: linear-gradient(135deg, #ca8a04 0%, #eab308 100%); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
->>>>>>> da94a011da1e6c61f0fe5ffbe7e96a40f9b134b0
     <div class="container-fluid px-4">
         <div class="navbar-brand d-flex align-items-center text-white text-decoration-none">
             <img src="{{ asset('img/logo2.png') }}" alt="LaraTech Logo" 
@@ -18,11 +14,7 @@
                     onmouseover="this.style.background='rgba(255,255,255,0.25)'; this.style.borderColor='rgba(255,255,255,0.5)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'"
                     onmouseout="this.style.background='rgba(255,255,255,0.15)'; this.style.borderColor='rgba(255,255,255,0.25)'; this.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)'">
                 <i class="fas fa-sign-out-alt me-2"></i>
-<<<<<<< HEAD
-                <span class="fw-medium">Keluar</span>
-=======
                 <span class="fw-medium">Logout</span>
->>>>>>> da94a011da1e6c61f0fe5ffbe7e96a40f9b134b0
             </button>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                 @csrf

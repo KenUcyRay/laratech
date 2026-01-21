@@ -14,7 +14,7 @@
                     onmouseover="this.style.background='rgba(255,255,255,0.25)'; this.style.borderColor='rgba(255,255,255,0.5)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'"
                     onmouseout="this.style.background='rgba(255,255,255,0.15)'; this.style.borderColor='rgba(255,255,255,0.25)'; this.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)'">
                 <i class="fas fa-sign-out-alt me-2"></i>
-                <span class="fw-medium">Keluar</span>
+                <span class="fw-medium">Logout</span>
             </button>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                 @csrf

@@ -23,7 +23,7 @@
             </div>
             <div class="absolute bottom-10 left-10 right-10 text-white">
                 <div class="bg-black/30 backdrop-blur-sm rounded-2xl p-8">
-                    <h2 class="text-4xl font-bold mb-6">Mengelola Secara Efisien</h2>
+                    <h2 class="text-4xl font-bold mb-6">Pengelola Secara Efisien</h2>
                     <p class="text-xl leading-relaxed">
                       Lacak jadwal perawatan, status peralatan, dan penugasan teknisi dengan mudah dalam satu tempat.
                     </p>
@@ -34,7 +34,7 @@
         <!-- Right Side - Login Form -->
         <div class="w-full lg:w-1/2 p-12 lg:p-20 flex flex-col justify-center">
             <div class="mb-12">
-                <h1 class="text-5xl font-bold text-gray-900 mb-4">Selamat Datang Di LaraTech!</h1>
+                <h1 class="text-5xl font-bold text-gray-900 mb-4">Welcome To LaraTech!</h1>
                 <p class="text-xl text-gray-600">Masukan Akun Anda</p>
             </div>
 
@@ -67,7 +67,7 @@
 
                     <!-- Password Field -->
                     <div>
-                        <label for="password" class="block text-lg font-medium text-gray-700 mb-3">Sandi</label>
+                        <label for="password" class="block text-lg font-medium text-gray-700 mb-3">Password</label>
                         <div class="relative">
                             <input :type="showPassword ? 'text' : 'password'" 
                                    name="password" 
@@ -99,7 +99,7 @@
                     <button type="submit" 
                             :disabled="loading"
                             class="w-full bg-gradient-to-r from-blue-800 to-cyan-500 hover:from-blue-900 hover:to-cyan-600 disabled:opacity-50 text-white font-medium py-4 px-6 text-lg rounded-xl transition-all">
-                        <span x-show="!loading">Masuk</span>
+                        <span x-show="!loading">Sign In</span>
                         <span x-show="loading" class="flex items-center justify-center">
                             <svg class="animate-spin -ml-1 mr-3 h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>

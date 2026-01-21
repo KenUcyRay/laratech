@@ -1,5 +1,5 @@
-<div class="h-100 position-sticky"
-    style="background: linear-gradient(180deg, #ca8a04 0%, #eab308 100%); box-shadow: 2px 0 10px rgba(0,0,0,0.1); height: 100vh; overflow-y: auto; padding-top: 10px;">
+<div class="h-100"
+    style="background: linear-gradient(180deg, #ca8a04 0%, #eab308 100%); box-shadow: 2px 0 10px rgba(0,0,0,0.1); height: 100vh; overflow-y: auto; padding-top: 80px;">
     <!-- Sidebar Header -->
     <div class="p-4 border-bottom border-white border-opacity-25">
         <div class="d-flex align-items-center text-white">
@@ -50,7 +50,7 @@
                         style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
                         <i class="fas fa-tools"></i>
                     </div>
-                    <span class="fw-medium">Perbaikan</span>
+                    <span class="fw-medium">Repairs</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -76,7 +76,7 @@
                         style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
                         <i class="fas fa-calendar-alt"></i>
                     </div>
-                    <span class="fw-medium">Jadwal Kerja</span>
+                    <span class="fw-medium">Work Schedule</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -89,7 +89,7 @@
                         style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
                         <i class="fas fa-boxes"></i>
                     </div>
-                    <span class="fw-medium">Inventori</span>
+                    <span class="fw-medium">Inventory</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -102,7 +102,7 @@
                         style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
                         <i class="fas fa-file-alt"></i>
                     </div>
-                    <span class="fw-medium">Laporan</span>
+                    <span class="fw-medium">Reports</span>
                 </a>
             </li>
         </ul>
