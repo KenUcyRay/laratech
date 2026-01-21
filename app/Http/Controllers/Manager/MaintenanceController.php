@@ -32,22 +32,15 @@ class MaintenanceController extends Controller
         // Check if equipment already has a schedule
         $exists = Maintenance::where('equipment_id', $validated['equipment_id'])->exists();
         if ($exists) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Equipment ini sudah memiliki jadwal maintenance.'
-            ], 422);
+            return redirect()->route('manager.maintenance.index')->with('error', 'Equipment ini sudah memiliki jadwal maintenance.');
         }
 
         $lastService = $validated['last_service_date'] ? \Carbon\Carbon::parse($validated['last_service_date']) : now();
         $validated['next_service_due'] = $lastService->copy()->addHours(1500);
 
-        $maintenance = Maintenance::create($validated);
+        Maintenance::create($validated);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Jadwal maintenance berhasil dibuat',
-            'data' => $maintenance
-        ]);
+        return redirect()->route('manager.maintenance.index')->with('success', 'Jadwal maintenance berhasil dibuat');
     }
 
     public function show($id)
@@ -76,10 +69,7 @@ class MaintenanceController extends Controller
             ->exists();
 
         if ($exists) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Equipment ini sudah memiliki jadwal maintenance.'
-            ], 422);
+            return redirect()->route('manager.maintenance.index')->with('error', 'Equipment ini sudah memiliki jadwal maintenance.');
         }
 
         $lastService = $validated['last_service_date'] ? \Carbon\Carbon::parse($validated['last_service_date']) : now();
@@ -87,11 +77,7 @@ class MaintenanceController extends Controller
 
         $maintenance->update($validated);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Jadwal maintenance berhasil diperbarui',
-            'data' => $maintenance
-        ]);
+        return redirect()->route('manager.maintenance.index')->with('success', 'Jadwal maintenance berhasil diperbarui');
     }
 
     public function destroy($id)
@@ -99,9 +85,6 @@ class MaintenanceController extends Controller
         $maintenance = Maintenance::findOrFail($id);
         $maintenance->delete();
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Jadwal maintenance berhasil dihapus'
-        ]);
+        return redirect()->route('manager.maintenance.index')->with('success', 'Jadwal maintenance berhasil dihapus');
     }
 }
