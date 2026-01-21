@@ -17,7 +17,7 @@ class ScheduleController extends Controller
         // Fetch Tasks assigned to user
         $tasks = Task::where('assigned_to', $userId)
             ->whereNotNull('due_date')
-            ->where('status', '!=', 'cancelled')
+            ->whereNotIn('status', ['done', 'cancelled'])
             ->with('equipment')
             ->get()
             ->map(function ($task) {
