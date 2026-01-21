@@ -12,7 +12,7 @@ class MaintenanceController extends Controller
 {
     public function index()
     {
-        $maintenances = Maintenance::with(['equipment', 'assignee'])->orderBy('next_service_due', 'asc')->get();
+        $maintenances = Maintenance::with(['equipment', 'assignee'])->orderBy('next_service_due', 'asc')->paginate(10);
         // For Create Modal
         $equipments = Equipment::all(); // Keep for Edit modal
         $availableEquipments = Equipment::doesntHave('maintenances')->get(); // For Create modal

@@ -10,7 +10,7 @@ class EquipmentTypeController extends Controller
 {
     public function index()
     {
-        $types = EquipmentType::withCount('equipments')->get();
+        $types = EquipmentType::withCount('equipments')->paginate(10);
         return view('manager.equipment_types.index', compact('types'));
     }
 

@@ -8,6 +8,17 @@
 
 @push('styles')
 <style>
+.btn-outline-primary {
+    color: #374151;
+    border-color: #374151;
+    background: transparent;
+}
+.btn-outline-primary:hover {
+    color: #ffffff;
+    background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+    border-color: #4b5563;
+    box-shadow: 0 2px 4px rgba(75, 85, 99, 0.3);
+}
 .border-left-primary {
     border-left: 0.25rem solid #7c3aed !important;
 }
@@ -71,6 +82,38 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <div class="text-muted small">
+                Showing {{ $maintenances->firstItem() ?? 1 }} to {{ $maintenances->lastItem() ?? $maintenances->count() }} of {{ $maintenances->total() }} results
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                @if ($maintenances->onFirstPage())
+                    <button class="btn btn-sm btn-outline-secondary" disabled>
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </button>
+                @else
+                    <a href="{{ $maintenances->previousPageUrl() }}" class="btn btn-sm btn-outline-primary">
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </a>
+                @endif
+                
+                <span class="text-muted small mx-2">
+                    Page {{ $maintenances->currentPage() }} of {{ $maintenances->lastPage() }}
+                </span>
+                
+                @if ($maintenances->hasMorePages())
+                    <a href="{{ $maintenances->nextPageUrl() }}" class="btn btn-sm btn-outline-primary">
+                        Next <i class="fas fa-chevron-right"></i>
+                    </a>
+                @else
+                    <button class="btn btn-sm btn-outline-secondary" disabled>
+                        Next <i class="fas fa-chevron-right"></i>
+                    </button>
+                @endif
+            </div>
         </div>
     </div>
 </div>

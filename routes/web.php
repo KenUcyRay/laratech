@@ -19,6 +19,7 @@ Route::prefix('manager')->name('manager.')->middleware(['auth', 'manager'])->gro
     Route::resource('tasks', App\Http\Controllers\Manager\TaskController::class);
     Route::get('/team', [App\Http\Controllers\Manager\TeamController::class, 'index'])->name('team.index');
     Route::resource('reports', App\Http\Controllers\Manager\ReportController::class)->only(['index', 'show']);
+    Route::get('/reports/export/pdf', [App\Http\Controllers\Manager\ReportController::class, 'exportPdf'])->name('reports.export.pdf');
 
     // Equipment & Maintenance
     Route::resource('equipment-types', App\Http\Controllers\Manager\EquipmentTypeController::class);
