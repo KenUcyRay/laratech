@@ -228,8 +228,7 @@ input, textarea {
                             <thead>
                                 <tr>
                                     <th>Equipment</th>
-                                    <th>Type</th>
-                                    <th>Next Service</th>
+                                    <th>Next Service Due</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
@@ -237,11 +236,12 @@ input, textarea {
                                 @foreach($maintenanceDue as $maintenance)
                                     <tr>
                                         <td>{{ $maintenance->equipment->name ?? 'N/A' }}</td>
-                                        <td>{{ ucfirst($maintenance->type) }}</td>
-                                        <td>{{ $maintenance->next_service->format('M d, Y') }}</td>
+                                        <td>{{ $maintenance->next_service_due ? $maintenance->next_service_due->format('M d, Y') : '-' }}
+                                        </td>
                                         <td>
-                                            <span class="badge bg-{{ $maintenance->next_service->isPast() ? 'danger' : 'warning' }}">
-                                                {{ $maintenance->next_service->isPast() ? 'Overdue' : 'Due Soon' }}
+                                            <span
+                                                class="badge bg-{{ $maintenance->next_service_due && $maintenance->next_service_due->isPast() ? 'danger' : 'warning' }}">
+                                                {{ $maintenance->next_service_due && $maintenance->next_service_due->isPast() ? 'Overdue' : 'Due Soon' }}
                                             </span>
                                         </td>
                                     </tr>

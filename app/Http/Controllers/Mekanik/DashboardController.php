@@ -17,18 +17,18 @@ class DashboardController extends Controller
 
         $completedRepairs = Task::where('status', 'done')->count();
 
-        $scheduledMaintenance = Maintenance::where('next_service', '>', now())
-            ->count();
+        // Count all active maintenance schedules
+        $scheduledMaintenance = Maintenance::count();
 
         //(high priority tasks that are active)
         $urgentRepairs = Task::whereIn('status', ['todo', 'doing'])
             ->where('priority', 'high')
             ->count();
 
-        //(high priority - within 7 days)
-        $maintenanceDue = Maintenance::where('next_service', '<=', now()->addDays(7))
-            ->with(['equipment', 'equipment.type'])
-            ->orderBy('next_service', 'asc')
+        // Get maintenance that is due or upcoming (within 7 days)
+        $maintenanceDue = Maintenance::with(['equipment', 'equipment.type', 'assignee'])
+            ->where('next_service_due', '<=', now()->addDays(7))
+            ->orderBy('next_service_due', 'asc')
             ->get();
 
         $activeRepairTasks = Task::whereIn('status', ['todo', 'doing'])

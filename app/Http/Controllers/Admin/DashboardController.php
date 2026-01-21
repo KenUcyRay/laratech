@@ -52,7 +52,7 @@ class DashboardController extends Controller
                 ];
             }
         } catch (\Exception $e) {
-            // Model doesn't exist or table doesn't exist
+            // Model doesn't exist or table doesn't exist - Admin can still see task overview
         }
 
         try {
@@ -73,7 +73,7 @@ class DashboardController extends Controller
         try {
             if (class_exists('App\Models\Maintenance')) {
                 $maintenanceModel = app('App\Models\Maintenance');
-                $maintenanceDue = $maintenanceModel::where('next_service', '<=', now()->addDays(7))
+                $maintenanceDue = $maintenanceModel::where('next_service_due', '<=', now()->addDays(7))
                     ->with('equipment')
                     ->get();
             }

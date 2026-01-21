@@ -10,8 +10,9 @@ class MaintenanceController extends Controller
 {
     public function index(): View
     {
-        $maintenances = Maintenance::with(['equipment.type'])
-            ->latest()
+        $maintenances = Maintenance::with(['equipment.type', 'assignee'])
+            ->where('user_id', auth()->id())
+            ->orderBy('next_service_due', 'asc')
             ->get();
 
         return view('operator.maintenance.index', compact('maintenances'));

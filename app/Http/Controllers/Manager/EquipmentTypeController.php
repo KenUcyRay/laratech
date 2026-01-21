@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Manager;
 
 use App\Http\Controllers\Controller;
 use App\Models\EquipmentType;
@@ -11,7 +11,7 @@ class EquipmentTypeController extends Controller
     public function index()
     {
         $types = EquipmentType::withCount('equipments')->get();
-        return view('admin.equipment_types.index', compact('types'));
+        return view('manager.equipment_types.index', compact('types'));
     }
 
     public function store(Request $request)

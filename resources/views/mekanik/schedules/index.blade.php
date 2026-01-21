@@ -3,7 +3,7 @@
 @section('title', 'Jadwal Kerja')
 
 @section('sidebar')
-    @include('components.operator-sidebar')
+    @include('components.mekanik-sidebar')
 @endsection
 
 @section('content')
@@ -11,7 +11,7 @@
 
         {{-- Ultra Modern Header --}}
         <div class="position-relative overflow-hidden rounded-4 shadow-lg mb-4"
-            style="background: linear-gradient(135deg, #10B981 0%, #059669 100%);">
+            style="background: linear-gradient(135deg, #f6c23e 0%, #f4b619 100%);">
             <div class="position-absolute top-0 end-0 opacity-25">
                 <i class="fas fa-calendar-alt"
                     style="font-size: 8rem; color: white; transform: rotate(15deg); margin: -2rem;"></i>
@@ -95,127 +95,40 @@
 
     </div>
 
-    {{-- Modal Tambah Jadwal --}}
-    <div class="modal fade" id="addScheduleModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content border-0 shadow-lg rounded-4">
-                <div class="modal-header border-0 pb-0">
-                    <div class="text-center w-100">
-                        <h3 class="fw-bold text-dark mb-2"
-                            style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-                            Tambah Jadwal Baru</h3>
-                        <p class="text-muted mb-0 fs-6">Atur jadwal kerja dan shift dengan mudah</p>
-                    </div>
-                    <button type="button" class="btn-close position-absolute" data-bs-dismiss="modal"
-                        style="top: 15px; right: 15px;"></button>
-                </div>
-                <form id="scheduleForm">
-                    <div class="modal-body pt-3">
-                        <div class="row g-4">
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <select class="form-select border-0 shadow-sm" id="scheduleType"
-                                        style="background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; height: 60px;">
-                                        <option value="shift">Shift Kerja</option>
-                                        <option value="meeting">Meeting</option>
-                                        <option value="maintenance">Maintenance</option>
-                                        <option value="training">Training</option>
-                                    </select>
-                                    <label for="scheduleType" class="text-muted"><i class="fas fa-list me-2"
-                                            style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>Jenis
-                                        Jadwal</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="date" class="form-control border-0 shadow-sm" id="scheduleDate"
-                                        style="background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; height: 60px;">
-                                    <label for="scheduleDate" class="text-muted"><i class="fas fa-calendar me-2"
-                                            style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>Tanggal</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row g-4 mt-2">
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="time" class="form-control border-0 shadow-sm" id="startTime"
-                                        style="background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; height: 60px;">
-                                    <label for="startTime" class="text-muted"><i class="fas fa-clock me-2"
-                                            style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>Waktu
-                                        Mulai</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="time" class="form-control border-0 shadow-sm" id="endTime"
-                                        style="background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; height: 60px;">
-                                    <label for="endTime" class="text-muted"><i class="fas fa-clock me-2"
-                                            style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>Waktu
-                                        Selesai</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-4">
-                            <div class="form-floating">
-                                <textarea class="form-control border-0 shadow-sm" id="scheduleDescription"
-                                    placeholder="Deskripsi jadwal..."
-                                    style="background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; height: 120px; resize: none;"></textarea>
-                                <label for="scheduleDescription" class="text-muted"><i class="fas fa-align-left me-2"
-                                        style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>Deskripsi</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer border-0 pt-2">
-                        <button type="button" class="btn btn-light rounded-pill px-4 py-2 me-2" data-bs-dismiss="modal"
-                            style="background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%); border: none; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-                            <i class="fas fa-times me-2"></i>Batal
-                        </button>
-                        <button type="submit" class="btn btn-primary rounded-pill px-4 py-2 shadow"
-                            style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); border: none; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);">
-                            <i class="fas fa-save me-2"></i>Simpan Jadwal
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
     {{-- Modal Detail Jadwal --}}
     <div class="modal fade" id="scheduleDetailModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow-lg rounded-4">
                 <div class="modal-header border-0 pb-2"
-                    style="background: linear-gradient(135deg, #10B981 0%, #059669 100%);">
+                    style="background: linear-gradient(135deg, #f6c23e 0%, #f4a20c 100%);">
                     <h5 class="modal-title fw-bold text-white" id="detailTitle">Detail Jadwal</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body pt-3 px-4">
                     <div class="mb-3">
                         <label class="small text-muted text-uppercase fw-bold d-flex align-items-center">
-                            <i class="fas fa-clock me-2 text-success"></i> Waktu
+                            <i class="fas fa-clock me-2 text-warning"></i> Waktu
                         </label>
                         <div id="detailTime" class="fs-5 fw-medium text-dark"></div>
                     </div>
 
                     <div class="mb-3">
                         <label class="small text-muted text-uppercase fw-bold d-flex align-items-center">
-                            <i class="fas fa-tag me-2 text-success"></i> Tipe
+                            <i class="fas fa-tag me-2 text-warning"></i> Tipe
                         </label>
                         <div id="detailType"></div>
                     </div>
 
                     <div class="mb-3" id="equipmentSection">
                         <label class="small text-muted text-uppercase fw-bold d-flex align-items-center">
-                            <i class="fas fa-cog me-2 text-success"></i> Equipment
+                            <i class="fas fa-cog me-2 text-warning"></i> Equipment
                         </label>
                         <div id="detailEquipment" class="fs-6 fw-medium text-dark"></div>
                     </div>
 
                     <div class="mb-3" id="descriptionSection">
                         <label class="small text-muted text-uppercase fw-bold d-flex align-items-center">
-                            <i class="fas fa-align-left me-2 text-success"></i> Deskripsi
+                            <i class="fas fa-align-left me-2 text-warning"></i> Deskripsi
                         </label>
                         <p id="detailDescription" class="text-secondary mb-0"></p>
                     </div>
@@ -228,10 +141,19 @@
                                 <i class="fas fa-spinner me-1"></i> Kerjakan
                             </button>
                             <button onclick="updateTaskStatus('done')" class="btn flex-grow-1 text-white"
-                                style="background: linear-gradient(135deg, #10B981 0%, #059669 100%);">
+                                style="background: linear-gradient(135deg, #f6c23e 0%, #f4a20c 100%);">
                                 <i class="fas fa-check me-1"></i> Selesai
                             </button>
                         </div>
+                    </div>
+
+                    {{-- Form untuk Update Status Maintenance --}}
+                    <div id="maintenanceActionSection" class="d-none mt-4 pt-3 border-top">
+                        <label class="small text-muted text-uppercase fw-bold mb-2">Aksi Maintenance</label>
+                        <button onclick="completeMaintenance()" class="btn w-100 text-white fw-bold"
+                            style="background: linear-gradient(135deg, #f6c23e 0%, #f4a20c 100%);">
+                            <i class="fas fa-check-circle me-1"></i> Selesaikan Maintenance
+                        </button>
                     </div>
                 </div>
             </div>
@@ -239,7 +161,6 @@
     </div>
 
     <script>
-        // ... (Existing constants and state) ...
         /* =========================
         CONSTANTS
         ========================= */
@@ -258,12 +179,10 @@
         let currentMonth = new Date().getMonth();
         let currentYear = new Date().getFullYear();
         let selectedDate = new Date();
-        let selectedScheduleId = null; // Store selected ID for updates
 
         // Injected schedules from Controller
         let schedules = @json($schedules);
 
-        // ... (Existing util and navigation functions) ...
         /* =========================
         UTIL
         ========================= */
@@ -320,8 +239,8 @@
                 const dateStr = formatDate(new Date(currentYear, currentMonth, day));
                 const hasSchedule = schedules.some(s => s.date === dateStr);
 
-                const buttonClass = isActive ? "btn-success text-white" : "btn-light";
-                const underline = hasSchedule ? "border-bottom: 3px solid #10B981;" : "";
+                const buttonClass = isActive ? "btn-warning text-white" : "btn-light";
+                const underline = hasSchedule ? "border-bottom: 3px solid #f6c23e;" : "";
 
                 row.innerHTML += `
                                 <td class="text-center">
@@ -358,7 +277,7 @@
         }
 
         /* =========================
-        SCHEDULE LIST & MODAL
+        SCHEDULE LIST
         ========================= */
         function renderSchedules() {
             const container = document.getElementById("schedule-content");
@@ -381,24 +300,24 @@
                 const itemJson = JSON.stringify(item).replace(/"/g, '&quot;');
 
                 container.innerHTML += `
-                                <div class="mb-3 p-3 rounded-3 bg-light shadow-sm border-start border-4 border-${badgeClass}" 
-                                     style="cursor: pointer; transition: transform 0.2s;"
-                                     onmouseover="this.style.transform='translateX(5px)'"
-                                     onmouseout="this.style.transform='translateX(0)'"
-                                     onclick="showDetailModal(${itemJson})">
-                                    <div class="d-flex justify-content-between align-items-center mb-1">
-                                        <strong>${item.title}</strong>
-                                        <span class="badge bg-${badgeClass}">${item.type.toUpperCase()}</span>
-                                    </div>
-                                    <div class="text-muted small mb-1"><i class="fas fa-clock me-1"></i> ${item.time}</div>
-                                    ${item.status ? `<div class="mt-2 text-end"><span class="badge bg-secondary">${item.status}</span></div>` : ''}
-                                </div>
-                            `;
+                        <div class="mb-3 p-3 rounded-3 bg-light shadow-sm border-start border-4 border-${badgeClass}" 
+                             style="cursor: pointer; transition: transform 0.2s;"
+                             onmouseover="this.style.transform='translateX(5px)'"
+                             onmouseout="this.style.transform='translateX(0)'"
+                             onclick="showDetailModal(${itemJson})">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <strong>${item.title}</strong>
+                                <span class="badge bg-${badgeClass}">${item.type.toUpperCase()}</span>
+                            </div>
+                            <div class="text-muted small mb-1"><i class="fas fa-clock me-1"></i> ${item.time}</div>
+                            ${item.status ? `<div class="mt-2 text-end"><span class="badge bg-secondary">${item.status}</span></div>` : ''}
+                        </div>
+                    `;
             });
         }
 
         function showDetailModal(item) {
-            selectedScheduleId = item.id; // Save ID for action
+            selectedScheduleId = item.id;
 
             document.getElementById('detailTitle').textContent = item.title;
             document.getElementById('detailTime').textContent = `${item.date} ${item.time}`;
@@ -424,18 +343,23 @@
             }
 
             const typeBadge = document.getElementById('detailType');
+            const taskActionSection = document.getElementById('taskActionSection');
+            const maintenanceActionSection = document.getElementById('maintenanceActionSection');
+
+            // Reset display
+            taskActionSection.classList.add('d-none');
+            maintenanceActionSection.classList.add('d-none');
+
             if (item.type === 'task') {
-                typeBadge.innerHTML = '<span class="badge" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%);">TASK</span>';
-                // Show update buttons if it's a task and not done
-                const actionSection = document.getElementById('taskActionSection');
+                typeBadge.innerHTML = '<span class="badge" style="background: linear-gradient(135deg, #f6c23e 0%, #f4a20c 100%);">TASK</span>';
+
                 if (item.status !== 'done') {
-                    actionSection.classList.remove('d-none');
-                } else {
-                    actionSection.classList.add('d-none');
+                    taskActionSection.classList.remove('d-none');
                 }
             } else {
-                typeBadge.innerHTML = '<span class="badge bg-warning text-dark">MAINTENANCE</span>';
-                document.getElementById('taskActionSection').classList.add('d-none');
+                typeBadge.innerHTML = '<span class="badge" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%);">MAINTENANCE</span>';
+                // Always show complete button for maintenance in schedule
+                maintenanceActionSection.classList.remove('d-none');
             }
 
             new bootstrap.Modal(document.getElementById('scheduleDetailModal')).show();
@@ -445,7 +369,7 @@
             if (!selectedScheduleId) return;
 
             try {
-                const response = await fetch(`/operator/tasks/${selectedScheduleId}/status`, {
+                const response = await fetch(`/mekanik/work-orders/${selectedScheduleId}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -454,7 +378,9 @@
                     body: JSON.stringify({ status: status })
                 });
 
-                if (response.ok) {
+                const data = await response.json();
+
+                if (response.ok && data.status === 'success') {
                     // Update local data
                     const idx = schedules.findIndex(s => s.id === selectedScheduleId && s.type === 'task');
                     if (idx !== -1) {
@@ -464,19 +390,51 @@
                     // Refresh view
                     renderSchedules();
                     bootstrap.Modal.getInstance(document.getElementById('scheduleDetailModal')).hide();
-
-                    // Show success toast (optional)
-                    alert('Status berhasil diperbarui!');
                 } else {
-                    alert('Gagal memperbarui status.');
+                    alert('Gagal memperbarui status: ' + (data.message || 'Unknown error'));
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('Terjadi kesalahan.');
+                alert('Terjadi kesalahan saat menghubungi server.');
             }
         }
 
-        // ... (Stats and Init) ...
+        async function completeMaintenance() {
+            if (!selectedScheduleId) return;
+
+            if (!confirm('Apakah Anda yakin ingin menyelesaikan maintenance ini?')) return;
+
+            try {
+                const response = await fetch(`/mekanik/maintenance/${selectedScheduleId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ action: 'complete' })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.status === 'success') {
+                    // Remove from local schedule list as it's done for this cycle
+                    schedules = schedules.filter(s => !(s.id === selectedScheduleId && s.type === 'maintenance'));
+
+                    // Refresh view and stats
+                    renderSchedules();
+                    generateStats();
+                    bootstrap.Modal.getInstance(document.getElementById('scheduleDetailModal')).hide();
+
+                    alert('Maintenance berhasil diselesaikan!');
+                } else {
+                    alert('Gagal menyelesaikan maintenance: ' + (data.message || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan saat menghubungi server.');
+            }
+        }
+
         /* =========================
         STATS GENERATION
         ========================= */

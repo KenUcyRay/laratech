@@ -12,6 +12,7 @@ class TaskController extends Controller
     public function index(): View
     {
         $query = Task::with(['equipment', 'equipment.type'])
+            ->where('assigned_to', auth()->id())
             ->orderBy('priority', 'desc')
             ->orderBy('due_date', 'asc');
 
