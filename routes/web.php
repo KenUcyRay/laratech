@@ -48,11 +48,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     // Reports
     Route::resource('reports', App\Http\Controllers\Admin\ReportController::class)->only(['index', 'show', 'update', 'destroy']);
 
-    Route::get('settings', [App\Http\Controllers\Admin\SettingController::class, 'index'])->name('settings.index');
-    Route::put('settings', [App\Http\Controllers\Admin\SettingController::class, 'update'])->name('settings.update');
-    Route::post('settings/toggle-maintenance', [App\Http\Controllers\Admin\SettingController::class, 'toggleMaintenance'])->name('settings.toggle-maintenance');
-    Route::post('settings/backup', [App\Http\Controllers\Admin\SettingController::class, 'backup'])->name('settings.backup');
-    Route::post('settings/clear-cache', [App\Http\Controllers\Admin\SettingController::class, 'clearCache'])->name('settings.clear-cache');
+
 });
 
 // Operator Routes

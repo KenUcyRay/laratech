@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class ReportController extends Controller
 {
@@ -70,5 +72,43 @@ class ReportController extends Controller
         }
 
         return view('admin.reports.show', compact('report'));
+    }
+
+    public function update(Request $request, $id): RedirectResponse
+    {
+        $validated = $request->validate([
+            'status' => ['required', 'string', 'in:open,in_progress,resolved'],
+        ]);
+
+        try {
+            if (class_exists('App\Models\Report')) {
+                $reportModel = app('App\Models\Report');
+                $report = $reportModel::findOrFail($id);
+                $report->update($validated);
+                
+                return redirect()->route('admin.reports.index')->with('success', 'Report status updated successfully.');
+            }
+        } catch (\Exception $e) {
+            // Model doesn't exist or record not found
+        }
+
+        return redirect()->route('admin.reports.index')->with('error', 'Unable to update report.');
+    }
+
+    public function destroy($id): RedirectResponse
+    {
+        try {
+            if (class_exists('App\Models\Report')) {
+                $reportModel = app('App\Models\Report');
+                $report = $reportModel::findOrFail($id);
+                $report->delete();
+                
+                return redirect()->route('admin.reports.index')->with('success', 'Report deleted successfully.');
+            }
+        } catch (\Exception $e) {
+            // Model doesn't exist or record not found
+        }
+
+        return redirect()->route('admin.reports.index')->with('error', 'Unable to delete report.');
     }
 }

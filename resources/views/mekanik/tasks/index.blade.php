@@ -109,7 +109,42 @@
 
     </div>
 
-    {{-- Task Detail Modal --}}
+    {{-- Confirmation Modal --}}
+    <div class="modal fade" id="confirmModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header border-0" style="background: linear-gradient(135deg, #B6771D 0%, #7B542F 100%);">
+                    <h5 class="modal-title text-white fw-bold"><i class="fas fa-question-circle me-2"></i>Confirm Action</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p id="confirmMessage" class="mb-0">Are you sure?</p>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-secondary rounded-3" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger rounded-3" id="confirmAction">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Error Modal --}}
+    <div class="modal fade" id="errorModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header border-0 bg-danger">
+                    <h5 class="modal-title text-white fw-bold"><i class="fas fa-exclamation-triangle me-2"></i>Error</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p id="errorMessage" class="mb-0 text-danger">An error occurred.</p>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-secondary rounded-3" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="taskDetailModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -177,8 +212,17 @@
             });
 
             function updateTaskStatus(id, status) {
-                if (!confirm('Are you sure you want to update task status to ' + status + '?')) return;
+                // Show confirmation modal
+                const modal = new bootstrap.Modal(document.getElementById('confirmModal'));
+                document.getElementById('confirmMessage').textContent = `Are you sure you want to update task status to ${status}?`;
+                document.getElementById('confirmAction').onclick = function() {
+                    modal.hide();
+                    performTaskUpdate(id, status);
+                };
+                modal.show();
+            }
 
+            function performTaskUpdate(id, status) {
                 fetch(`/mekanik/tasks/${id}`, {
                     method: "POST",
                     headers: {
@@ -196,12 +240,18 @@
                         if (data.status === 'success') {
                             location.reload();
                         } else {
-                            alert('Error: ' + JSON.stringify(data));
+                            // Show error modal
+                            const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                            document.getElementById('errorMessage').textContent = 'Error: ' + JSON.stringify(data);
+                            errorModal.show();
                         }
                     })
                     .catch(err => {
                         console.error(err);
-                        alert('Failed to update task.');
+                        // Show error modal
+                        const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                        document.getElementById('errorMessage').textContent = 'Failed to update task.';
+                        errorModal.show();
                     });
             }
         </script>

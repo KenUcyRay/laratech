@@ -18,9 +18,9 @@ class OperatorController extends Controller
         return view('admin.operators.index', compact('operators'));
     }
 
-    public function create(): View
+    public function create(): RedirectResponse
     {
-        return view('admin.operators.create');
+        return redirect()->route('admin.operators.index');
     }
 
     public function store(Request $request): RedirectResponse
@@ -46,9 +46,9 @@ class OperatorController extends Controller
         return view('admin.operators.show', compact('operator'));
     }
 
-    public function edit(User $operator): View
+    public function edit(User $operator): RedirectResponse
     {
-        return view('admin.operators.edit', compact('operator'));
+        return redirect()->route('admin.operators.index');
     }
 
     public function update(Request $request, User $operator): RedirectResponse

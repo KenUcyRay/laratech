@@ -18,9 +18,9 @@ class MekanikController extends Controller
         return view('admin.mekaniks.index', compact('mekaniks'));
     }
 
-    public function create(): View
+    public function create(): RedirectResponse
     {
-        return view('admin.mekaniks.create');
+        return redirect()->route('admin.mekaniks.index');
     }
 
     public function store(Request $request): RedirectResponse
@@ -46,9 +46,9 @@ class MekanikController extends Controller
         return view('admin.mekaniks.show', compact('mekanik'));
     }
 
-    public function edit(User $mekanik): View
+    public function edit(User $mekanik): RedirectResponse
     {
-        return view('admin.mekaniks.edit', compact('mekanik'));
+        return redirect()->route('admin.mekaniks.index');
     }
 
     public function update(Request $request, User $mekanik): RedirectResponse

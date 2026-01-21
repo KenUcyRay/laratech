@@ -78,19 +78,7 @@
                     <span class="fw-medium">Reports</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('admin.settings*') ? 'active' : '' }}"
-                    href="{{ route('admin.settings.index') }}"
-                    style="transition: all 0.3s ease; {{ request()->routeIs('admin.settings*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
-                    onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
-                    onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
-                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3"
-                        style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
-                        <i class="fas fa-cog"></i>
-                    </div>
-                    <span class="fw-medium">Settings</span>
-                </a>
-            </li>
+
         </ul>
     </div>
 </div>

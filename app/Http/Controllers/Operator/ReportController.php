@@ -8,20 +8,32 @@ use App\Models\ReportImage;
 use App\Models\Equipment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Storage;
 
 class ReportController extends Controller
 {
     public function pdf(Report $report)
     {
-        $report->load(['equipment', 'user', 'images']);
-
-        $pdf = Pdf::loadView('operator.reports.pdf-single', compact('report'));
-
-        return $pdf->download(
-            'laporan-kerusakan-' . $report->id . '.pdf'
-        );
+        try {
+            $report->load(['equipment', 'user', 'images']);
+            
+            // Debug: Log untuk memastikan data ada
+            \Log::info('PDF Generation - Report ID: ' . $report->id);
+            \Log::info('PDF Generation - Equipment: ' . ($report->equipment->name ?? 'N/A'));
+            
+            $pdf = Pdf::loadView('operator.reports.pdf-single', compact('report'));
+            $pdf->setPaper('A4', 'portrait');
+            
+            $filename = 'laporan-kerusakan-' . $report->id . '.pdf';
+            
+            // Gunakan method download langsung
+            return $pdf->download($filename);
+            
+        } catch (\Exception $e) {
+            \Log::error('PDF Generation Error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal mengunduh PDF: ' . $e->getMessage());
+        }
     }
 
     public function index()

@@ -9,6 +9,13 @@
 @section('content')
     <div class="container-fluid mt-4">
 
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show rounded-4 mb-4" role="alert">
+                <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+
         {{-- Ultra Modern Header --}}
         <div class="position-relative overflow-hidden rounded-4 shadow-lg mb-4"
             style="background: linear-gradient(135deg, #10B981 0%, #059669 100%);">
@@ -38,7 +45,8 @@
         {{-- Calendar View --}}
         <div class="row g-4">
             <div class="col-lg-8">
-                <div class="card border-0 shadow-sm rounded-4">
+                <div class="card border-0 shadow-lg rounded-4"
+                    style="background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%);">
                     <div class="card-header bg-transparent border-0 p-4">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="fw-bold mb-0">📅 Kalender Jadwal</h5>
@@ -46,12 +54,12 @@
                     </div>
                     <div class="card-body p-4">
                         <div class="d-flex justify-content-between align-items-center mb-4">
-                            <button class="btn btn-light rounded-circle" style="width: 40px; height: 40px;"
+                            <button class="btn btn-light rounded-3 shadow-sm" style="width: 40px; height: 40px;"
                                 onclick="changeMonth(-1)">
                                 <i class="fas fa-chevron-left"></i>
                             </button>
                             <h4 class="fw-bold mb-0" id="calendar-title">Januari 2026</h4>
-                            <button class="btn btn-light rounded-circle" style="width: 40px; height: 40px;"
+                            <button class="btn btn-light rounded-3 shadow-sm" style="width: 40px; height: 40px;"
                                 onclick="changeMonth(1)">
                                 <i class="fas fa-chevron-right"></i>
                             </button>
@@ -81,7 +89,8 @@
 
             {{-- Schedule List --}}
             <div class="col-lg-4">
-                <div class="card border-0 shadow-sm rounded-4">
+                <div class="card border-0 shadow-lg rounded-4"
+                    style="background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%);">
                     <div class="card-header bg-transparent border-0 p-4" id="schedule-header">
                         <h5 class="fw-bold mb-0">🕐 Jadwal Hari Ini</h5>
                         <small class="text-muted" id="current-date">Loading...</small>
@@ -95,103 +104,16 @@
 
     </div>
 
-    {{-- Modal Tambah Jadwal --}}
-    <div class="modal fade" id="addScheduleModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content border-0 shadow-lg rounded-4">
-                <div class="modal-header border-0 pb-0">
-                    <div class="text-center w-100">
-                        <h3 class="fw-bold text-dark mb-2"
-                            style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-                            Tambah Jadwal Baru</h3>
-                        <p class="text-muted mb-0 fs-6">Atur jadwal kerja dan shift dengan mudah</p>
-                    </div>
-                    <button type="button" class="btn-close position-absolute" data-bs-dismiss="modal"
-                        style="top: 15px; right: 15px;"></button>
-                </div>
-                <form id="scheduleForm">
-                    <div class="modal-body pt-3">
-                        <div class="row g-4">
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <select class="form-select border-0 shadow-sm" id="scheduleType"
-                                        style="background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; height: 60px;">
-                                        <option value="shift">Shift Kerja</option>
-                                        <option value="meeting">Meeting</option>
-                                        <option value="maintenance">Maintenance</option>
-                                        <option value="training">Training</option>
-                                    </select>
-                                    <label for="scheduleType" class="text-muted"><i class="fas fa-list me-2"
-                                            style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>Jenis
-                                        Jadwal</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="date" class="form-control border-0 shadow-sm" id="scheduleDate"
-                                        style="background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; height: 60px;">
-                                    <label for="scheduleDate" class="text-muted"><i class="fas fa-calendar me-2"
-                                            style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>Tanggal</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row g-4 mt-2">
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="time" class="form-control border-0 shadow-sm" id="startTime"
-                                        style="background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; height: 60px;">
-                                    <label for="startTime" class="text-muted"><i class="fas fa-clock me-2"
-                                            style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>Waktu
-                                        Mulai</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="time" class="form-control border-0 shadow-sm" id="endTime"
-                                        style="background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; height: 60px;">
-                                    <label for="endTime" class="text-muted"><i class="fas fa-clock me-2"
-                                            style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>Waktu
-                                        Selesai</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-4">
-                            <div class="form-floating">
-                                <textarea class="form-control border-0 shadow-sm" id="scheduleDescription"
-                                    placeholder="Deskripsi jadwal..."
-                                    style="background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 15px; height: 120px; resize: none;"></textarea>
-                                <label for="scheduleDescription" class="text-muted"><i class="fas fa-align-left me-2"
-                                        style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>Deskripsi</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer border-0 pt-2">
-                        <button type="button" class="btn btn-light rounded-pill px-4 py-2 me-2" data-bs-dismiss="modal"
-                            style="background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%); border: none; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-                            <i class="fas fa-times me-2"></i>Batal
-                        </button>
-                        <button type="submit" class="btn btn-primary rounded-pill px-4 py-2 shadow"
-                            style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); border: none; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);">
-                            <i class="fas fa-save me-2"></i>Simpan Jadwal
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
     {{-- Modal Detail Jadwal --}}
     <div class="modal fade" id="scheduleDetailModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog">
             <div class="modal-content border-0 shadow-lg rounded-4">
-                <div class="modal-header border-0 pb-2"
+                <div class="modal-header border-0 p-4"
                     style="background: linear-gradient(135deg, #10B981 0%, #059669 100%);">
                     <h5 class="modal-title fw-bold text-white" id="detailTitle">Detail Jadwal</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body pt-3 px-4">
+                <div class="modal-body p-4">
                     <div class="mb-3">
                         <label class="small text-muted text-uppercase fw-bold d-flex align-items-center">
                             <i class="fas fa-clock me-2 text-success"></i> Waktu
@@ -224,10 +146,10 @@
                     <div id="taskActionSection" class="d-none mt-4 pt-3 border-top">
                         <label class="small text-muted text-uppercase fw-bold mb-2">Update Status</label>
                         <div class="d-flex gap-2">
-                            <button onclick="updateTaskStatus('doing')" class="btn btn-primary flex-grow-1">
+                            <button onclick="updateTaskStatus('doing')" class="btn btn-primary flex-grow-1 rounded-3">
                                 <i class="fas fa-spinner me-1"></i> Kerjakan
                             </button>
-                            <button onclick="updateTaskStatus('done')" class="btn flex-grow-1 text-white"
+                            <button onclick="updateTaskStatus('done')" class="btn flex-grow-1 text-white rounded-3"
                                 style="background: linear-gradient(135deg, #10B981 0%, #059669 100%);">
                                 <i class="fas fa-check me-1"></i> Selesai
                             </button>
@@ -239,10 +161,7 @@
     </div>
 
     <script>
-        // ... (Existing constants and state) ...
-        /* =========================
-        CONSTANTS
-        ========================= */
+        // Constants and state
         const monthNames = [
             "Januari", "Februari", "Maret", "April", "Mei", "Juni",
             "Juli", "Agustus", "September", "Oktober", "November", "Desember"
@@ -252,21 +171,13 @@
             "Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"
         ];
 
-        /* =========================
-        STATE
-        ========================= */
         let currentMonth = new Date().getMonth();
         let currentYear = new Date().getFullYear();
         let selectedDate = new Date();
-        let selectedScheduleId = null; // Store selected ID for updates
+        let selectedScheduleId = null;
 
-        // Injected schedules from Controller
         let schedules = @json($schedules);
 
-        // ... (Existing util and navigation functions) ...
-        /* =========================
-        UTIL
-        ========================= */
         function formatDate(date) {
             const y = date.getFullYear();
             const m = String(date.getMonth() + 1).padStart(2, "0");
@@ -274,9 +185,6 @@
             return `${y}-${m}-${d}`;
         }
 
-        /* =========================
-        MONTH NAVIGATION
-        ========================= */
         function changeMonth(direction) {
             currentMonth += direction;
 
@@ -291,9 +199,6 @@
             renderCalendar();
         }
 
-        /* =========================
-        CALENDAR RENDER
-        ========================= */
         function renderCalendar() {
             const tbody = document.getElementById("calendar-body");
             tbody.innerHTML = "";
@@ -306,7 +211,6 @@
 
             let row = document.createElement("tr");
 
-            // kosong awal
             for (let i = 0; i < firstDay; i++) {
                 row.innerHTML += `<td></td>`;
             }
@@ -324,14 +228,14 @@
                 const underline = hasSchedule ? "border-bottom: 3px solid #10B981;" : "";
 
                 row.innerHTML += `
-                                    <td class="text-center">
-                                        <button class="btn btn-sm rounded-circle ${buttonClass}"
-                                                style="${underline}"
-                                                onclick="selectDate(${day})">
-                                            ${day}
-                                        </button>
-                                    </td>
-                                `;
+                    <td class="text-center">
+                        <button class="btn btn-sm rounded-circle ${buttonClass}"
+                                style="${underline}"
+                                onclick="selectDate(${day})">
+                            ${day}
+                        </button>
+                    </td>
+                `;
 
                 if ((firstDay + day) % 7 === 0) {
                     tbody.appendChild(row);
@@ -344,9 +248,6 @@
             }
         }
 
-        /* =========================
-        DATE SELECT
-        ========================= */
         function selectDate(day) {
             selectedDate = new Date(currentYear, currentMonth, day);
 
@@ -357,9 +258,6 @@
             renderSchedules();
         }
 
-        /* =========================
-        SCHEDULE LIST & MODAL
-        ========================= */
         function renderSchedules() {
             const container = document.getElementById("schedule-content");
             container.innerHTML = "";
@@ -368,7 +266,7 @@
             const todaySchedules = schedules.filter(s => s.date === today);
 
             if (todaySchedules.length === 0) {
-                container.innerHTML = `<p class="text-muted">Tidak ada jadwal.</p>`;
+                container.innerHTML = `<div class="text-center py-4"><div class="text-muted"><i class="fas fa-calendar-times fs-3 mb-2"></i><p class="mb-0">Tidak ada jadwal.</p></div></div>`;
                 return;
             }
 
@@ -377,33 +275,31 @@
                 if (item.type === 'maintenance') badgeClass = 'danger';
                 if (item.type === 'task') badgeClass = 'info';
 
-                // Pass item as clean JSON string to onclick handler
                 const itemJson = JSON.stringify(item).replace(/"/g, '&quot;');
 
                 container.innerHTML += `
-                                    <div class="mb-3 p-3 rounded-3 bg-light shadow-sm border-start border-4 border-${badgeClass}" 
-                                         style="cursor: pointer; transition: transform 0.2s;"
-                                         onmouseover="this.style.transform='translateX(5px)'"
-                                         onmouseout="this.style.transform='translateX(0)'"
-                                         onclick="showDetailModal(${itemJson})">
-                                        <div class="d-flex justify-content-between align-items-center mb-1">
-                                            <strong>${item.title}</strong>
-                                            <span class="badge bg-${badgeClass}">${item.type.toUpperCase()}</span>
-                                        </div>
-                                        <div class="text-muted small mb-1"><i class="fas fa-clock me-1"></i> ${item.time}</div>
-                                        ${item.status ? `<div class="mt-2 text-end"><span class="badge bg-secondary">${item.status}</span></div>` : ''}
-                                    </div>
-                                `;
+                    <div class="mb-3 p-3 rounded-3 shadow-sm border-start border-4 border-${badgeClass}" 
+                         style="cursor: pointer; transition: all 0.3s ease; background: rgba(255,255,255,0.8);"
+                         onmouseover="this.style.transform='translateX(5px)'; this.style.background='rgba(255,255,255,1)'"
+                         onmouseout="this.style.transform='translateX(0)'; this.style.background='rgba(255,255,255,0.8)'"
+                         onclick="showDetailModal(${itemJson})">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <strong>${item.title}</strong>
+                            <span class="badge bg-${badgeClass} rounded-pill px-2 py-1">${item.type.toUpperCase()}</span>
+                        </div>
+                        <div class="text-muted small mb-1"><i class="fas fa-clock me-1"></i> ${item.time}</div>
+                        ${item.status ? `<div class="mt-2 text-end"><span class="badge bg-secondary rounded-pill px-2 py-1">${item.status}</span></div>` : ''}
+                    </div>
+                `;
             });
         }
 
         function showDetailModal(item) {
-            selectedScheduleId = item.id; // Save ID for action
+            selectedScheduleId = item.id;
 
             document.getElementById('detailTitle').textContent = item.title;
             document.getElementById('detailTime').textContent = `${item.date} ${item.time}`;
 
-            // Equipment section
             const equipmentSection = document.getElementById('equipmentSection');
             const equipmentEl = document.getElementById('detailEquipment');
             if (item.equipment) {
@@ -413,7 +309,6 @@
                 equipmentSection.classList.add('d-none');
             }
 
-            // Description section - hide for tasks, show for maintenance
             const descriptionSection = document.getElementById('descriptionSection');
             const descriptionEl = document.getElementById('detailDescription');
             if (item.type === 'task') {
@@ -425,8 +320,7 @@
 
             const typeBadge = document.getElementById('detailType');
             if (item.type === 'task') {
-                typeBadge.innerHTML = '<span class="badge" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%);">TASK</span>';
-                // Show update buttons if it's a task and not done
+                typeBadge.innerHTML = '<span class="badge rounded-pill px-3 py-2" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%);">TASK</span>';
                 const actionSection = document.getElementById('taskActionSection');
                 if (item.status !== 'done') {
                     actionSection.classList.remove('d-none');
@@ -434,7 +328,7 @@
                     actionSection.classList.add('d-none');
                 }
             } else {
-                typeBadge.innerHTML = '<span class="badge bg-warning text-dark">MAINTENANCE</span>';
+                typeBadge.innerHTML = '<span class="badge bg-warning text-dark rounded-pill px-3 py-2">MAINTENANCE</span>';
                 document.getElementById('taskActionSection').classList.add('d-none');
             }
 
@@ -455,18 +349,22 @@
                 });
 
                 if (response.ok) {
-                    // Update local data
                     const idx = schedules.findIndex(s => s.id === selectedScheduleId && s.type === 'task');
                     if (idx !== -1) {
                         schedules[idx].status = status;
                     }
 
-                    // Refresh view
                     renderSchedules();
                     bootstrap.Modal.getInstance(document.getElementById('scheduleDetailModal')).hide();
 
-                    // Show success toast (optional)
-                    alert('Status berhasil diperbarui!');
+                    // Show success alert
+                    const alertDiv = document.createElement('div');
+                    alertDiv.className = 'alert alert-success alert-dismissible fade show rounded-4 mb-4';
+                    alertDiv.innerHTML = `
+                        <i class="fas fa-check-circle me-2"></i>Status berhasil diperbarui!
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    `;
+                    document.querySelector('.container-fluid').insertBefore(alertDiv, document.querySelector('.container-fluid').firstChild.nextSibling);
                 } else {
                     alert('Gagal memperbarui status.');
                 }
@@ -476,47 +374,41 @@
             }
         }
 
-        // ... (Stats and Init) ...
-        /* =========================
-        STATS GENERATION
-        ========================= */
         function generateStats() {
             const today = formatDate(new Date());
             const todaySchedules = schedules.filter(s => s.date === today);
-
-            // Stats logic can be expanded
-            const maintenanceCount = schedules.filter(s => s.type === 'maintenance').length;
             const taskCount = schedules.filter(s => s.type === 'task').length;
 
             document.getElementById('stats-container').innerHTML = `
-                                <div class="col-md-6">
-                                    <div class="card border-0 shadow-sm rounded-4 h-100">
-                                        <div class="card-body p-4 text-center">
-                                            <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                                                <i class="fas fa-calendar-check fs-3 text-primary"></i>
-                                            </div>
-                                            <h3 class="fw-bold text-primary mb-1">${todaySchedules.length}</h3>
-                                            <p class="text-muted mb-0">Jadwal Hari Ini</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="card border-0 shadow-sm rounded-4 h-100">
-                                        <div class="card-body p-4 text-center">
-                                            <div class="bg-info bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                                                <i class="fas fa-tasks fs-3 text-info"></i>
-                                            </div>
-                                            <h3 class="fw-bold text-info mb-1">${taskCount}</h3>
-                                            <p class="text-muted mb-0">Total Tasks</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            `;
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-lg rounded-4 h-100"
+                        style="background: linear-gradient(145deg, #10B981 0%, #059669 100%); transform: translateY(0); transition: all 0.3s ease;"
+                        onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <div class="card-body p-4 text-center">
+                            <div class="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                <i class="fas fa-calendar-check fs-3 text-black"></i>
+                            </div>
+                            <h3 class="fw-bold text-white mb-1">${todaySchedules.length}</h3>
+                            <p class="text-white text-opacity-75 mb-0">Jadwal Hari Ini</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-lg rounded-4 h-100"
+                        style="background: linear-gradient(145deg, #16a34a 0%, #15803d 100%); transform: translateY(0); transition: all 0.3s ease;"
+                        onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                        <div class="card-body p-4 text-center">
+                            <div class="bg-white bg-opacity-20 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                <i class="fas fa-tasks fs-3 text-black"></i>
+                            </div>
+                            <h3 class="fw-bold text-white mb-1">${taskCount}</h3>
+                            <p class="text-white text-opacity-75 mb-0">Total Tasks</p>
+                        </div>
+                    </div>
+                </div>
+            `;
         }
 
-        /* =========================
-        INIT
-        ========================= */
         document.addEventListener("DOMContentLoaded", () => {
             generateStats();
             selectDate(selectedDate.getDate());

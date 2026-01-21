@@ -88,38 +88,86 @@
 
     </div>
 
-    @push('scripts')
+    {{-- Confirmation Modal --}}
+    <div class="modal fade" id="confirmModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header border-0" style="background: linear-gradient(135deg, #B6771D 0%, #7B542F 100%);">
+                    <h5 class="modal-title text-white fw-bold"><i class="fas fa-question-circle me-2"></i>Confirm Action</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p id="confirmMessage" class="mb-0">Are you sure?</p>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-secondary rounded-3" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success rounded-3" id="confirmAction">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Error Modal --}}
+    <div class="modal fade" id="errorModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header border-0 bg-danger">
+                    <h5 class="modal-title text-white fw-bold"><i class="fas fa-exclamation-triangle me-2"></i>Error</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p id="errorMessage" class="mb-0 text-danger">An error occurred.</p>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-secondary rounded-3" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @push('scripts'))
         <script>
             document.querySelectorAll('.complete-btn').forEach(btn => {
                 btn.addEventListener('click', function () {
                     let id = this.dataset.id;
 
-                    // Direct completion without modal
-                    if (!confirm('Are you sure you want to mark this scheduled maintenance as complete?')) return;
-
-                    fetch(`/mekanik/maintenance/${id}`, {
-                        method: "POST",
-                        headers: {
-                            "X-CSRF-TOKEN": "{{ csrf_token() }}",
-                            "Content-Type": "application/json",
-                            "Accept": "application/json"
-                        },
-                        body: JSON.stringify({
-                            _method: 'PUT',
-                            action: 'complete',
-                            notes: '' // Empty notes as per requirement
-                        })
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.status === 'success') {
-                                location.reload();
-                            } else {
-                                alert('Error: ' + data.message);
-                            }
-                        });
+                    // Show confirmation modal
+                    const modal = new bootstrap.Modal(document.getElementById('confirmModal'));
+                    document.getElementById('confirmMessage').textContent = 'Are you sure you want to mark this scheduled maintenance as complete?';
+                    document.getElementById('confirmAction').onclick = function() {
+                        modal.hide();
+                        performMaintenanceComplete(id);
+                    };
+                    modal.show();
                 });
             });
+
+            function performMaintenanceComplete(id) {
+                fetch(`/mekanik/maintenance/${id}`, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        _method: 'PUT',
+                        action: 'complete',
+                        notes: '' // Empty notes as per requirement
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            location.reload();
+                        } else {
+                            // Show error modal
+                            const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                            document.getElementById('errorMessage').textContent = 'Error: ' + data.message;
+                            errorModal.show();
+                        }
+                    });
+            }
         </script>
     @endpush
 @endsection
