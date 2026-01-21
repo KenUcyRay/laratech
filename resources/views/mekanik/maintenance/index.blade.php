@@ -37,11 +37,11 @@
                         <table class="table table-hover" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th width="25%">Equipment</th>
-                                    <th width="20%">Last Service Date</th>
-                                    <th width="20%">Next Service Due</th>
-                                    <th width="15%">Status</th>
-                                    <th width="20%">Action</th>
+                                    <th class="fw-semibold" width="25%">Equipment</th>
+                                    <th class="fw-semibold" width="20%">Last Service Date</th>
+                                    <th class="fw-semibold" width="20%">Next Service Due</th>
+                                    <th class="fw-semibold" width="15%">Status</th>
+                                    <th class="fw-semibold" width="20%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -71,14 +71,14 @@
                             </tbody>
                         </table>
                     </div>
-                    
+
                     {{-- Pagination --}}
                     {{ $maintenances->links('custom.mekanik-pagination') }}
                 @else
                     <div class="text-center py-5">
-                        <i class="fas fa-calendar-check fa-3x text-muted mb-3"></i>
-                        <h5 class="text-muted">No Scheduled Maintenance</h5>
-                        <p class="text-muted">There are currently no maintenance schedules to display.</p>
+                        <i class="fas fa-calendar-check fa-4x text-muted mb-4 opacity-50"></i>
+                        <h5 class="text-muted fw-semibold">No Scheduled Maintenance</h5>
+                        <p class="text-muted mb-0">There are currently no maintenance schedules to display.</p>
                     </div>
                 @endif
             </div>

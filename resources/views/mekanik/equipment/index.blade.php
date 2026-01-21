@@ -36,11 +36,11 @@
                         <table class="table table-hover" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th width="15%">Code</th>
-                                    <th width="25%">Name</th>
-                                    <th width="20%">Type</th>
-                                    <th width="20%">Current Status</th>
-                                    <th width="20%">Action</th>
+                                    <th class="fw-semibold" width="15%">Code</th>
+                                    <th class="fw-semibold" width="25%">Name</th>
+                                    <th class="fw-semibold" width="20%">Type</th>
+                                    <th class="fw-semibold" width="20%">Current Status</th>
+                                    <th class="fw-semibold" width="20%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -66,14 +66,14 @@
                             </tbody>
                         </table>
                     </div>
-                    
+
                     {{-- Pagination --}}
                     {{ $equipments->links('custom.mekanik-pagination') }}
                 @else
                     <div class="text-center py-5">
-                        <i class="fas fa-tools fa-3x text-muted mb-3"></i>
-                        <h5 class="text-muted">No Equipment Found</h5>
-                        <p class="text-muted">There are currently no equipment items to display.</p>
+                        <i class="fas fa-tools fa-4x text-muted mb-4 opacity-50"></i>
+                        <h5 class="text-muted fw-semibold">No Equipment Found</h5>
+                        <p class="text-muted mb-0">There are currently no equipment items to display.</p>
                     </div>
                 @endif
             </div>

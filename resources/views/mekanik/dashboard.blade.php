@@ -36,10 +36,11 @@
                     <div class="card-body p-4">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-2">
+                                <div class="fs-6 fw-semibold text-warning text-uppercase mb-3"
+                                    style="letter-spacing: 0.5px;">
                                     Active Work Orders
                                 </div>
-                                <div class="h3 mb-0 font-weight-bold text-dark">{{ $activeWorkOrders ?? 0 }}</div>
+                                <div class="display-6 mb-0 fw-bold text-dark">{{ $activeWorkOrders ?? 0 }}</div>
                             </div>
                             <div class="bg-warning bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center"
                                 style="width: 60px; height: 60px;">
@@ -55,10 +56,11 @@
                     <div class="card-body p-4">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-2">
+                                <div class="fs-6 fw-semibold text-danger text-uppercase mb-3"
+                                    style="letter-spacing: 0.5px;">
                                     Urgent Repairs
                                 </div>
-                                <div class="h3 mb-0 font-weight-bold text-dark">{{ $urgentRepairs ?? 0 }}</div>
+                                <div class="display-6 mb-0 fw-bold text-dark">{{ $urgentRepairs ?? 0 }}</div>
                             </div>
                             <div class="bg-danger bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center"
                                 style="width: 60px; height: 60px;">
@@ -74,10 +76,11 @@
                     <div class="card-body p-4">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-2">
+                                <div class="fs-6 fw-semibold text-success text-uppercase mb-3"
+                                    style="letter-spacing: 0.5px;">
                                     Completed Repairs
                                 </div>
-                                <div class="h3 mb-0 font-weight-bold text-dark">{{ $completedRepairs ?? 0 }}</div>
+                                <div class="display-6 mb-0 fw-bold text-dark">{{ $completedRepairs ?? 0 }}</div>
                             </div>
                             <div class="bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center"
                                 style="width: 60px; height: 60px;">
@@ -93,10 +96,10 @@
                     <div class="card-body p-4">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <div class="text-xs font-weight-bold text-info text-uppercase mb-2">
+                                <div class="fs-6 fw-semibold text-info text-uppercase mb-3" style="letter-spacing: 0.5px;">
                                     Scheduled Maintenance
                                 </div>
-                                <div class="h3 mb-0 font-weight-bold text-dark">{{ $scheduledMaintenance ?? 0 }}</div>
+                                <div class="display-6 mb-0 fw-bold text-dark">{{ $scheduledMaintenance ?? 0 }}</div>
                             </div>
                             <div class="bg-info bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center"
                                 style="width: 60px; height: 60px;">
@@ -122,9 +125,9 @@
                                 <table class="table table-hover" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th width="45%">Equipment</th>
-                                            <th width="30%">Due Date</th>
-                                            <th width="25%">Status</th>
+                                            <th class="fw-semibold" width="45%">Equipment</th>
+                                            <th class="fw-semibold" width="30%">Due Date</th>
+                                            <th class="fw-semibold" width="25%">Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -146,9 +149,9 @@
                             </div>
                         @else
                             <div class="text-center py-5">
-                                <i class="fas fa-calendar-day fa-3x text-muted mb-3"></i>
-                                <h5 class="text-muted">No Upcoming Maintenance</h5>
-                                <p class="text-muted">All maintenance is up to date.</p>
+                                <i class="fas fa-calendar-day fa-4x text-muted mb-4 opacity-50"></i>
+                                <h5 class="text-muted fw-semibold">No Upcoming Maintenance</h5>
+                                <p class="text-muted mb-0">All maintenance is up to date.</p>
                             </div>
                         @endif
                     </div>
@@ -167,10 +170,10 @@
                                 <table class="table table-hover" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th width="35%">Task</th>
-                                            <th width="25%">Equipment</th>
-                                            <th width="20%">Priority</th>
-                                            <th width="20%">Due</th>
+                                            <th class="fw-semibold" width="35%">Task</th>
+                                            <th class="fw-semibold" width="25%">Equipment</th>
+                                            <th class="fw-semibold" width="20%">Priority</th>
+                                            <th class="fw-semibold" width="20%">Due</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -192,9 +195,9 @@
                             </div>
                         @else
                             <div class="text-center py-5">
-                                <i class="fas fa-tasks fa-3x text-muted mb-3"></i>
-                                <h5 class="text-muted">No Active Tasks</h5>
-                                <p class="text-muted">You're all caught up!</p>
+                                <i class="fas fa-tasks fa-4x text-muted mb-4 opacity-50"></i>
+                                <h5 class="text-muted fw-semibold">No Active Tasks</h5>
+                                <p class="text-muted mb-0">You're all caught up!</p>
                             </div>
                         @endif
                     </div>

@@ -37,12 +37,12 @@
                         <table class="table table-hover" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th width="25%">Title</th>
-                                    <th width="20%">Equipment</th>
-                                    <th width="12%">Priority</th>
-                                    <th width="12%">Status</th>
-                                    <th width="13%">Due Date</th>
-                                    <th width="18%">Action</th>
+                                    <th class="fw-semibold" width="25%">Title</th>
+                                    <th class="fw-semibold" width="20%">Equipment</th>
+                                    <th class="fw-semibold" width="12%">Priority</th>
+                                    <th class="fw-semibold" width="12%">Status</th>
+                                    <th class="fw-semibold" width="13%">Due Date</th>
+                                    <th class="fw-semibold" width="18%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -94,14 +94,14 @@
                             </tbody>
                         </table>
                     </div>
-                    
+
                     {{-- Pagination --}}
                     {{ $tasks->links('custom.mekanik-pagination') }}
                 @else
                     <div class="text-center py-5">
-                        <i class="fas fa-clipboard-list fa-3x text-muted mb-3"></i>
-                        <h5 class="text-muted">No Tasks Found</h5>
-                        <p class="text-muted">There are currently no {{ strtolower($pageTitle) }} to display.</p>
+                        <i class="fas fa-clipboard-list fa-4x text-muted mb-4 opacity-50"></i>
+                        <h5 class="text-muted fw-semibold">No Tasks Found</h5>
+                        <p class="text-muted mb-0">There are currently no {{ strtolower($pageTitle) }} to display.</p>
                     </div>
                 @endif
             </div>
@@ -113,25 +113,29 @@
     <div class="modal fade" id="taskDetailModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header bg-info text-white">
-                    <h5 class="modal-title text-white">Task Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <div class="modal-header border-0" style="background: linear-gradient(135deg, #B6771D 0%, #7B542F 100%);">
+                    <h5 class="modal-title text-white fw-bold"><i class="fas fa-tasks me-2"></i>Task Details</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="fw-bold">Equipment:</label>
-                        <p id="modalTaskEquipment">-</p>
+                        <label class="fw-semibold text-uppercase small text-muted mb-2"
+                            style="letter-spacing: 0.5px;">Equipment:</label>
+                        <p id="modalTaskEquipment" class="fs-6 text-dark mb-0">-</p>
                     </div>
                     <div class="mb-3">
-                        <label class="fw-bold">Full Title / Description:</label>
-                        <p id="modalTaskTitle" class="bg-light p-3 rounded">-</p>
+                        <label class="fw-semibold text-uppercase small text-muted mb-2" style="letter-spacing: 0.5px;">Full
+                            Title / Description:</label>
+                        <p id="modalTaskTitle" class="bg-light p-3 rounded fs-6">-</p>
                     </div>
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between mb-2">
                         <div>
-                            <strong>Priority:</strong> <span id="modalTaskPriority">-</span>
+                            <strong class="text-muted small">Priority:</strong> <span id="modalTaskPriority"
+                                class="fw-semibold">-</span>
                         </div>
                         <div>
-                            <strong>Status:</strong> <span id="modalTaskStatus">-</span>
+                            <strong class="text-muted small">Status:</strong> <span id="modalTaskStatus"
+                                class="fw-semibold">-</span>
                         </div>
                     </div>
                 </div>

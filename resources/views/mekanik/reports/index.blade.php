@@ -48,13 +48,13 @@
                         <table class="table table-hover" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th width="10%">Date</th>
-                                    <th width="18%">Equipment</th>
-                                    <th width="12%">Reporter</th>
-                                    <th width="22%">Description</th>
-                                    <th width="10%">Severity</th>
-                                    <th width="10%">Status</th>
-                                    <th width="10%">Action</th>
+                                    <th class="fw-semibold" width="10%">Date</th>
+                                    <th class="fw-semibold" width="18%">Equipment</th>
+                                    <th class="fw-semibold" width="12%">Reporter</th>
+                                    <th class="fw-semibold" width="22%">Description</th>
+                                    <th class="fw-semibold" width="10%">Severity</th>
+                                    <th class="fw-semibold" width="10%">Status</th>
+                                    <th class="fw-semibold" width="10%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -112,14 +112,14 @@
                             </tbody>
                         </table>
                     </div>
-                    
+
                     {{-- Pagination --}}
                     {{ $reports->links('custom.mekanik-pagination') }}
                 @else
                     <div class="text-center py-5">
-                        <i class="fas fa-clipboard-list fa-3x text-muted mb-3"></i>
-                        <h5 class="text-muted">No Reports Found</h5>
-                        <p class="text-muted">There are currently no issue reports to display.</p>
+                        <i class="fas fa-clipboard-list fa-4x text-muted mb-4 opacity-50"></i>
+                        <h5 class="text-muted fw-semibold">No Reports Found</h5>
+                        <p class="text-muted mb-0">There are currently no issue reports to display.</p>
                     </div>
                 @endif
             </div>
@@ -134,24 +134,28 @@
         <div class="modal-dialog">
             <form id="statusForm">
                 <div class="modal-content">
-                    <div class="modal-header bg-warning text-white">
-                        <h5 class="modal-title text-white">Update Report Status</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <div class="modal-header border-0"
+                        style="background: linear-gradient(135deg, #B6771D 0%, #7B542F 100%);">
+                        <h5 class="modal-title text-white fw-bold"><i class="fas fa-edit me-2"></i>Update Report Status</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" id="reportId">
                         <div class="mb-3">
-                            <label class="form-label">Status</label>
-                            <select id="reportStatus" class="form-select">
+                            <label class="form-label fw-semibold text-uppercase small text-muted"
+                                style="letter-spacing: 0.5px;">Status</label>
+                            <select id="reportStatus" class="form-select form-select-lg">
                                 <option value="pending">Pending</option>
                                 <option value="processing">Processing</option>
                                 <option value="resolved">Resolved</option>
                             </select>
                         </div>
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer border-0">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <button type="submit" class="btn text-white fw-bold"
+                            style="background: linear-gradient(135deg, #B6771D 0%, #7B542F 100%);"><i
+                                class="fas fa-save me-1"></i>Save Changes</button>
                     </div>
                 </div>
             </form>
@@ -174,10 +178,11 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                            <div class="text-uppercase small fw-semibold text-info mb-2"
+                                                style="letter-spacing: 0.5px;">
                                                 Equipment
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="detailEquipmentName">-
+                                            <div class="h5 mb-0 fw-bold text-gray-800" id="detailEquipmentName">-
                                             </div>
                                             <div class="text-muted small mt-1" id="detailEquipmentType">-</div>
                                         </div>
@@ -195,10 +200,11 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                            <div class="text-uppercase small fw-semibold text-warning mb-2"
+                                                style="letter-spacing: 0.5px;">
                                                 Reported
                                                 By</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="detailReporterName">
+                                            <div class="h5 mb-0 fw-bold text-gray-800" id="detailReporterName">
                                                 -
                                             </div>
                                             <div class="text-muted small mt-1" id="detailDate">-</div>
@@ -214,7 +220,7 @@
 
                     <div class="card mb-3 shadow-sm">
                         <div class="card-header bg-light">
-                            <h6 class="m-0 font-weight-bold text-secondary">Description</h6>
+                            <h6 class="m-0 fw-semibold text-secondary">Description</h6>
                         </div>
                         <div class="card-body bg-white">
                             <p class="card-text" id="detailDescription" style="white-space: pre-wrap;">-</p>

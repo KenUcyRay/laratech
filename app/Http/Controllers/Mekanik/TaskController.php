@@ -26,7 +26,7 @@ class TaskController extends Controller
             $allowStart = true;
         } elseif (request()->routeIs('mekanik.repairs*')) {
             $query->whereIn('status', ['doing']);
-            $pageTitle = 'Perbaikan (In Progress)';
+            $pageTitle = 'Repairs (In Progress)';
             $allowComplete = true;
         } else {
             // Fallback or show all active
