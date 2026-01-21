@@ -12,7 +12,7 @@ class TaskController extends Controller
 {
     public function index()
     {
-        $tasks = Task::with(['equipment', 'assignee', 'report'])->latest()->get();
+        $tasks = Task::with(['equipment', 'assignee', 'report'])->latest()->paginate(5);
         $equipments = Equipment::all();
         $assignees = User::whereIn('role', ['mekanik', 'operator'])->get();
 

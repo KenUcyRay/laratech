@@ -1,63 +1,79 @@
 @extends('layouts.app')
 
+@section('title', 'Maintenance Schedule')
+
 @section('sidebar')
     @include('components.manager-sidebar')
 @endsection
 
-@section('title', 'Maintenance Schedule')
+@push('styles')
+<style>
+.border-left-primary {
+    border-left: 0.25rem solid #7c3aed !important;
+}
+</style>
+@endpush
 
 @section('content')
-    <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h4>Maintenance Schedule</h4>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><i class="fas fa-calendar-check me-2"></i>Maintenance Schedule</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group me-2">
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
-                Add Schedule
+                <i class="fas fa-plus me-2"></i>Add Schedule
             </button>
         </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Equipment</th>
-                            <th>Assignee</th>
-                            <th>Last Service Date</th>
-                            <th>Next Service Due</th>
-                            <th>Status</th>
-                            <th>Action</th>
+    </div>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Maintenance Schedule</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Equipment</th>
+                        <th>Assignee</th>
+                        <th>Last Service Date</th>
+                        <th>Next Service Due</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($maintenances as $m)
+                        <tr id="row-{{ $m->id }}">
+                            <td>{{ $m->equipment->name ?? '-' }}</td>
+                            <td>{{ $m->assignee->name ?? '-' }} ({{ ucfirst($m->assignee->role ?? '') }})</td>
+                            <td>{{ $m->last_service_date ? $m->last_service_date->format('d M Y H:i') : '-' }}</td>
+                            <td>
+                                {{ $m->next_service_due ? $m->next_service_due->format('d M Y H:i') : '-' }}
+                            </td>
+                            <td>
+                                @php
+                                    $isDue = now()->greaterThanOrEqualTo($m->next_service_due);
+                                    $isClose = now()->addDays(2)->greaterThanOrEqualTo($m->next_service_due);
+                                @endphp
+                                <span class="badge bg-{{ $isDue ? 'danger' : ($isClose ? 'warning' : 'success') }}">
+                                    {{ $isDue ? 'Overdue' : ($isClose ? 'Upcoming' : 'OK') }}
+                                </span>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-warning edit-btn"
+                                    data-id="{{ $m->id }}">Edit</button>
+                                <button type="button" class="btn btn-sm btn-danger delete-btn"
+                                    data-id="{{ $m->id }}">Delete</button>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($maintenances as $m)
-                            <tr id="row-{{ $m->id }}">
-                                <td>{{ $m->equipment->name ?? '-' }}</td>
-                                <td>{{ $m->assignee->name ?? '-' }} ({{ ucfirst($m->assignee->role ?? '') }})</td>
-                                <td>{{ $m->last_service_date ? $m->last_service_date->format('d M Y H:i') : '-' }}</td>
-                                <td>
-                                    {{ $m->next_service_due ? $m->next_service_due->format('d M Y H:i') : '-' }}
-                                </td>
-                                <td>
-                                    @php
-                                        $isDue = now()->greaterThanOrEqualTo($m->next_service_due);
-                                        $isClose = now()->addDays(2)->greaterThanOrEqualTo($m->next_service_due);
-                                    @endphp
-                                    <span class="badge bg-{{ $isDue ? 'danger' : ($isClose ? 'warning' : 'success') }}">
-                                        {{ $isDue ? 'Overdue' : ($isClose ? 'Upcoming' : 'OK') }}
-                                    </span>
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-sm btn-warning edit-btn"
-                                        data-id="{{ $m->id }}">Edit</button>
-                                    <button type="button" class="btn btn-sm btn-danger delete-btn"
-                                        data-id="{{ $m->id }}">Delete</button>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
 
     <!-- Create Modal -->
     <div class="modal fade" id="createModal" tabindex="-1">
