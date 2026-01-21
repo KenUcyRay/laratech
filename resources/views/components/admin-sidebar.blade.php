@@ -36,7 +36,7 @@
                         style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
                         <i class="fas fa-users"></i>
                     </div>
-                    <span class="fw-medium">Manajemen User</span>
+                    <span class="fw-medium">User Management</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -49,7 +49,7 @@
                         style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
                         <i class="fas fa-desktop"></i>
                     </div>
-                    <span class="fw-medium">Data Operator</span>
+                    <span class="fw-medium">Operator Data</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -62,7 +62,7 @@
                         style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
                         <i class="fas fa-wrench"></i>
                     </div>
-                    <span class="fw-medium">Data Mekanik</span>
+                    <span class="fw-medium">Mechanic Data</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -75,7 +75,7 @@
                         style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
                         <i class="fas fa-chart-bar"></i>
                     </div>
-                    <span class="fw-medium">Laporan</span>
+                    <span class="fw-medium">Reports</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -88,7 +88,7 @@
                         style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
                         <i class="fas fa-cog"></i>
                     </div>
-                    <span class="fw-medium">Pengaturan</span>
+                    <span class="fw-medium">Settings</span>
                 </a>
             </li>
         </ul>

@@ -21,11 +21,11 @@
             @php
                 $links = [
                     ['route'=>'operator.dashboard', 'icon'=>'fa-chart-line', 'title'=>'Dashboard', 'subtitle'=>'Overview & statistik'],
-                    ['route'=>'operator.tasks.index', 'icon'=>'fa-tasks', 'title'=>'Tugas Saya', 'subtitle'=>'Kelola tugas harian'],
-                    ['route'=>'operator.schedules.index', 'icon'=>'fa-calendar-alt', 'title'=>'Jadwal Kerja', 'subtitle'=>'Atur waktu kerja'],
-                    ['route'=>'operator.equipment.index', 'icon'=>'fa-cogs', 'title'=>'Equipment', 'subtitle'=>'Lihat list & detail equipment'],
-                    ['route'=>'operator.reports.index', 'icon'=>'fa-exclamation-triangle', 'title'=>'Laporan Harian', 'subtitle'=>'Buat & lihat laporan'],
-                    ['route'=>'operator.maintenance.index', 'icon'=>'fa-tools', 'title'=>'Maintenance', 'subtitle'=>'Perawatan sistem'],
+                    ['route'=>'operator.tasks.index', 'icon'=>'fa-tasks', 'title'=>'My Tasks', 'subtitle'=>'Manage daily tasks'],
+                    ['route'=>'operator.schedules.index', 'icon'=>'fa-calendar-alt', 'title'=>'Work Schedule', 'subtitle'=>'Manage work time'],
+                    ['route'=>'operator.equipment.index', 'icon'=>'fa-cogs', 'title'=>'Equipment', 'subtitle'=>'View equipment list & details'],
+                    ['route'=>'operator.reports.index', 'icon'=>'fa-exclamation-triangle', 'title'=>'Daily Reports', 'subtitle'=>'Create & view reports'],
+                    ['route'=>'operator.maintenance.index', 'icon'=>'fa-tools', 'title'=>'Maintenance', 'subtitle'=>'System maintenance'],
                 ];
             @endphp
 

@@ -22,7 +22,7 @@
                             <h1 class="fw-bold mb-0 text-white">{{ $pageTitle }}</h1>
                         </div>
                         <p class="text-white-50 mb-0 fs-6">
-                            ⚙️ Tugas perbaikan dan pemeliharaan
+                            ⚙️ Repair and maintenance tasks
                         </p>
                     </div>
                 </div>
@@ -96,8 +96,6 @@
             </div>
         </div>
 
-    </div>
-    </div>
     </div>
 
     @push('scripts')

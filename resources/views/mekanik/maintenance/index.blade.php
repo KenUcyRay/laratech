@@ -22,7 +22,7 @@
                             <h1 class="fw-bold mb-0 text-white">Maintenance Schedule</h1>
                         </div>
                         <p class="text-white-50 mb-0 fs-6">
-                            🔧 Jadwal pemeliharaan dan servis equipment
+                            🔧 Equipment maintenance and service schedule
                         </p>
                     </div>
                 </div>
@@ -83,7 +83,6 @@
             </div>
         </div>
 
-    </div>
     </div>
 
     @push('scripts')

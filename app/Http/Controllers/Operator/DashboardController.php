@@ -77,7 +77,7 @@ class DashboardController extends Controller
             'taskCounts',
             'Equipment',
             'totalTasks',   // ditambahkan
-            'maintenance'   // ditambahkan
+            'maintenance',  // ditambahkan
             'maintenanceCount'
         ));
     }

@@ -19,10 +19,10 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <div class="d-flex align-items-center mb-2">
-                            <h1 class="fw-bold mb-0 text-white">Dashboard Mekanik</h1>
+                            <h1 class="fw-bold mb-0 text-white">Mechanic Dashboard</h1>
                         </div>
                         <p class="text-white-50 mb-0 fs-6">
-                            📊 Ringkasan aktivitas dan status pekerjaan Anda
+                            📊 Summary of your activities and work status
                         </p>
                     </div>
                 </div>
@@ -202,6 +202,7 @@
             </div>
         </div>
     </div>
+@endsection
 
 @push('styles')
     <style>
