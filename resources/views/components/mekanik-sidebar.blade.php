@@ -37,7 +37,7 @@
                         style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
                         <i class="fas fa-clipboard-list"></i>
                     </div>
-                    <span class="fw-medium">Work Orders</span>
+                    <span class="fw-medium">New Tasks</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -50,7 +50,7 @@
                         style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
                         <i class="fas fa-tools"></i>
                     </div>
-                    <span class="fw-medium">Repairs</span>
+                    <span class="fw-medium">In Progress</span>
                 </a>
             </li>
             <li class="nav-item">

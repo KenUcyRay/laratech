@@ -37,11 +37,10 @@
                         <table class="table table-hover" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th width="20%">Equipment</th>
-                                    <th width="15%">Assignee</th>
-                                    <th width="15%">Last Service Date</th>
-                                    <th width="15%">Next Service Due</th>
-                                    <th width="10%">Status</th>
+                                    <th width="25%">Equipment</th>
+                                    <th width="20%">Last Service Date</th>
+                                    <th width="20%">Next Service Due</th>
+                                    <th width="15%">Status</th>
                                     <th width="20%">Action</th>
                                 </tr>
                             </thead>
@@ -49,7 +48,6 @@
                                 @foreach($maintenances as $m)
                                     <tr id="row-{{ $m->id }}">
                                         <td>{{ $m->equipment->name ?? '-' }}</td>
-                                        <td>{{ $m->assignee->name ?? '-' }}</td>
                                         <td>{{ $m->last_service_date ? $m->last_service_date->format('Y-m-d H:i') : '-' }}</td>
                                         <td>
                                             {{ $m->next_service_due ? $m->next_service_due->format('Y-m-d H:i') : '-' }}
@@ -60,7 +58,7 @@
                                                 $isClose = now()->addDays(2)->greaterThanOrEqualTo($m->next_service_due);
                                             @endphp
                                             <span class="badge bg-{{ $isDue ? 'danger' : ($isClose ? 'warning' : 'success') }}">
-                                                {{ $isDue ? 'Overdue' : ($isClose ? 'Upcoming' : 'OK') }}
+                                                {{ $isDue ? 'Overdue' : ($isClose ? 'Due Soon' : 'On Schedule') }}
                                             </span>
                                         </td>
                                         <td>

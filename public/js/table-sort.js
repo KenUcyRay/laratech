@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
         headers.forEach((header, index) => {
             // Skip "Action" or "Aksi" columns
             const headerText = header.textContent.trim().toLowerCase();
-            if (headerText.includes('action') || headerText.includes('aksi')) {
+            if (headerText.includes('action') || headerText.includes('aksi') || header.classList.contains('no-sort')) {
                 return; // Do not add click listener
             }
 

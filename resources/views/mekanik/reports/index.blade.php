@@ -71,9 +71,13 @@
                                             </span>
                                         </td>
                                         <td>
-                                            <span class="badge bg-{{ $report->status == 'resolved' ? 'success' : 'secondary' }}">
-                                                {{ ucfirst($report->status) }}
-                                            </span>
+                                            @if($report->status == 'resolved')
+                                                <span class="badge bg-success">Resolved</span>
+                                            @elseif($report->status == 'processing')
+                                                <span class="badge bg-primary">Processing</span>
+                                            @else
+                                                <span class="badge bg-warning text-dark">Pending</span>
+                                            @endif
                                         </td>
                                         <td>
                                             <div class="btn-group center" role="group">
@@ -158,7 +162,7 @@
     <div class="modal fade" id="detailModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header bg-info text-white">
+                <div class="modal-header text-white" style="background: linear-gradient(135deg, #B6771D 0%, #7B542F 100%);">
                     <h5 class="modal-title text-white"><i class="fas fa-clipboard-list me-2"></i>Report Details</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>

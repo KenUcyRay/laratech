@@ -14,6 +14,7 @@ class ReportController extends Controller
     public function index(Request $request): View
     {
         $query = Report::with(['equipment', 'reporter', 'task'])
+            ->where('status', '!=', 'resolved') // Hide resolved
             ->orderBy('created_at', 'desc');
 
         // Filter severity
@@ -44,9 +45,12 @@ class ReportController extends Controller
         // Assign to task checks
         if ($request->boolean('assign_to_task') || $request->input('action') === 'assign_task') {
             // Create a new task linked
+            // Use report description as title (truncated) or specific title
+            $title = $validated['task_title'] ?? \Illuminate\Support\Str::limit($report->description, 20, '...');
+
             $task = Task::create([
                 'equipment_id' => $report->equipment_id,
-                'title' => $validated['task_title'] ?? 'Perbaikan dari Report #' . $report->id,
+                'title' => $title,
                 'priority' => $report->severity === 'high' ? 'high' : 'medium',
                 'status' => 'todo',
                 'assigned_to' => Auth::id(),

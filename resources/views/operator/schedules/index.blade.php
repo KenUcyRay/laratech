@@ -62,13 +62,13 @@
                             <table class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th class="text-center fw-semibold text-muted">Min</th>
-                                        <th class="text-center fw-semibold text-muted">Sen</th>
-                                        <th class="text-center fw-semibold text-muted">Sel</th>
-                                        <th class="text-center fw-semibold text-muted">Rab</th>
-                                        <th class="text-center fw-semibold text-muted">Kam</th>
-                                        <th class="text-center fw-semibold text-muted">Jum</th>
-                                        <th class="text-center fw-semibold text-muted">Sab</th>
+                                        <th class="text-center fw-semibold text-muted no-sort">Min</th>
+                                        <th class="text-center fw-semibold text-muted no-sort">Sen</th>
+                                        <th class="text-center fw-semibold text-muted no-sort">Sel</th>
+                                        <th class="text-center fw-semibold text-muted no-sort">Rab</th>
+                                        <th class="text-center fw-semibold text-muted no-sort">Kam</th>
+                                        <th class="text-center fw-semibold text-muted no-sort">Jum</th>
+                                        <th class="text-center fw-semibold text-muted no-sort">Sab</th>
                                     </tr>
                                 </thead>
                                 <tbody id="calendar-body">

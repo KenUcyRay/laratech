@@ -80,6 +80,14 @@
                                             @if($task->status == 'done')
                                                 <span class="text-success"><i class="fas fa-check-circle"></i> Done</span>
                                             @endif
+
+                                            <button class="btn btn-sm btn-info text-white view-task-btn"
+                                                data-title="{{ $task->report ? $task->report->description : $task->title }}"
+                                                data-equipment="{{ $task->equipment->name ?? '-' }}"
+                                                data-priority="{{ ucfirst($task->priority) }}"
+                                                data-status="{{ ucfirst($task->status) }}">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -101,8 +109,53 @@
 
     </div>
 
+    {{-- Task Detail Modal --}}
+    <div class="modal fade" id="taskDetailModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title text-white">Task Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="fw-bold">Equipment:</label>
+                        <p id="modalTaskEquipment">-</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="fw-bold">Full Title / Description:</label>
+                        <p id="modalTaskTitle" class="bg-light p-3 rounded">-</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <strong>Priority:</strong> <span id="modalTaskPriority">-</span>
+                        </div>
+                        <div>
+                            <strong>Status:</strong> <span id="modalTaskStatus">-</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @push('scripts')
         <script>
+            // View Task Detail
+            document.querySelectorAll('.view-task-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    document.getElementById('modalTaskEquipment').textContent = this.dataset.equipment;
+                    document.getElementById('modalTaskTitle').textContent = this.dataset.title;
+                    document.getElementById('modalTaskPriority').textContent = this.dataset.priority;
+                    document.getElementById('modalTaskStatus').textContent = this.dataset.status;
+
+                    new bootstrap.Modal(document.getElementById('taskDetailModal')).show();
+                });
+            });
+
             // Start Task
             document.querySelectorAll('.start-task-btn').forEach(btn => {
                 btn.addEventListener('click', function () {

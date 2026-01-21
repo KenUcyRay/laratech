@@ -11,7 +11,7 @@ class TaskController extends Controller
 {
     public function index(): View
     {
-        $query = Task::with(['equipment', 'equipment.type'])
+        $query = Task::with(['equipment', 'equipment.type', 'report'])
             ->where('assigned_to', auth()->id())
             ->orderBy('priority', 'desc')
             ->orderBy('due_date', 'asc');
@@ -54,6 +54,14 @@ class TaskController extends Controller
 
         if ($validated['status'] === 'done' && $task->status !== 'done') {
             $data['completed_at'] = now();
+
+            // Auto-resolve linked report if exists
+            // Since Report belongsTo Task (optional) or Task belongsTo Equipment
+            // The relationship is Report -> Task (report has task_id)
+            $report = \App\Models\Report::where('task_id', $task->id)->first();
+            if ($report) {
+                $report->update(['status' => 'resolved']);
+            }
         }
 
         $task->update($data);

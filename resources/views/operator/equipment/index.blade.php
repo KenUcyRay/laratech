@@ -65,7 +65,8 @@
                                 <td>{{ number_format($equipment->hour_meter) }} jam</td>
                                 <td>
                                     {{-- Tombol buat laporan --}}
-                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#reportModal">
+                                    <button class="btn btn-sm btn-warning btn-report" data-bs-toggle="modal"
+                                        data-bs-target="#reportModal" data-equipment-id="{{ $equipment->id }}">
                                         <i class="fas fa-exclamation-triangle me-1"></i>Buat Laporan
                                     </button>
                                 </td>
@@ -161,9 +162,28 @@
     </div>
 </div>
 
-{{-- Pastikan Bootstrap JS ada --}}
-@push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-@endpush
+    {{-- Pastikan Bootstrap JS ada --}}
+    @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const reportModal = document.getElementById('reportModal');
+                if (reportModal) {
+                    reportModal.addEventListener('show.bs.modal', function (event) {
+                        // Button that triggered the modal
+                        const button = event.relatedTarget;
+                        // Extract info from data-attributes
+                        const equipmentId = button.getAttribute('data-equipment-id');
+
+                        // Update the modal's content.
+                        const select = reportModal.querySelector('select[name="equipment_id"]');
+                        if (select && equipmentId) {
+                            select.value = equipmentId;
+                        }
+                    });
+                }
+            });
+        </script>
+    @endpush
 
 @endsection
