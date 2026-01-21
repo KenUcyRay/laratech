@@ -30,13 +30,18 @@ class TaskController extends Controller
             'status' => 'required|in:todo,doing,done,cancelled',
         ]);
 
-        $task = Task::create($validated);
+        Task::create($validated);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Task berhasil dibuat',
-            'data' => $task
-        ]);
+        return redirect()->route('manager.tasks.index')->with('success', 'Task berhasil dibuat');
+    }
+
+    public function edit($id)
+    {
+        $task = Task::with(['equipment', 'assignee'])->findOrFail($id);
+        $equipments = Equipment::all();
+        $assignees = User::whereIn('role', ['mekanik', 'operator'])->get();
+        
+        return view('manager.tasks.edit', compact('task', 'equipments', 'assignees'));
     }
 
     public function update(Request $request, $id)
@@ -54,11 +59,7 @@ class TaskController extends Controller
 
         $task->update($validated);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Task berhasil diperbarui',
-            'data' => $task
-        ]);
+        return redirect()->route('manager.tasks.index')->with('success', 'Task berhasil diperbarui');
     }
 
     public function destroy($id)
@@ -66,9 +67,6 @@ class TaskController extends Controller
         $task = Task::findOrFail($id);
         $task->delete();
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Task berhasil dihapus'
-        ]);
+        return redirect()->route('manager.tasks.index')->with('success', 'Task berhasil dihapus');
     }
 }
