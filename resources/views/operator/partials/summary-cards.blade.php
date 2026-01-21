@@ -1,4 +1,5 @@
 <div class="row g-4 mb-4">
+    {{-- Total Tasks --}}
     <div class="col-md-3">
         <div class="card shadow-sm border-0" style="transition: all 0.3s ease; cursor: pointer;"
             onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'"
@@ -15,6 +16,7 @@
         </div>
     </div>
 
+    {{-- Pending --}}
     <div class="col-md-3">
         <div class="card shadow-sm border-0" style="transition: all 0.3s ease; cursor: pointer;"
             onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'"
@@ -31,6 +33,7 @@
         </div>
     </div>
 
+    {{-- Completed --}}
     <div class="col-md-3">
         <div class="card shadow-sm border-0" style="transition: all 0.3s ease; cursor: pointer;"
             onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'"
@@ -47,6 +50,7 @@
         </div>
     </div>
 
+    {{-- Maintenance --}}
     <div class="col-md-3">
         <div class="card shadow-sm border-0" style="transition: all 0.3s ease; cursor: pointer;"
             onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'"
