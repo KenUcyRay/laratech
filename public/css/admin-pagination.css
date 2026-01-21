@@ -1,0 +1,22 @@
+/* Admin Pagination Styles */
+.btn-outline-primary {
+    color: #3b82f6;
+    border-color: #3b82f6;
+    background: transparent;
+}
+
+.btn-outline-primary:hover {
+    color: #ffffff;
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    border-color: #1d4ed8;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+}
+
+.btn-outline-primary:focus {
+    box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+}
+
+.btn-outline-primary:active {
+    background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+    border-color: #1e40af;
+}

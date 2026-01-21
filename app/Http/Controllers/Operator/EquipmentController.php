@@ -9,7 +9,7 @@ class EquipmentController extends Controller
 {
     public function index()
     {
-        $equipments = Equipment::with('type')->get();
+        $equipments = Equipment::with('type')->paginate(10);
         return view('operator.equipment.index', compact('equipments'));
     }
 }

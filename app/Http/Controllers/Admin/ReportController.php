@@ -26,7 +26,7 @@ class ReportController extends Controller
                 $reportModel = app('App\Models\Report');
                 $reports = $reportModel::with(['equipment.type', 'reporter', 'images'])
                     ->latest()
-                    ->get();
+                    ->paginate(10);
                 
                 $reportStats = [
                     'total' => $reportModel::count(),

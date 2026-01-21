@@ -110,6 +110,13 @@
                     </tbody>
                 </table>
             </div>
+            
+            {{-- Pagination --}}
+            @if($users->hasPages())
+                <div class="d-flex justify-content-end mt-4">
+                    {{ $users->links('custom.admin-pagination') }}
+                </div>
+            @endif
         </div>
     </div>
 

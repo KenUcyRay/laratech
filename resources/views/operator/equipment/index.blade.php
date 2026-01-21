@@ -47,7 +47,7 @@
                     <tbody>
                         @forelse($equipments ?? [] as $index => $equipment)
                             <tr>
-                                <td class="fw-medium">{{ $index + 1 }}</td>
+                                <td class="fw-medium">{{ ($equipments->currentPage() - 1) * $equipments->perPage() + $index + 1 }}</td>
                                 <td class="fw-medium">{{ $equipment->code }}</td>
                                 <td>{{ $equipment->name }}</td>
                                 <td>{{ $equipment->type->name ?? '-' }}</td>
@@ -83,6 +83,13 @@
                     </tbody>
                 </table>
             </div>
+            
+            {{-- Pagination --}}
+            @if($equipments->hasPages())
+                <div class="d-flex justify-content-end mt-4">
+                    {{ $equipments->links('custom.pagination') }}
+                </div>
+            @endif
         </div>
     </div>
 

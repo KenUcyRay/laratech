@@ -1,60 +1,96 @@
-@section('sidebar')
-<div class="h-100 pt-0" 
-     style="background: linear-gradient(180deg, #10B981 0%, #059669 100%);
-            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-            height: 100vh;
-            overflow-y: auto;
-            transition: all 0.3s ease;">
-
+<div class="h-100" style="background: linear-gradient(180deg, #10B981 0%, #059669 100%); box-shadow: 2px 0 10px rgba(0,0,0,0.1); height: 100vh; overflow-y: auto; padding-top: 80px;">
     <!-- Sidebar Header -->
     <div class="p-4 border-bottom border-white border-opacity-25">
-        <div class="d-flex align-items-center text-white mb-4">
-            <i class="fas fa-desktop fs-3 me-3" style="color: rgba(255,255,255,0.95);"></i>
+        <div class="d-flex align-items-center text-white">
+            <i class="fas fa-user-shield fs-4 me-3" style="color: rgba(255,255,255,0.9);"></i>
             <div>
-                <h5 class="mb-0 fw-bold">Operator Panel</h5>
+                <h6 class="mb-0 fw-bold">Operator Panel</h6>
                 <small class="opacity-75">LaraTech System</small>
             </div>
         </div>
-
-        <!-- Navigation -->
-        <nav class="nav flex-column gap-2">
-            @php
-                $links = [
-                    ['route'=>'operator.dashboard', 'icon'=>'fa-chart-line', 'title'=>'Dashboard', 'subtitle'=>'Overview & statistik'],
-                    ['route'=>'operator.tasks.index', 'icon'=>'fa-tasks', 'title'=>'My Tasks', 'subtitle'=>'Manage daily tasks'],
-                    ['route'=>'operator.schedules.index', 'icon'=>'fa-calendar-alt', 'title'=>'Work Schedule', 'subtitle'=>'Manage work time'],
-                    ['route'=>'operator.equipment.index', 'icon'=>'fa-cogs', 'title'=>'Equipment', 'subtitle'=>'View equipment list & details'],
-                    ['route'=>'operator.reports.index', 'icon'=>'fa-exclamation-triangle', 'title'=>'Daily Reports', 'subtitle'=>'Create & view reports'],
-                    ['route'=>'operator.maintenance.index', 'icon'=>'fa-tools', 'title'=>'Maintenance', 'subtitle'=>'System maintenance'],
-                ];
-            @endphp
-
-            @foreach($links as $link)
-                <a href="{{ route($link['route']) }}"
-                   class="nav-link d-flex align-items-center p-3 rounded-3 text-decoration-none"
-                   style="
-                      transition: all 0.3s ease;
-                      color: {{ request()->routeIs($link['route'].'*') ? 'white' : 'rgba(255,255,255,0.8)' }};
-                      background-color: {{ request()->routeIs($link['route'].'*') ? 'rgba(255,255,255,0.15)' : 'transparent' }};
-                      box-shadow: {{ request()->routeIs($link['route'].'*') ? 'inset 3px 0 0 0 rgba(255,255,255,0.9)' : 'none' }};
-                   "
-                   onmouseover="this.style.backgroundColor='rgba(255,255,255,0.2)'; this.style.color='white'; this.querySelector('i').style.transform='scale(1.2)';"
-                   onmouseout="this.style.backgroundColor='{{ request()->routeIs($link['route'].'*') ? 'rgba(255,255,255,0.15)' : 'transparent' }}'; this.style.color='{{ request()->routeIs($link['route'].'*') ? 'white' : 'rgba(255,255,255,0.8)' }}'; this.querySelector('i').style.transform='scale(1)';"
-                >
-                    <div class="icon-container me-3 fs-5" style="transition: transform 0.2s ease, color 0.2s ease;">
-                        <i class="fas {{ $link['icon'] }}"></i>
-                    </div>
-                    <div class="flex-grow-1">
-                        <div class="fw-semibold">{{ $link['title'] }}</div>
-                        <small class="d-block" style="opacity: 0.75;">{{ $link['subtitle'] }}</small>
-                    </div>
-                </a>
-            @endforeach
-        </nav>
     </div>
 
-    <div class="mt-auto p-3 text-center text-white" style="opacity:0.5; font-size: 0.8rem;">
-        &copy; {{ date('Y') }} LaraTech System
+    <!-- Navigation Menu -->
+    <div class="p-3">
+        <ul class="nav flex-column gap-2">
+            <li class="nav-item">
+                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('operator.dashboard') ? 'active' : '' }}" 
+                   href="{{ route('operator.dashboard') }}"
+                   style="transition: all 0.3s ease; {{ request()->routeIs('operator.dashboard') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
+                   onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
+                   onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
+                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3" 
+                         style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <span class="fw-medium">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('operator.tasks*') ? 'active' : '' }}" 
+                   href="{{ route('operator.tasks.index') }}"
+                   style="transition: all 0.3s ease; {{ request()->routeIs('operator.tasks*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
+                   onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
+                   onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
+                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3" 
+                         style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <span class="fw-medium">My Task</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('operator.schedules*') ? 'active' : '' }}" 
+                   href="{{ route('operator.schedules.index') }}"
+                   style="transition: all 0.3s ease; {{ request()->routeIs('operator.schedules*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
+                   onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
+                   onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
+                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3" 
+                         style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
+                        <i class="fas fa-calendar"></i>
+                    </div>
+                    <span class="fw-medium">Work Schedule</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('operator.equipment*') ? 'active' : '' }}" 
+                   href="{{ route('operator.equipment.index') }}"
+                   style="transition: all 0.3s ease; {{ request()->routeIs('operator.equipment*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
+                   onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
+                   onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
+                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3" 
+                         style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <span class="fw-medium">Equipment</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('operator.reports*') ? 'active' : '' }}" 
+                   href="{{ route('operator.reports.index') }}"
+                   style="transition: all 0.3s ease; {{ request()->routeIs('operator.reports*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
+                   onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
+                   onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
+                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3" 
+                         style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <span class="fw-medium">Daily Report</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white d-flex align-items-center py-3 px-3 rounded-3 {{ request()->routeIs('operator.maintenance*') ? 'active' : '' }}" 
+                   href="{{ route('operator.maintenance.index') }}"
+                   style="transition: all 0.3s ease; {{ request()->routeIs('operator.maintenance*') ? 'background: rgba(255,255,255,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.15);' : '' }}"
+                   onmouseover="if(!this.classList.contains('active')) this.style.background='rgba(255,255,255,0.1)'"
+                   onmouseout="if(!this.classList.contains('active')) this.style.background='transparent'">
+                    <div class="d-flex align-items-center justify-content-center rounded-2 me-3" 
+                         style="width: 35px; height: 35px; background: rgba(255,255,255,0.15);">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <span class="fw-medium">Maintenance</span>
+                </a>
+            </li>
+        </ul>
     </div>
 </div>
-@endsection
