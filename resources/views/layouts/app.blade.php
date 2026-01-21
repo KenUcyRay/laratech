@@ -69,6 +69,8 @@
     
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Table Sort JS -->
+    <script src="{{ asset('js/table-sort.js') }}"></script>
     @stack('scripts')
 </body>
 </html>
