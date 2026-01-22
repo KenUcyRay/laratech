@@ -20,9 +20,15 @@ class Report extends Model
         'severity',
         'status',
         'task_id',
+        'processed_by',
     ];
 
-     public function user()
+    public function processor(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'processed_by');
+    }
+
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

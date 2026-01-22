@@ -13,21 +13,26 @@ class ReportController extends Controller
 {
     public function index(Request $request): View
     {
-        $query = Report::with(['equipment', 'reporter', 'task'])
-            ->where('status', '!=', 'resolved') // Hide resolved
-            ->orderBy('created_at', 'desc');
+        $tab = $request->get('tab', 'pending'); // pending, my_processing
+
+        $query = Report::with(['equipment', 'reporter', 'task', 'processor']);
+
+        if ($tab == 'my_processing') {
+            $query->where('status', 'processing')
+                ->where('processed_by', Auth::id());
+
+        } else {
+            // Default: Pending reports (all)
+            $query->where('status', 'pending');
+        }
+
 
         // Filter severity
         if ($request->has('severity')) {
             $query->where('severity', $request->severity);
         }
 
-        // Filter status
-        if ($request->has('status')) {
-            $query->where('status', $request->status);
-        }
-
-        $reports = $query->paginate(10);
+        $reports = $query->orderBy('created_at', 'desc')->paginate(10);
 
         return view('mekanik.reports.index', compact('reports'));
     }
@@ -59,11 +64,17 @@ class ReportController extends Controller
 
             $report->task_id = $task->id;
             $report->status = 'processing'; // Auto update status
+            $report->processed_by = Auth::id(); // Assign to current user
         }
 
         // Manual status update
         if ($request->has('status')) {
             $report->status = $validated['status'];
+
+            // If status becomes processing, assign to current user if not set
+            if ($validated['status'] == 'processing') {
+                $report->processed_by = Auth::id();
+            }
         }
 
         $report->save();

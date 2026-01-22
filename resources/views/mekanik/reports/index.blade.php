@@ -29,16 +29,53 @@
             </div>
         </div>
 
-        {{-- Filters --}}
-        <div class="mb-3">
-            <a href="{{ route('mekanik.reports.index') }}"
-                class="btn btn-sm {{ !request('status') && !request('severity') ? 'btn-secondary' : 'btn-outline-secondary' }}">All</a>
-            <a href="{{ route('mekanik.reports.index', ['status' => 'pending']) }}"
-                class="btn btn-sm {{ request('status') == 'pending' ? 'btn-warning' : 'btn-outline-warning' }}">Pending</a>
-            <a href="{{ route('mekanik.reports.index', ['severity' => 'high']) }}"
-                class="btn btn-sm {{ request('severity') == 'high' ? 'btn-danger' : 'btn-outline-danger' }}">High
-                Priority</a>
+        {{-- Tabs & Filters --}}
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <ul class="nav nav-pills custom-tabs">
+                <li class="nav-item">
+                    <a class="nav-link {{ request('tab', 'pending') == 'pending' ? 'active' : '' }} fw-bold"
+                        href="{{ route('mekanik.reports.index', ['tab' => 'pending']) }}"
+                        style="border-radius: 50px; padding: 0.5rem 1.5rem;">
+                        <i class="fas fa-clock me-2"></i>Pending Reports
+                    </a>
+                </li>
+                <li class="nav-item ms-2">
+                    <a class="nav-link {{ request('tab') == 'my_processing' ? 'active' : '' }} fw-bold"
+                        href="{{ route('mekanik.reports.index', ['tab' => 'my_processing']) }}"
+                        style="border-radius: 50px; padding: 0.5rem 1.5rem;">
+                        <i class="fas fa-spinner me-2"></i>My Processing
+                    </a>
+                </li>
+            </ul>
+
+            <div class="d-flex">
+                <a href="{{ route('mekanik.reports.index', ['tab' => request('tab', 'pending'), 'severity' => 'high']) }}"
+                    class="btn btn-sm {{ request('severity') == 'high' ? 'btn-danger' : 'btn-outline-danger' }} rounded-pill px-3">
+                    <i class="fas fa-exclamation-circle me-1"></i> High Priority
+                </a>
+            </div>
         </div>
+
+        <style>
+            .custom-tabs .nav-link {
+                color: #6c757d;
+                background-color: white;
+                border: 1px solid #dee2e6;
+                transition: all 0.3s ease;
+            }
+
+            .custom-tabs .nav-link:hover {
+                background-color: #f8f9fa;
+                transform: translateY(-2px);
+            }
+
+            .custom-tabs .nav-link.active {
+                background: linear-gradient(135deg, #B6771D 0%, #7B542F 100%);
+                color: white !important;
+                border: none;
+                box-shadow: 0 4px 6px rgba(182, 119, 29, 0.3);
+            }
+        </style>
 
         {{-- Reports Table --}}
         <div class="card border-0 shadow-sm rounded-4 mb-4">
@@ -49,9 +86,12 @@
                             <thead>
                                 <tr>
                                     <th class="fw-semibold" width="10%">Date</th>
-                                    <th class="fw-semibold" width="18%">Equipment</th>
+                                    <th class="fw-semibold" width="15%">Equipment</th>
                                     <th class="fw-semibold" width="12%">Reporter</th>
-                                    <th class="fw-semibold" width="22%">Description</th>
+                                    @if(request('tab') == 'my_processing')
+                                        <th class="fw-semibold" width="12%">Processed By</th>
+                                    @endif
+                                    <th class="fw-semibold" width="20%">Description</th>
                                     <th class="fw-semibold" width="10%">Severity</th>
                                     <th class="fw-semibold" width="10%">Status</th>
                                     <th class="fw-semibold" width="10%">Action</th>
@@ -63,7 +103,14 @@
                                         <td>{{ $report->created_at->format('Y-m-d') }}</td>
                                         <td>{{ $report->equipment->name ?? '-' }}</td>
                                         <td>{{ $report->reporter->name ?? '-' }}</td>
-                                        <td><small>{{ Str::limit($report->description, 40) }}</small></td>
+                                        @if(request('tab') == 'my_processing')
+                                            <td>
+                                                <span class="badge bg-info text-dark">
+                                                    <i class="fas fa-user-cog me-1"></i> {{ $report->processor->name ?? 'Me' }}
+                                                </span>
+                                            </td>
+                                        @endif
+                                        <td><small>{{ Str::limit($report->description, 35) }}</small></td>
                                         <td>
                                             <span
                                                 class="badge bg-{{ $report->severity == 'high' ? 'danger' : ($report->severity == 'medium' ? 'warning' : 'info') }}">
