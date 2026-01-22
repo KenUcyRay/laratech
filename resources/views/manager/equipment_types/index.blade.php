@@ -82,8 +82,8 @@
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button class="btn btn-sm btn-danger rounded-end" data-bs-toggle="modal"
-                                            data-bs-target="#deleteModal"
-                                            onclick="setDeleteForm({{ $type->id }}, '{{ addslashes($type->name) }}')">
+                                            data-bs-target="#deleteModal" data-id="{{ $type->id }}"
+                                            data-name="{{ $type->name }}" onclick="setDeleteForm(this)">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </div>
@@ -225,19 +225,23 @@
     </div>
 @endsection
 
-<script>
-    function populateEditForm(button) {
-        const id = button.getAttribute('data-type-id');
-        const name = button.getAttribute('data-type-name');
-        const description = button.getAttribute('data-type-description');
+@push('scripts')
+    <script>
+        function populateEditForm(button) {
+            const id = button.getAttribute('data-type-id');
+            const name = button.getAttribute('data-type-name');
+            const description = button.getAttribute('data-type-description');
 
-        document.getElementById('editForm').action = `/manager/equipment-types/${id}`;
-        document.getElementById('editName').value = name || '';
-        document.getElementById('editDescription').value = description || '';
-    }
+            document.getElementById('editForm').action = `/manager/equipment-types/${id}`;
+            document.getElementById('editName').value = name || '';
+            document.getElementById('editDescription').value = description || '';
+        }
 
-    function setDeleteForm(id, name) {
-        document.getElementById('deleteForm').action = `/manager/equipment-types/${id}`;
-        document.getElementById('deleteTypeName').textContent = name;
-    }
-</script>
+        function setDeleteForm(button) {
+            const id = button.dataset.id;
+            const name = button.dataset.name;
+            document.getElementById('deleteForm').action = `/manager/equipment-types/${id}`;
+            document.getElementById('deleteTypeName').textContent = name;
+        }
+    </script>
+@endpush

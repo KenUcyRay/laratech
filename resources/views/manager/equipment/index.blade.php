@@ -126,8 +126,8 @@
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button class="btn btn-sm btn-danger rounded-end" data-bs-toggle="modal"
-                                            data-bs-target="#deleteModal"
-                                            onclick="setDeleteForm({{ $eq->id }}, '{{ addslashes($eq->name) }}')">
+                                            data-bs-target="#deleteModal" data-id="{{ $eq->id }}" data-name="{{ $eq->name }}"
+                                            onclick="setDeleteForm(this)">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </div>
@@ -439,7 +439,9 @@
             document.getElementById('editHour').value = button.dataset.equipmentHour;
         }
 
-        function setDeleteForm(id, name) {
+        function setDeleteForm(button) {
+            const id = button.dataset.id;
+            const name = button.dataset.name;
             document.getElementById('deleteForm').action = `/manager/equipment/${id}`;
             document.getElementById('deleteEquipmentName').textContent = name;
         }
