@@ -65,6 +65,11 @@ class ReportController extends Controller
             $report->task_id = $task->id;
             $report->status = 'processing'; // Auto update status
             $report->processed_by = Auth::id(); // Assign to current user
+
+            // Sync Equipment Status: Report Processing -> Equipment Servis
+            if ($report->equipment) {
+                $report->equipment->update(['status' => 'servis']);
+            }
         }
 
         // Manual status update
@@ -74,6 +79,16 @@ class ReportController extends Controller
             // If status becomes processing, assign to current user if not set
             if ($validated['status'] == 'processing') {
                 $report->processed_by = Auth::id();
+
+                // Sync Equipment Status: Report Processing -> Equipment Servis
+                if ($report->equipment) {
+                    $report->equipment->update(['status' => 'servis']);
+                }
+            } elseif ($validated['status'] == 'resolved') {
+                // Sync Equipment Status: Report Resolved -> Equipment Idle
+                if ($report->equipment) {
+                    $report->equipment->update(['status' => 'idle']);
+                }
             }
         }
 

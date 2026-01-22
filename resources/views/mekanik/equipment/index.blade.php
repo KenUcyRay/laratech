@@ -114,8 +114,218 @@
         </div>
     </div>
 
+    @push('styles')
+        <style>
+            /* Custom Popup Styles - Mekanik Theme */
+            .custom-popup-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(4px);
+                z-index: 9998;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                animation: fadeIn 0.2s ease;
+            }
+
+            .custom-popup {
+                background: white;
+                border-radius: 1rem;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                max-width: 400px;
+                width: 90%;
+                animation: slideDown 0.3s ease;
+                overflow: hidden;
+            }
+
+            .custom-popup-header {
+                background: linear-gradient(135deg, #B6771D 0%, #7B542F 100%);
+                color: white;
+                padding: 1.5rem;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .custom-popup-header i {
+                font-size: 2rem;
+            }
+
+            .custom-popup-body {
+                padding: 1.5rem;
+            }
+
+            .custom-popup-title {
+                font-size: 1.25rem;
+                font-weight: bold;
+                margin: 0;
+            }
+
+            .custom-popup-text {
+                color: #6c757d;
+                margin: 0;
+            }
+
+            .custom-popup-buttons {
+                display: flex;
+                gap: 0.5rem;
+                margin-top: 1.5rem;
+            }
+
+            .custom-popup-btn {
+                flex: 1;
+                padding: 0.75rem;
+                border: none;
+                border-radius: 0.5rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+
+            .custom-popup-btn-primary {
+                background: linear-gradient(135deg, #B6771D 0%, #7B542F 100%);
+                color: white;
+            }
+
+            .custom-popup-btn-primary:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(182, 119, 29, 0.4);
+            }
+
+            .custom-popup-btn-secondary {
+                background: #e9ecef;
+                color: #495057;
+            }
+
+            .custom-popup-btn-secondary:hover {
+                background: #dee2e6;
+            }
+
+            /* Toast Notification */
+            .custom-toast {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: white;
+                border-radius: 0.75rem;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+                padding: 1rem 1.5rem;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                z-index: 9999;
+                animation: slideInRight 0.3s ease, fadeOut 0.3s ease 2.7s;
+                min-width: 300px;
+            }
+
+            .custom-toast.success {
+                border-left: 4px solid #10B981;
+            }
+
+            .custom-toast.error {
+                border-left: 4px solid #EF4444;
+            }
+
+            .custom-toast i {
+                font-size: 1.5rem;
+            }
+
+            .custom-toast.success i {
+                color: #10B981;
+            }
+
+            .custom-toast.error i {
+                color: #EF4444;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+
+                to {
+                    opacity: 1;
+                }
+            }
+
+            @keyframes slideDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-20px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes slideInRight {
+                from {
+                    opacity: 0;
+                    transform: translateX(100px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+
+            @keyframes fadeOut {
+                to {
+                    opacity: 0;
+                    transform: translateX(100px);
+                }
+            }
+        </style>
+    @endpush
+
     @push('scripts')
         <script>
+            // Custom Popup Functions
+            function showToast(type, title) {
+                const toast = document.createElement('div');
+                toast.className = `custom-toast ${type}`;
+                toast.innerHTML = `
+                            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                            <div>
+                                <strong>${title}</strong>
+                            </div>
+                        `;
+                document.body.appendChild(toast);
+
+                setTimeout(() => {
+                    toast.remove();
+                }, 3000);
+            }
+
+            function showAlert(type, title, text, callback) {
+                const overlay = document.createElement('div');
+                overlay.className = 'custom-popup-overlay';
+                overlay.innerHTML = `
+                            <div class="custom-popup">
+                                <div class="custom-popup-header">
+                                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                                    <div>
+                                        <h5 class="custom-popup-title">${title}</h5>
+                                    </div>
+                                </div>
+                                <div class="custom-popup-body">
+                                    <p class="custom-popup-text">${text}</p>
+                                    <div class="custom-popup-buttons">
+                                        <button class="custom-popup-btn custom-popup-btn-primary" onclick="this.closest('.custom-popup-overlay').remove(); ${callback ? callback + '()' : ''}">OK</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                document.body.appendChild(overlay);
+            }
+
             document.querySelectorAll('.update-status-btn').forEach(btn => {
                 btn.addEventListener('click', function () {
                     let id = this.dataset.id;
@@ -149,10 +359,15 @@
                 })
                     .then(response => response.json())
                     .then(data => {
+                        bootstrap.Modal.getInstance(document.getElementById('statusModal')).hide();
+
                         if (data.status === 'success') {
-                            location.reload();
+                            showToast('success', 'Status berhasil diperbarui');
+                            setTimeout(() => {
+                                location.reload();
+                            }, 1500);
                         } else {
-                            alert('Error: ' + data.message);
+                            showAlert('error', 'Error', data.message);
                         }
                     });
             });
