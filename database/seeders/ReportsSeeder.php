@@ -33,17 +33,28 @@ class ReportsSeeder extends Seeder
 
         $severities = ['low', 'medium', 'high'];
 
-        foreach ($equipments->take(15) as $equipment) {
-            $numReports = rand(0, 2);
+        // Shuffle and take 15 random equipments to ensure uniqueness
+        $targetEquipments = $equipments->shuffle()->take(15);
 
-            for ($i = 0; $i < $numReports; $i++) {
-                Report::create([
-                    'equipment_id' => $equipment->id,
-                    'user_id' => $reporters->random()->id,
-                    'description' => $descriptions[array_rand($descriptions)] . ' on ' . $equipment->name,
-                    'severity' => $severities[array_rand($severities)],
-                    'created_at' => now()->subDays(rand(0, 30)),
-                ]);
+        foreach ($targetEquipments as $equipment) {
+            // 1 report per equipment max
+
+            // Random status
+            $statuses = ['pending', 'processing', 'resolved', 'closed'];
+            $status = $statuses[array_rand($statuses)];
+
+            Report::create([
+                'equipment_id' => $equipment->id,
+                'user_id' => $reporters->random()->id,
+                'description' => $descriptions[array_rand($descriptions)] . ' on ' . $equipment->name,
+                'severity' => $severities[array_rand($severities)],
+                'status' => $status,
+                'created_at' => now()->subDays(rand(0, 30)),
+            ]);
+
+            // Sync equipment status
+            if ($status === 'processing') {
+                $equipment->update(['status' => 'servis']);
             }
         }
     }

@@ -25,7 +25,7 @@ class EquipmentsSeeder extends Seeder
                     'code' => strtoupper(substr($type->name, 0, 3)) . '-' . str_pad($counter, 3, '0', STR_PAD_LEFT),
                     'name' => $type->name . ' Unit ' . $i,
                     'equipment_type_id' => $type->id,
-                    'status' => $statuses[($i - 1) % 4],
+                    'status' => 'idle',
                     'hour_meter' => rand(500, 10000),
                 ]);
                 $counter++;

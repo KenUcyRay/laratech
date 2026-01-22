@@ -62,6 +62,22 @@ class TasksSeeder extends Seeder
 
                 Task::create($task);
             }
+
+            // Update equipment status based on tasks
+            // Priority: Doing (active service) > Todo (broken/needs service) > Done/Cancelled (Idle/Operasi)
+            $hasDoing = Task::where('equipment_id', $equipment->id)->where('status', 'doing')->exists();
+            $hasTodo = Task::where('equipment_id', $equipment->id)->where('status', 'todo')->exists();
+
+            if ($hasDoing) {
+                $equipment->update(['status' => 'servis']);
+            } elseif ($hasTodo) {
+                // Only set to rusak if not already being serviced
+                $equipment->update(['status' => 'rusak']);
+            } else {
+                // If only done/cancelled, ensure it's idle (or leave as is from EquipmentSeeder)
+                // We'll leave as is because EquipmentSeeder sets to 'idle'.
+            }
         }
     }
 }
+
