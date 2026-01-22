@@ -13,6 +13,17 @@ class Equipment extends Model
 {
     use HasFactory, HasUuids, SoftDeletes;
 
+    protected static function booted()
+    {
+        static::deleting(function ($equipment) {
+            // Cascade delete relations
+            $equipment->tasks()->each(fn($task) => $task->delete());
+            $equipment->maintenances()->each(fn($maintenance) => $maintenance->delete());
+            $equipment->reports()->each(fn($report) => $report->delete());
+            $equipment->images()->each(fn($image) => $image->delete());
+        });
+    }
+
     protected $table = 'equipments';
 
     protected $fillable = [

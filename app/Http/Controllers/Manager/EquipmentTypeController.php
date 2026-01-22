@@ -56,7 +56,8 @@ class EquipmentTypeController extends Controller
         $type = EquipmentType::findOrFail($id);
 
         if ($type->equipments()->count() > 0) {
-            return redirect()->route('manager.equipment-types.index')->with('error', 'Tidak dapat menghapus tipe ini karena masih digunakan oleh equipment.');
+            // Cascade delete equipments
+            $type->equipments()->get()->each->delete();
         }
 
         $type->delete();

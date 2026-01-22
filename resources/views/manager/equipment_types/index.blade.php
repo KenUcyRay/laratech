@@ -83,7 +83,8 @@
                                         </button>
                                         <button class="btn btn-sm btn-danger rounded-end" data-bs-toggle="modal"
                                             data-bs-target="#deleteModal" data-id="{{ $type->id }}"
-                                            data-name="{{ $type->name }}" onclick="setDeleteForm(this)">
+                                            data-name="{{ $type->name }}" data-count="{{ $type->equipments_count }}"
+                                            onclick="setDeleteForm(this)">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </div>
@@ -202,15 +203,16 @@
                     <h5 class="modal-title text-white fw-bold"><i class="fas fa-trash me-2"></i>Delete Equipment Type</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body p-4 text-center">
+                <div class="modal-body pt-4 px-4 pb-2 text-center">
                     <div class="mb-3">
                         <i class="fas fa-exclamation-triangle text-warning" style="font-size: 3rem;"></i>
                     </div>
                     <h6 class="fw-bold mb-2">Are you sure?</h6>
                     <p class="text-muted mb-0">You are about to delete: <strong id="deleteTypeName"></strong></p>
+                    <p id="deleteWarningText" class="text-danger small mt-2 d-none fw-bold"></p>
                     <p class="text-muted small">This action cannot be undone.</p>
                 </div>
-                <div class="modal-footer border-0 p-4 justify-content-center">
+                <div class="modal-footer border-0 px-4 pb-4 pt-0 justify-content-center">
                     <button type="button" class="btn btn-secondary rounded-3 me-2" data-bs-dismiss="modal">Cancel</button>
                     <form action="" method="POST" id="deleteForm" class="d-inline">
                         @csrf
@@ -240,8 +242,18 @@
         function setDeleteForm(button) {
             const id = button.dataset.id;
             const name = button.dataset.name;
+            const count = parseInt(button.dataset.count);
+
             document.getElementById('deleteForm').action = `/manager/equipment-types/${id}`;
             document.getElementById('deleteTypeName').textContent = name;
+
+            const warningText = document.getElementById('deleteWarningText');
+            if (count > 0) {
+                warningText.textContent = `This type is used by ${count} equipment. Deleting this type will delete all equipment`;
+                warningText.classList.remove('d-none');
+            } else {
+                warningText.classList.add('d-none');
+            }
         }
     </script>
 @endpush
